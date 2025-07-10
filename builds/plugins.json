@@ -1,11 +1,33 @@
 [
     {
+        "iconUrl": "https://cdn.bcdn.zip/wp-content/uploads/2017/04/nc-header-responsive.png",
+        "jarFileSize": 51845,
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
+        "fileSize": 14207,
+        "status": 1,
+        "language": "pt-br",
+        "authors": [
+            "Phisher98",
+            "saimuelbr"
+        ],
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "version": 1,
+        "internalName": "NetCine",
+        "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/Netcinez.jar",
+        "description": "Filmes, Séries e Animes em Português",
+        "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/Netcinez.cs3",
+        "name": "Netcinez"
+    },
+    {
         "iconUrl": "https://pobreflixtv.lat/uploads/set_resources_14/a5bd102ac3b4e1362ac25aed38707f87_favicon.ico",
         "jarFileSize": 99642,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
         "status": 1,
-        "language": "pt-br",
         "authors": [
             "saimuelbr"
         ],
@@ -16,7 +38,7 @@
         "version": 1,
         "internalName": "PobreFlix",
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/PobreFlix.jar",
-        "description": "PobreFlix - Filmes,Séries e Animes em Português",
+        "description": "Filmes, Séries e Animes em Português",
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/PobreFlix.cs3",
         "name": "PobreFlix"
     }
