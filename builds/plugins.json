@@ -16,11 +16,11 @@
             "TvSeries"
         ],
         "version": 1,
-        "internalName": "NetCine",
+        "internalName": "Netcinez",
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/Netcinez.jar",
         "description": "Filmes, Séries e Animes em Português",
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/Netcinez.cs3",
-        "name": "Netcinez"
+        "name": "NetCine"
     },
     {
         "iconUrl": "https://pobreflixtv.lat/uploads/set_resources_14/a5bd102ac3b4e1362ac25aed38707f87_favicon.ico",
@@ -28,7 +28,6 @@
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
         "status": 1,
-        "language": "pt-br",
         "authors": [
             "saimuelbr"
         ],
@@ -41,6 +40,7 @@
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/PobreFlix.jar",
         "description": "Filmes, Séries e Animes em Português",
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/PobreFlix.cs3",
-        "name": "PobreFlix"
+        "name": "PobreFlix",
+        "language": "pt-br"
     }
 ]
