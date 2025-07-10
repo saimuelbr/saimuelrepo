@@ -15,9 +15,9 @@
         ],
         "version": 1,
         "internalName": "PobreFlix",
-        "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/builds/PobreFlix.jar",
+        "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/PobreFlix.jar",
         "description": "PobreFlix - Filmes,Séries e Animes em Português",
-        "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/builds/PobreFlix.cs3",
+        "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/PobreFlix.cs3",
         "name": "PobreFlix"
     }
 ]
