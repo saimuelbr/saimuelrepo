@@ -1,8 +1,0 @@
-{
-  "name": "saimuel repo",
-  "description": "saimuelbr repository",
-  "manifestVersion": 1,
-  "pluginLists": [
-    "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/refs/heads/main/builds/plugins.json"
-  ]
-}
