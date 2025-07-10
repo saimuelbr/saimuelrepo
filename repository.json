@@ -1,0 +1,8 @@
+{
+  "name": "Saimuel Repository",
+  "description": "Repositório de plugins para CloudStream - Diversos plugins para filmes e séries",
+  "manifestVersion": 1,
+  "pluginLists": [
+    "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/plugins.json"
+  ]
+} 

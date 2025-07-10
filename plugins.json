@@ -1,0 +1,12 @@
+[
+  {
+    "file": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/PobreFlix.zip",
+    "id": "com.PobreFlix",
+    "name": "PobreFlix",
+    "version": 1,
+    "description": "Plugin para acessar filmes e séries do pobreflixtv.lat",
+    "language": "pt-br",
+    "author": "Saimuel",
+    "repository": "https://github.com/saimuelbr/saimuelrepo"
+  }
+] 
