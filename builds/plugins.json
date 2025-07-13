@@ -1,16 +1,15 @@
 [
     {
-        "iconUrl": "https://cdn.bcdn.zip/wp-content/uploads/2017/04/nc-header-responsive.png",
-        "jarFileSize": 51845,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
-        "fileSize": 14207,
-        "status": 1,
-        "language": "pt-br",
+        "status": 3,
         "authors": [
             "Phisher98",
             "saimuelbr"
         ],
+        "iconUrl": "https://cdn.bcdn.zip/wp-content/uploads/2017/04/nc-header-responsive.png",
+        "jarFileSize": 51845,
+        "language": "pt-br",
         "tvTypes": [
             "Movie",
             "TvSeries"
@@ -20,17 +19,18 @@
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/Netcinez.jar",
         "description": "Filmes, Séries e Animes em Português",
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/Netcinez.cs3",
-        "name": "NetCine"
+        "name": "Netcinez"
     },
     {
-        "iconUrl": "https://pobreflixtv.lat/uploads/set_resources_14/a5bd102ac3b4e1362ac25aed38707f87_favicon.ico",
-        "jarFileSize": 99642,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
         "status": 1,
         "authors": [
             "saimuelbr"
         ],
+        "iconUrl": "https://pobreflixtv.lat/uploads/set_resources_14/a5bd102ac3b4e1362ac25aed38707f87_favicon.ico",
+        "jarFileSize": 99642,
+        "language": "pt-br",
         "tvTypes": [
             "Movie",
             "TvSeries"
@@ -38,9 +38,28 @@
         "version": 1,
         "internalName": "PobreFlix",
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/PobreFlix.jar",
-        "description": "Filmes, Séries e Animes em Português",
+        "description": "Filmes e Séries em Português",
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/PobreFlix.cs3",
-        "name": "PobreFlix",
-        "language": "pt-br"
+        "name": "PobreFlix"
+    },
+    {
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
+        "status": 1,
+        "authors": [
+            "saimuelbr"
+        ],
+        "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.topfilmes.biz/home&size=16",
+        "jarFileSize": 55279,
+        "language": "pt-br",
+        "tvTypes": [
+            "Movie"
+        ],
+        "version": 1,
+        "internalName": "TopFilmes",
+        "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/TopFilmes.jar",
+        "description": "Filmes em Português",
+        "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/TopFilmes.cs3",
+        "name": "TopFilmes"
     }
 ]
