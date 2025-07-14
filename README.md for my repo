@@ -1,0 +1,62 @@
+# 🎬 Extensão Brasileira para CloudStream 3
+
+Extensão 100% brasileira para o [CloudStream 3](https://github.com/recloudstream/cloudstream), com conteúdo gratuito, atualizado e focado no público do Brasil.  
+Aqui você encontra filmes, séries e animes com fontes confiáveis, legendados ou dublados, de graça e sem enrolação!
+
+---
+
+## 📦 Sobre
+
+Este projeto é uma **extensão não oficial** para o CloudStream 3, desenvolvida para a comunidade BR que procura conteúdos em português.
+
+✅ Gratuito  
+✅ Atualizado  
+✅ Compatível com CloudStream 3  
+✅ Foco no público brasileiro
+
+---
+
+## 🚀 Instalação
+
+Para instalar a extensão no CloudStream 3 é muito fácil:
+
+1. Abra o app **CloudStream 3** no seu Android.
+2. Vá em **Configurações > Extensões > Adicionar extensão (URL)**.
+3. Cole a seguinte URL e confirme:
+ https://raw.githubusercontent.com/saimuelbr/saimuelrepo/refs/heads/main/builds/repo.json
+4. A extensão aparecerá na lista. Basta instalá-la e aproveitar!
+
+---
+
+## 📋 Requisitos
+
+- [CloudStream 3](https://github.com/recloudstream/cloudstream) atualizado
+- Android 5.0 ou superior
+
+---
+
+## 🤝 Suporte e Contato
+
+Caso tenha dúvidas, sugestões ou queira contribuir, entre em contato comigo pelo Discord:  
+**saimuelbr**
+
+---
+
+## 📄 Licença
+
+Este projeto é distribuído sob a licença [MIT](LICENSE).  
+**Não nos responsabilizamos pelo uso indevido desta extensão.**
+
+---
+
+## 💻 Créditos
+
+- [CloudStream](https://github.com/recloudstream/cloudstream) — projeto principal
+- Toda a comunidade brasileira pelo apoio e feedback!
+
+---
+
+<p align="center">
+  <strong>⭐️ Se gostou da extensão, não esqueça de dar uma estrela no repositório e compartilhar! ⭐️</strong>
+</p>
+   
