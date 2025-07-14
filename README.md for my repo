@@ -1,62 +1,84 @@
-# 🎬 Extensão Brasileira para CloudStream 3
+---
 
-Extensão 100% brasileira para o [CloudStream 3](https://github.com/recloudstream/cloudstream), com conteúdo gratuito, atualizado e focado no público do Brasil.  
-Aqui você encontra filmes, séries e animes com fontes confiáveis, legendados ou dublados, de graça e sem enrolação!
+# 🇧🇷 Extensão Brasileira para CloudStream 3
+
+![CloudStream](https://img.shields.io/badge/CloudStream3-Extens%C3%A3o-0da5d6?style=for-the-badge&logo=google-play&logoColor=white)
+![Licença](https://img.shields.io/github/license/saimuelbr/saimuelrepo?style=for-the-badge)
+![Status](https://img.shields.io/badge/status-ATIVO-green?style=for-the-badge)
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/recloudstream/cloudstream/master/.github/banner.png" width="600" alt="CloudStream Banner">
+</p>
 
 ---
 
-## 📦 Sobre
+## 🎬 Sobre
 
-Este projeto é uma **extensão não oficial** para o CloudStream 3, desenvolvida para a comunidade BR que procura conteúdos em português.
+Esta é uma **extensão não oficial** para o [CloudStream 3](https://github.com/recloudstream/cloudstream), com **conteúdo gratuito, atualizado e 100% focado no público brasileiro**.  
 
-✅ Gratuito  
-✅ Atualizado  
-✅ Compatível com CloudStream 3  
-✅ Foco no público brasileiro
+✅ Filmes  
+✅ Séries  
+✅ Animes  
+✅ Dublados & Legendados  
+✅ Gratuito & Sem anúncios  
+
+Feita de fã para fã, sem fins lucrativos!
 
 ---
 
 ## 🚀 Instalação
 
-Para instalar a extensão no CloudStream 3 é muito fácil:
+A instalação é simples e rápida. Basta seguir os passos abaixo:
 
-1. Abra o app **CloudStream 3** no seu Android.
-2. Vá em **Configurações > Extensões > Adicionar extensão (URL)**.
+### 📲 No CloudStream 3:
+
+1. Abra o app **CloudStream 3** no Android.
+2. Vá em:  
+   `Configurações > Extensões > Adicionar Extensão (URL)`
 3. Cole a seguinte URL e confirme:
- https://raw.githubusercontent.com/saimuelbr/saimuelrepo/refs/heads/main/builds/repo.json
-4. A extensão aparecerá na lista. Basta instalá-la e aproveitar!
+
+https://raw.githubusercontent.com/saimuelbr/saimuelrepo/refs/heads/main/builds/repo.json
+
+4️⃣ A extensão aparecerá na lista. Toque em instalar e divirta-se!
 
 ---
 
-## 📋 Requisitos
+## 📝 Requisitos
 
-- [CloudStream 3](https://github.com/recloudstream/cloudstream) atualizado
-- Android 5.0 ou superior
-
----
-
-## 🤝 Suporte e Contato
-
-Caso tenha dúvidas, sugestões ou queira contribuir, entre em contato comigo pelo Discord:  
-**saimuelbr**
+- [CloudStream 3](https://github.com/recloudstream/cloudstream) instalado
+- Android 5.0 (ou superior)
 
 ---
 
-## 📄 Licença
+## 💬 Suporte e Contato
 
-Este projeto é distribuído sob a licença [MIT](LICENSE).  
-**Não nos responsabilizamos pelo uso indevido desta extensão.**
+Dúvidas, sugestões ou bugs?  
+Entre em contato comigo no Discord:  
+📩 **saimuelbr**
+
+Contribuições são sempre bem-vindas! Se quiser ajudar com código ou feedback, abra uma issue ou faça um pull request.
 
 ---
 
-## 💻 Créditos
+## ⚖️ Licença
 
-- [CloudStream](https://github.com/recloudstream/cloudstream) — projeto principal
-- Toda a comunidade brasileira pelo apoio e feedback!
+Distribuído sob a licença [MIT](LICENSE).  
+Este projeto não tem vínculo com os desenvolvedores oficiais do CloudStream 3.  
+**Uso destinado para fins educacionais.**
+
+---
+
+## 🙏 Agradecimentos
+
+- [CloudStream 3](https://github.com/recloudstream/cloudstream) — Projeto incrível da comunidade
+- Todos os brasileiros que apoiam o open-source ❤️
+- Você que está usando e compartilhando!
 
 ---
 
 <p align="center">
-  <strong>⭐️ Se gostou da extensão, não esqueça de dar uma estrela no repositório e compartilhar! ⭐️</strong>
+  <strong>⭐️ Se curtiu esta extensão, deixe uma estrela no repositório e compartilhe! ⭐️</strong>
 </p>
-   
+
+
+---
