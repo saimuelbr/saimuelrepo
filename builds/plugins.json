@@ -1,15 +1,16 @@
 [
     {
+        "iconUrl": "https://cdn.bcdn.zip/wp-content/uploads/2017/04/nc-header-responsive.png",
+        "jarFileSize": 51844,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
-        "status": 3,
+        "fileSize": 14206,
+        "status": 1,
+        "language": "pt-br",
         "authors": [
             "Phisher98",
             "saimuelbr"
         ],
-        "iconUrl": "https://cdn.bcdn.zip/wp-content/uploads/2017/04/nc-header-responsive.png",
-        "jarFileSize": 51845,
-        "language": "pt-br",
         "tvTypes": [
             "Movie",
             "TvSeries"
@@ -22,15 +23,16 @@
         "name": "Netcinez"
     },
     {
+        "iconUrl": "https://pobreflixtv.lat/uploads/set_resources_14/a5bd102ac3b4e1362ac25aed38707f87_favicon.ico",
+        "jarFileSize": 99642,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
+        "fileSize": 0,
         "status": 1,
+        "language": "pt-br",
         "authors": [
             "saimuelbr"
         ],
-        "iconUrl": "https://pobreflixtv.lat/uploads/set_resources_14/a5bd102ac3b4e1362ac25aed38707f87_favicon.ico",
-        "jarFileSize": 99642,
-        "language": "pt-br",
         "tvTypes": [
             "Movie",
             "TvSeries"
@@ -43,17 +45,19 @@
         "name": "PobreFlix"
     },
     {
+        "iconUrl": "https://t1.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.topfilmes.biz/home&size=16",
+        "jarFileSize": 55279,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
+        "fileSize": 0,
         "status": 1,
+        "language": "pt-br",
         "authors": [
             "saimuelbr"
         ],
-        "iconUrl": "https://www.topfilmes.biz/assets/theme/red/favicon/favicon-96x96.png",
-        "jarFileSize": 55279,
-        "language": "pt-br",
         "tvTypes": [
-            "Movie"
+            "Movie",
+            "TvSeries"
         ],
         "version": 1,
         "internalName": "TopFilmes",
