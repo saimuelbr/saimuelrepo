@@ -1,84 +1,14 @@
----
+<h1 align="center">Hi 👋, I'm saimuel</h1>
+<h3 align="center">> Extensão brasileira gratuita para CloudStream 3 com filmes, séries e animes — feita por mim e para a comunidade.</h3>
 
-# 🇧🇷 Extensão Brasileira para CloudStream 3
+- 🔭 I’m currently working on [saimuelrepo](https://github.com/saimuelbr/saimuelrepo)
 
-![CloudStream](https://img.shields.io/badge/CloudStream3-Extens%C3%A3o-0da5d6?style=for-the-badge&logo=google-play&logoColor=white)
-![Licença](https://img.shields.io/github/license/saimuelbr/saimuelrepo?style=for-the-badge)
-![Status](https://img.shields.io/badge/status-ATIVO-green?style=for-the-badge)
+- 🌱 I’m currently learning **Kotlin**
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/recloudstream/cloudstream/master/.github/banner.png" width="600" alt="CloudStream Banner">
+<h3 align="left">Connect with me:</h3>
+<p align="left">
+<a href="https://discord.gg/https://discord.gg/yK2bTH4dDm" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/discord.svg" alt="https://discord.gg/yK2bTH4dDm" height="30" width="40" /></a>
 </p>
 
----
-
-## 🎬 Sobre
-
-Esta é uma **extensão não oficial** para o [CloudStream 3](https://github.com/recloudstream/cloudstream), com **conteúdo gratuito, atualizado e 100% focado no público brasileiro**.  
-
-✅ Filmes  
-✅ Séries  
-✅ Animes  
-✅ Dublados & Legendados  
-✅ Gratuito & Sem anúncios  
-
-Feita de fã para fã, sem fins lucrativos!
-
----
-
-## 🚀 Instalação
-
-A instalação é simples e rápida. Basta seguir os passos abaixo:
-
-### 📲 No CloudStream 3:
-
-1. Abra o app **CloudStream 3** no Android.
-2. Vá em:  
-   `Configurações > Extensões > Adicionar Extensão (URL)`
-3. Cole a seguinte URL e confirme:
-
-https://raw.githubusercontent.com/saimuelbr/saimuelrepo/refs/heads/main/builds/repo.json
-
-4️⃣ A extensão aparecerá na lista. Toque em instalar e divirta-se!
-
----
-
-## 📝 Requisitos
-
-- [CloudStream 3](https://github.com/recloudstream/cloudstream) instalado
-- Android 5.0 (ou superior)
-
----
-
-## 💬 Suporte e Contato
-
-Dúvidas, sugestões ou bugs?  
-Entre em contato comigo no Discord:  
-📩 **saimuelbr**
-
-Contribuições são sempre bem-vindas! Se quiser ajudar com código ou feedback, abra uma issue ou faça um pull request.
-
----
-
-## ⚖️ Licença
-
-Distribuído sob a licença [MIT](LICENSE).  
-Este projeto não tem vínculo com os desenvolvedores oficiais do CloudStream 3.  
-**Uso destinado para fins educacionais.**
-
----
-
-## 🙏 Agradecimentos
-
-- [CloudStream 3](https://github.com/recloudstream/cloudstream) — Projeto incrível da comunidade
-- Todos os brasileiros que apoiam o open-source ❤️
-- Você que está usando e compartilhando!
-
----
-
-<p align="center">
-  <strong>⭐️ Se curtiu esta extensão, deixe uma estrela no repositório e compartilhe! ⭐️</strong>
-</p>
-
-
----
+<h3 align="left">Languages and Tools:</h3>
+<p align="left"> <a href="https://developer.android.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/android/android-original-wordmark.svg" alt="android" width="40" height="40"/> </a> <a href="https://git-scm.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="git" width="40" height="40"/> </a> <a href="https://kotlinlang.org" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/kotlinlang/kotlinlang-icon.svg" alt="kotlin" width="40" height="40"/> </a> </p>
