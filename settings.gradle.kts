@@ -20,7 +20,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        // Adicione esta linha:
+        // jitpack
         maven("https://jitpack.io")
     }
 }
@@ -29,4 +29,3 @@ include(":PobreFlix")
 include(":Streamberry")
 include(":NetCine")
 include(":TopFilmes")
-include(":AnimesCloud")
