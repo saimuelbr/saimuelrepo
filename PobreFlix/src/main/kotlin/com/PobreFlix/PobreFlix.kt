@@ -32,7 +32,7 @@ import java.util.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-const val MAIN_URL = "https://pobreflixtv.lat"
+const val MAIN_URL = "https://pobreflixtv.asia"
 const val USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
 
 class PobreFlix : MainAPI() {

@@ -19,7 +19,7 @@ cloudstream {
     // You can find a list of available types here:
     // https://recloudstream.github.io/cloudstream/html/app/com.lagradost.cloudstream3/-tv-type/index.html
     tvTypes = listOf("Movie","TvSeries")
-    iconUrl = "https://pobreflixtv.lat/uploads/set_resources_14/a5bd102ac3b4e1362ac25aed38707f87_favicon.ico"
+    iconUrl = "https://pobreflixtv.asia/uploads/set_resources_14/a5bd102ac3b4e1362ac25aed38707f87_favicon.ico"
 
     isCrossPlatform = true
 }
