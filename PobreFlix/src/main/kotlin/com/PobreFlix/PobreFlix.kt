@@ -1,6 +1,6 @@
 package com.PobreFlix
 
-import com.lagradost.api.Log
+
 import com.lagradost.cloudstream3.Episode
 import com.lagradost.cloudstream3.HomePageList
 import com.lagradost.cloudstream3.HomePageResponse
@@ -173,7 +173,9 @@ class PobreFlix : MainAPI() {
         
         val recommendations = document.select("div#vbTabSlider div#collview").mapNotNull { it.toSearchResult() }
         
-        val isSerie = document.selectFirst("div.listagem ul#listagem") != null
+        val hasEpisodes = document.select("div.listagem ul#listagem li[data-id]").isNotEmpty()
+        val hasSeasonSelector = document.select("span.escolha_span").isNotEmpty()
+        val isSerie = hasEpisodes || hasSeasonSelector
         
         if (isSerie) {
             val episodes = getEpisodes(document, url)
@@ -199,23 +201,57 @@ class PobreFlix : MainAPI() {
     private suspend fun getEpisodes(document: org.jsoup.nodes.Document, baseUrl: String): List<Episode> {
         val episodes = mutableListOf<Episode>()
         
-        episodes.addAll(extractEpisodesFromPage(document))
-        episodes.addAll(loadAdditionalSeasons(baseUrl))
+        for (season in 1..21) {
+            try {
+                val seasonUrl = if (season == 1) baseUrl else "$baseUrl?temporada=$season"
+                
+                val seasonDoc = if (season == 1) document else app.get(seasonUrl, headers = mapOf("User-Agent" to USER_AGENT)).document
+                val seasonEpisodes = extractEpisodesFromPage(seasonDoc, season)
+                
+                if (seasonEpisodes.isNotEmpty()) {
+                    episodes.addAll(seasonEpisodes)
+                } else {
+                    if (season > 3) {
+                        val hasNextSeasons = (season + 1..season + 3).any { nextSeason ->
+                            try {
+                                val nextUrl = "$baseUrl?temporada=$nextSeason"
+                                val nextDoc = app.get(nextUrl, headers = mapOf("User-Agent" to USER_AGENT)).document
+                                extractEpisodesFromPage(nextDoc, nextSeason).isNotEmpty()
+                            } catch (e: Exception) {
+                                false
+                            }
+                        }
+                        if (!hasNextSeasons) {
+                            break
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                if (season > 3) {
+                    break
+                }
+            }
+        }
         
         return episodes
     }
 
-    private fun extractEpisodesFromPage(document: org.jsoup.nodes.Document): List<Episode> {
-        return document.select("div.listagem ul#listagem li").mapNotNull { episodeElement ->
+
+
+    private fun extractEpisodesFromPage(document: org.jsoup.nodes.Document, currentSeason: Int = 1): List<Episode> {
+        val episodeElements = document.select("div.listagem ul#listagem li[data-id]")
+        
+        return episodeElements.mapNotNull { episodeElement ->
             val episodeLink = episodeElement.selectFirst("a")?.attr("href")
             val episodeTitle = episodeElement.selectFirst("a")?.text()?.trim()
+            val dataId = episodeElement.attr("data-id")
             
             if (episodeLink != null && episodeTitle != null) {
                 val seasonEpisodeRegex = Regex("""(\\d+)x(\\d+)""")
                 val match = seasonEpisodeRegex.find(episodeLink)
                 
                 if (match != null) {
-                    val season = match.groupValues[1].toIntOrNull() ?: 1
+                    val season = match.groupValues[1].toIntOrNull() ?: currentSeason
                     val episode = match.groupValues[2].toIntOrNull() ?: 1
                     
                     newEpisode(fixUrl(episodeLink)) {
@@ -223,31 +259,19 @@ class PobreFlix : MainAPI() {
                         this.season = season
                         this.episode = episode
                     }
-                } else null
-            } else null
-        }
-    }
-
-    private suspend fun loadAdditionalSeasons(baseUrl: String): List<Episode> {
-        val additionalEpisodes = mutableListOf<Episode>()
-        
-        for (season in 2..21) {
-            try {
-                val seasonUrl = "$baseUrl?temporada=$season"
-                val document = app.get(seasonUrl, headers = mapOf("User-Agent" to USER_AGENT)).document
-                
-                val seasonEpisodes = extractEpisodesFromPage(document)
-                if (seasonEpisodes.isNotEmpty()) {
-                    additionalEpisodes.addAll(seasonEpisodes)
                 } else {
-                    break
+                    val episodeNumber = episodeTitle.replace(Regex("[^0-9]"), "").toIntOrNull() ?: 1
+                    
+                    newEpisode(fixUrl(episodeLink)) {
+                        this.name = episodeTitle
+                        this.season = currentSeason
+                        this.episode = episodeNumber
+                    }
                 }
-            } catch (e: Exception) {
-                break
+            } else {
+                null
             }
         }
-        
-        return additionalEpisodes
     }
 
     private fun getMovieSources(document: org.jsoup.nodes.Document, url: String): List<String> {
