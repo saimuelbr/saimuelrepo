@@ -23,6 +23,7 @@ import com.lagradost.cloudstream3.utils.ExtractorLink
 import com.lagradost.cloudstream3.utils.INFER_TYPE
 import com.lagradost.cloudstream3.utils.newExtractorLink
 import org.jsoup.nodes.Element
+import okhttp3.HttpUrl
 
 const val MAIN_URL = "https://www.visioncine-1.com.br"
 
@@ -55,10 +56,23 @@ class VisionCine : MainAPI() {
         "/genre/novelas" to "Novelas"
     )
 
+    private val baseUrl: HttpUrl = HttpUrl.Builder()
+        .scheme("https")
+        .host("visioncine.live")
+        .build()
+
+    private suspend fun ensureLoggedIn() {
+        if (!VisionCineSession.isLoggedIn(baseUrl)) {
+            VisionCineSession.clearCookies()
+            throw Exception("Sessão expirada. Faça login novamente nas configurações do plugin.")
+        }
+    }
+
     override suspend fun getMainPage(
         page: Int,
         request: MainPageRequest
     ): HomePageResponse {
+        ensureLoggedIn()
         val url = if (page == 1) "$mainUrl${request.data}" else "$mainUrl${request.data}?page=$page"
         val headers = mapOf("User-Agent" to USER_AGENT)
         val document = app.get(url, headers = headers).document
@@ -103,6 +117,7 @@ class VisionCine : MainAPI() {
     }
 
     override suspend fun search(query: String): List<SearchResponse> {
+        ensureLoggedIn()
         val url = "$mainUrl/search.php?q=$query"
         val headers = mapOf("User-Agent" to USER_AGENT)
         val document = app.get(url, headers = headers).document
@@ -111,6 +126,7 @@ class VisionCine : MainAPI() {
     }
 
     override suspend fun load(url: String): LoadResponse {
+        ensureLoggedIn()
         val document = app.get(url, headers = mapOf("User-Agent" to USER_AGENT)).document
         
         val title = document.selectFirst("div.info h1.fw-bolder")?.text()?.trim() ?: "Sem título"
@@ -160,6 +176,7 @@ class VisionCine : MainAPI() {
     }
 
     private suspend fun getEpisodes(document: org.jsoup.nodes.Document, baseUrl: String): List<Episode> {
+        ensureLoggedIn()
         val episodes = mutableListOf<Episode>()
         
         val seasonOptions = document.select("select#seasons-view option")
@@ -217,6 +234,7 @@ class VisionCine : MainAPI() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
+        ensureLoggedIn()
         val realData = when {
             data.startsWith("[") && data.endsWith("]") -> {
                 data.removePrefix("[").removeSuffix("]").split(",").first().trim().removeSurrounding("\"")

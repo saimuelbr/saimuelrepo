@@ -1,0 +1,4 @@
+<resources>
+    <string name="visioncine_login_google">Login com Google</string>
+    <string name="visioncine_login_google_summary">Clique para autenticar com sua conta Google</string>
+</resources> 
