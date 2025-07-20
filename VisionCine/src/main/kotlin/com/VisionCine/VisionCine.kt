@@ -24,6 +24,7 @@ import com.lagradost.cloudstream3.utils.INFER_TYPE
 import com.lagradost.cloudstream3.utils.newExtractorLink
 import org.jsoup.nodes.Element
 import okhttp3.HttpUrl
+import android.app.Activity
 
 const val MAIN_URL = "https://www.visioncine-1.com.br"
 
@@ -55,6 +56,7 @@ class VisionCine : MainAPI() {
         "/genre/dc" to "DC",
         "/genre/novelas" to "Novelas"
     )
+
 
     private val baseUrl: HttpUrl = HttpUrl.Builder()
         .scheme("https")

@@ -2,5 +2,7 @@
        <application>
            <activity android:name=".kotlin.com.VisionCine.VisionCineLoginActivity"
                android:exported="true"/>
+           <activity android:name=".kotlin.com.VisionCine.VisionCineSettings"
+               android:exported="true"/>
        </application>
    </manifest>
