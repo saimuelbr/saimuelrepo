@@ -23,4 +23,10 @@ cloudstream {
     iconUrl = "https://www.visioncine-1.com.br/temas/pixer/assets/img/icon_free.png"
 
     isCrossPlatform = true
+}
+
+dependencies {
+    implementation("androidx.fragment:fragment-ktx:1.6.1")
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("com.google.android.material:material:1.9.0")
 } 

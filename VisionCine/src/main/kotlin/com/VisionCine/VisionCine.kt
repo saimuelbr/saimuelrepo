@@ -25,10 +25,11 @@ import com.lagradost.cloudstream3.utils.newExtractorLink
 import org.jsoup.nodes.Element
 import okhttp3.HttpUrl
 import android.app.Activity
+import android.content.SharedPreferences
 
 const val MAIN_URL = "https://www.visioncine-1.com.br"
 
-class VisionCine : MainAPI() {
+class VisionCine(private val sharedPref: SharedPreferences) : MainAPI() {
     override var mainUrl = MAIN_URL
     override var name = "VisionCine"
     override val hasMainPage = true
