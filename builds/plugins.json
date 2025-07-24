@@ -14,7 +14,7 @@
             "Movie",
             "TvSeries"
         ],
-        "version": 1,
+        "version": 2,
         "internalName": "NetCine",
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/NetCine.jar",
         "description": "Filmes, Séries e Animes em Português",
@@ -34,7 +34,7 @@
             "Movie",
             "TvSeries"
         ],
-        "version": 1,
+        "version": 3,
         "internalName": "PobreFlix",
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/PobreFlix.jar",
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/PobreFlix.cs3",
@@ -76,7 +76,7 @@
             "Movie",
             "TvSeries"
         ],
-        "version": 1,
+        "version": 2,
         "internalName": "TopFilmes",
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/TopFilmes.jar",
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/TopFilmes.cs3",
