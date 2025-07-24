@@ -2,7 +2,7 @@
     {
         "iconUrl": "https://cdn.bcdn.zip/wp-content/uploads/2017/04/nc-header-responsive.png",
         "fileSize": 14200,
-        "apiVersion": 1,
+        "apiVersion": 3,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
         "status": 1,
         "language": "pt-br",
@@ -24,7 +24,7 @@
     {
         "iconUrl": "https://pobreflixtv.lat/uploads/set_resources_14/a5bd102ac3b4e1362ac25aed38707f87_favicon.ico",
         "fileSize": 24897,
-        "apiVersion": 1,
+        "apiVersion": 3,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
         "status": 1,
         "authors": [
@@ -66,7 +66,7 @@
     {
         "iconUrl": "https://www.topfilmes.biz/assets/theme/red/favicon/favicon-128.png",
         "fileSize": 13586,
-        "apiVersion": 1,
+        "apiVersion": 2,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
         "status": 1,
         "authors": [
