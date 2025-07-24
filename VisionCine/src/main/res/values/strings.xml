@@ -1,8 +1,0 @@
-<resources>
-    <string name="header_tw">Login</string>
-    <string name="text_hint">Token</string>
-    <string name="Text_Token">Obtenha o Token do VisionCine</string>
-    <string name="insert_token">Inserir Token</string>
-    <string name="save_token">Salvar Token</string>
-    <string name="reset_token">Resetar Token</string>
-</resources> 

@@ -40,7 +40,7 @@ subprojects {
     }
 
     android {
-        namespace = "com.PobreFlix"
+        namespace = "com.saimuelbr"
 
         defaultConfig {
             minSdk = 21

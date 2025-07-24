@@ -1,26 +1,5 @@
 [
     {
-        "iconUrl": "https://www.visioncine-1.com.br/temas/pixer/assets/img/icon_free.png",
-        "fileSize": 0,
-        "apiVersion": 1,
-        "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
-        "status": 1,
-        "language": "pt-br",
-        "authors": [
-            "saimuelbr"
-        ],
-        "tvTypes": [
-            "Movie",
-            "TvSeries"
-        ],
-        "version": 1,
-        "internalName": "VisionCine",
-        "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/VisionCine.jar",
-        "description": "Filmes, Séries e Animes. Full HD e HD, Top 1 Source.",
-        "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/VisionCine.cs3",
-        "name": "VisionCine"
-    },
-    {
         "iconUrl": "https://cdn.bcdn.zip/wp-content/uploads/2017/04/nc-header-responsive.png",
         "fileSize": 51625,
         "apiVersion": 1,
@@ -103,6 +82,29 @@
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/TopFilmes.cs3",
         "name": "TopFilmes",
         "description": "Filmes em português, lançamentos e clássicos do TopFilmes.",
+        "language": "pt-br"
+    },
+    {
+        "iconUrl": "https://novizer.com/img/android-chrome-192x192.png",
+        "fileSize": 0,
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
+        "status": 1,
+        "language": "pt-br",
+        "authors": [
+            "saimuelbr"
+        ],
+        "tvTypes": [
+            "Movie",
+            "TvSeries",
+            "Anime"
+        ],
+        "version": 1,
+        "internalName": "Vizer",
+        "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/Vizer.jar",
+        "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/Vizer.cs3",
+        "name": "Vizer",
+        "description": "Filmes, séries e animes do Vizer, atualizado e rápido. Dublado e legendado.",
         "language": "pt-br"
     }
 ]
