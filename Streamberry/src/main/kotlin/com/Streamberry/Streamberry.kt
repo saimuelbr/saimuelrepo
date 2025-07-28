@@ -1,6 +1,5 @@
 package com.Streamberry
 
-import com.lagradost.api.Log
 import com.lagradost.cloudstream3.Episode
 import com.lagradost.cloudstream3.HomePageList
 import com.lagradost.cloudstream3.HomePageResponse
@@ -131,10 +130,22 @@ class Streamberry : MainAPI() {
                 }
                 if (actorName != null) Actor(actorName, actorImg?.let { fixUrl(it) }) else null
             }
-            val filemoonPage = document.select(".fix-table tr")
-                .firstOrNull { tr -> tr.selectFirst("img[src*='filemoon.to']") != null }
-                ?.selectFirst("a")?.attr("href")
-            val sources = filemoonPage ?: url
+            val sources = mutableListOf<String>()
+            
+            val dubladoRow = document.select(".fix-table tbody tr")
+                .firstOrNull { row ->
+                    val languageElement = row.selectFirst("td:nth-child(3)")
+                    languageElement?.text()?.contains("Dublado", ignoreCase = true) == true
+                }
+            
+            if (dubladoRow != null) {
+                val linkElement = dubladoRow.selectFirst("a")
+                val link = linkElement?.attr("href")
+                
+                if (!link.isNullOrEmpty()) {
+                    sources.add(link)
+                }
+            }
             return newMovieLoadResponse(title, url, TvType.Movie, sources) {
                 this.posterUrl = poster?.let { fixUrl(it) }
                 this.year = year
@@ -197,23 +208,31 @@ class Streamberry : MainAPI() {
         callback: (ExtractorLink) -> Unit
     ): Boolean {
         try {
-            if (data.contains("/links/")) {
-                val redirectResp = app.get(data, allowRedirects = false)
-                val location = redirectResp.headers["location"] ?: data
+            val cleanData = if (data.startsWith("[") && data.endsWith("]")) {
+                data.removePrefix("[").removeSuffix("]")
+                    .split(",")
+                    .firstOrNull()
+                    ?.trim()
+                    ?.removeSurrounding("\"")
+                    ?: data
+            } else {
+                data
+            }
+            
+            if (cleanData.contains("/links/")) {
+                val redirectResp = app.get(cleanData, allowRedirects = false)
+                val location = redirectResp.headers["location"] ?: cleanData
                 val finalUrl = if (location.contains("filemoon.to")) location else {
                     val resp2 = app.get(location, allowRedirects = false)
                     resp2.headers["location"] ?: location
                 }
-                try {
-                    FileMoon().getUrl(finalUrl, mainUrl, subtitleCallback, callback)
-                } catch (e: Exception) {
-                }
+                FileMoon().getUrl(finalUrl, mainUrl, subtitleCallback, callback)
                 return true
             } else {
-                val document = app.get(data).document
-                val filemoonLink = document.select(".fix-table tr").firstOrNull { tr ->
-                    tr.selectFirst("img[src*='filemoon.to']") != null
-                }?.selectFirst("a")?.attr("href")
+                val document = app.get(cleanData).document
+                val filemoonLink = document.select(".fix-table tr")
+                    .firstOrNull { tr -> tr.selectFirst("img[src*='filemoon.to']") != null }
+                    ?.selectFirst("a")?.attr("href")
                 if (filemoonLink != null) {
                     val redirectResp = app.get(filemoonLink, allowRedirects = false)
                     val location = redirectResp.headers["location"] ?: filemoonLink
@@ -221,10 +240,7 @@ class Streamberry : MainAPI() {
                         val resp2 = app.get(location, allowRedirects = false)
                         resp2.headers["location"] ?: location
                     }
-                    try {
-                        FileMoon().getUrl(finalUrl, mainUrl, subtitleCallback, callback)
-                    } catch (e: Exception) {
-                    }
+                    FileMoon().getUrl(finalUrl, mainUrl, subtitleCallback, callback)
                     return true
                 }
             }
