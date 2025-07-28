@@ -762,6 +762,26 @@ class EmbedCanais : MainAPI() {
             "https://embedcanaistv.com/wp-content/uploads/2024/11/cropped-cropped-iconn-192x192.png"
         }
     }
+    
+    private fun createDataUrl(url: String, poster: String): String {
+        return "$url|POSTER:$poster"
+    }
+    
+    private fun extractPosterFromDataUrl(dataUrl: String): String? {
+        return if (dataUrl.contains("|POSTER:")) {
+            dataUrl.split("|POSTER:")[1]
+        } else {
+            null
+        }
+    }
+    
+    private fun extractUrlFromDataUrl(dataUrl: String): String {
+        return if (dataUrl.contains("|POSTER:")) {
+            dataUrl.split("|POSTER:")[0]
+        } else {
+            dataUrl
+        }
+    }
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
         val url = "$mainUrl"
@@ -792,7 +812,7 @@ class EmbedCanais : MainAPI() {
                 val fullChannelUrl = if (channelUrl.startsWith("http")) channelUrl else "$mainUrl$channelUrl"
                 
                 channels.add(
-                    newTvSeriesSearchResponse(title, fullChannelUrl, TvType.Live) {
+                    newTvSeriesSearchResponse(title, createDataUrl(fullChannelUrl, posterUrl), TvType.Live) {
                         this.posterUrl = posterUrl
                     }
                 )
@@ -820,7 +840,7 @@ class EmbedCanais : MainAPI() {
                 val fullChannelUrl = if (channelUrl.startsWith("http")) channelUrl else "$mainUrl$channelUrl"
                 
                 results.add(
-                    newTvSeriesSearchResponse(title, fullChannelUrl, TvType.Live) {
+                    newTvSeriesSearchResponse(title, createDataUrl(fullChannelUrl, posterUrl), TvType.Live) {
                         this.posterUrl = posterUrl
                     }
                 )
@@ -831,21 +851,24 @@ class EmbedCanais : MainAPI() {
     }
 
     override suspend fun load(url: String): LoadResponse {
-        val response = app.get(url)
+        val actualUrl = extractUrlFromDataUrl(url)
+        val posterFromData = extractPosterFromDataUrl(url)
+        
+        val response = app.get(actualUrl)
         val doc = response.document
         
         val title = doc.selectFirst("h1")?.text() ?: doc.title()
-        val posterUrl = getPosterForChannel(title)
+        val posterUrl = posterFromData ?: getPosterForChannel(title)
 
-        return newMovieLoadResponse(title, url, TvType.Live, url) {
+        return newMovieLoadResponse(title, actualUrl, TvType.Live, actualUrl) {
             this.posterUrl = posterUrl
             this.plot = "Canal ao vivo - $title"
-            this.dataUrl = url
+            this.dataUrl = actualUrl
         }
     }
 
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
-        val channelUrl = if (data.isNotEmpty()) data else return false
+        val channelUrl = if (data.isNotEmpty()) extractUrlFromDataUrl(data) else return false
         
         val response = app.get(channelUrl)
         val doc = response.document
