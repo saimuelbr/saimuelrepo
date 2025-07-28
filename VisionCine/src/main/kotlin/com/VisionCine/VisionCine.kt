@@ -270,8 +270,8 @@ class VisionCine : MainAPI() {
                         val scriptContent = script.data()
                         
                         val patterns = listOf(
-                            Regex("initializePlayerWithSubtitle\\(['\"]([^'\"]*\\.(?:mp4|m3u8)[^'\"]*)['\"],\\s*['\"]([^'\"]*\\.srt[^'\"]*)['\"]"),
-                            Regex("initializePlayer\\(['\"]([^'\"]*\\.(?:mp4|m3u8)[^'\"]*)['\"]"),
+                            Regex("initializePlayerWithSubtitle\\s*\\(\\s*['\"]([^'\"]*\\.(?:mp4|m3u8)[^'\"]*)['\"],\\s*['\"]([^'\"]*\\.(?:srt|vtt)[^'\"]*)['\"]"),
+                            Regex("initializePlayer\\s*\\(\\s*['\"]([^'\"]*\\.(?:mp4|m3u8)[^'\"]*)['\"]"),
                             Regex("file:\\s*['\"]([^'\"]*\\.(?:mp4|m3u8)[^'\"]*)['\"]"),
                             Regex("src:\\s*['\"]([^'\"]*\\.(?:mp4|m3u8)[^'\"]*)['\"]"),
                             Regex("source:\\s*['\"]([^'\"]*\\.(?:mp4|m3u8)[^'\"]*)['\"]"),
@@ -279,9 +279,9 @@ class VisionCine : MainAPI() {
                         )
                         
                         val subtitlePatterns = listOf(
-                            Regex("['\"]([^'\"]*\\.srt[^'\"]*)['\"]"),
-                            Regex("subtitle:\\s*['\"]([^'\"]*\\.srt[^'\"]*)['\"]"),
-                            Regex("subs:\\s*['\"]([^'\"]*\\.srt[^'\"]*)['\"]")
+                            Regex("['\"]([^'\"]*\\.(?:srt|vtt)[^'\"]*)['\"]"),
+                            Regex("subtitle:\\s*['\"]([^'\"]*\\.(?:srt|vtt)[^'\"]*)['\"]"),
+                            Regex("subs:\\s*['\"]([^'\"]*\\.(?:srt|vtt)[^'\"]*)['\"]")
                         )
                         
                         var foundVideo: String? = null
