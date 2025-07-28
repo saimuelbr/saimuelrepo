@@ -131,7 +131,7 @@
     },
     {
         "iconUrl": "https://embedcanaistv.com/wp-content/uploads/2024/11/cropped-cropped-iconn-192x192.png",
-        "fileSize": 16794,
+        "fileSize": 12036,
         "apiVersion": 3,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
         "status": 1,
@@ -142,12 +142,12 @@
         "tvTypes": [
             "Live"
         ],
-        "version": 1,
-        "internalName": "EmbedCanais",
-        "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/EmbedCanais.jar",
-        "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/EmbedCanais.cs3",
-        "name": "EmbedCanais",
-        "description": "Canais de TV ao vivo do EmbedCanais. Esportes, Desennhos, Noticias e muito mais.",
+        "version": 2,
+        "internalName": "EmbedSports",
+        "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/EmbedSports.jar",
+        "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/EmbedSports.cs3",
+        "name": "EmbedSports",
+        "description": "Canais de TV ao vivo do EmbedSports. Futebol, UFC e muito mais.",
         "language": "pt-br"
     }
 ]

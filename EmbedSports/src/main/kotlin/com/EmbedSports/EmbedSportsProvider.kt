@@ -1,11 +1,11 @@
-package com.EmbedCanais
+package com.EmbedSports
 
 import com.lagradost.cloudstream3.plugins.BasePlugin
 import com.lagradost.cloudstream3.plugins.CloudstreamPlugin
 
 @CloudstreamPlugin
-class EmbedCanaisProvider: BasePlugin() {
+class EmbedSportsProvider: BasePlugin() {
     override fun load() {
-        registerMainAPI(EmbedCanais())
+        registerMainAPI(EmbedSports())
     }
 } 
