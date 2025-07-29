@@ -28,7 +28,7 @@ import com.lagradost.cloudstream3.utils.newExtractorLink
 import org.jsoup.nodes.Element
 
 class NetCine : MainAPI() {
-    override var mainUrl = "https://netcinex.si"
+    override var mainUrl = "https://netcine.lat"
     override var name = "NetCine"
     override val hasMainPage = true
     override var lang = "pt-br"
