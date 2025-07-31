@@ -149,5 +149,26 @@
         "name": "StarckFilmes",
         "description": "Filmes e séries do StarckFilmes. Torrents com WebSeed em alta qualidade com legendas.",
         "language": "pt-br"
+    },
+    {
+        "iconUrl": "https://animefhd.com/wp-content/themes/temaa25/img/favicon/270.png",
+        "fileSize": 15800,
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
+        "status": 1,
+        "language": "pt-br",
+        "authors": [
+            "saimuelbr"
+        ],
+        "tvTypes": [
+            "Anime"
+        ],
+        "version": 1,
+        "internalName": "AnimeFHD",
+        "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/AnimeFHD.jar",
+        "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/AnimeFHD.cs3",
+        "name": "AnimeFHD",
+        "description": "Animes em português do AnimeFHD HD.",
+        "language": "pt-br"
     }
 ]
