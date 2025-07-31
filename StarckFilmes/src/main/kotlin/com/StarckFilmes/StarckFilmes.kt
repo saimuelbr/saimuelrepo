@@ -217,10 +217,11 @@ class StarckFilmes : MainAPI() {
         }
 
         for (link in magnetLinks) {
-            val magnetUrl = link.attr("href")
+            val originalMagnetUrl = link.attr("href")
+            val enhancedMagnetUrl = enhanceMagnetWithTrackers(originalMagnetUrl)
             val quality = link.text().trim()
             
-            val magnetInfo = extractMagnetInfo(magnetUrl)
+            val magnetInfo = extractMagnetInfo(enhancedMagnetUrl)
             
             val sourceName = buildString {
                 append("StarckFilmes Ep$episodeNumber")
@@ -234,7 +235,7 @@ class StarckFilmes : MainAPI() {
                 newExtractorLink(
                     sourceName,
                     sourceName,
-                    magnetUrl,
+                    enhancedMagnetUrl,
                     ExtractorLinkType.MAGNET
                 ) {
                     this.referer = mainUrl
@@ -267,7 +268,8 @@ class StarckFilmes : MainAPI() {
         }
 
         for (link in magnetLinks) {
-            val magnetUrl = link.attr("href")
+            val originalMagnetUrl = link.attr("href")
+            val enhancedMagnetUrl = enhanceMagnetWithTrackers(originalMagnetUrl)
             
             val buttonContainer = link.closest("span.btn-down")
             val textSpans = buttonContainer?.select("span.text span")
@@ -302,7 +304,7 @@ class StarckFilmes : MainAPI() {
                 if (size.isNotEmpty()) append(" ($size)")
             }
             
-            val magnetInfo = extractMagnetInfo(magnetUrl)
+            val magnetInfo = extractMagnetInfo(enhancedMagnetUrl)
             
             val linkType = ExtractorLinkType.MAGNET
             
@@ -310,7 +312,7 @@ class StarckFilmes : MainAPI() {
                 newExtractorLink(
                     sourceName,
                     sourceName,
-                    magnetUrl,
+                    enhancedMagnetUrl,
                     linkType
                 ) {
                     this.referer = mainUrl
@@ -380,6 +382,109 @@ class StarckFilmes : MainAPI() {
         }
         
         return episodes
+    }
+    
+    private fun enhanceMagnetWithTrackers(magnetUrl: String): String {
+        val premiumTrackers = listOf(
+            "udp://tracker.opentrackr.org:1337/announce",
+            "udp://open.stealth.si:80/announce",
+            "udp://retracker.hotplug.ru:2710/announce",
+            "http://tracker.bt4g.com:2095/announce",
+            "http://bt.okmp3.ru:2710/announce",
+            "udp://tracker.torrent.eu.org:451/announce",
+            "http://tracker.mywaifu.best:6969/announce",
+            "udp://tracker.qu.ax:6969/announce",
+            "http://tracker.privateseedbox.xyz:2710/announce",
+            "udp://evan.im:6969/announce",
+            "https://tracker.yemekyedim.com:443/announce",
+            "udp://retracker.lanta.me:2710/announce",
+            "udp://martin-gebhardt.eu:25/announce",
+            "http://tracker.beeimg.com:6969/announce",
+            "udp://tracker.yume-hatsuyuki.moe:6969/announce",
+            "udp://udp.tracker.projectk.org:23333/announce",
+            "http://tracker.renfei.net:8080/announce",
+            "https://tracker.expli.top:443/announce",
+            "https://tr.nyacat.pw:443/announce",
+            "udp://extracker.dahrkael.net:6969/announce",
+            "udp://tracker.hifitechindia.com:6969/announce",
+            "http://ipv4.rer.lol:2710/announce",
+            "udp://tracker.plx.im:6969/announce",
+            "udp://tracker.skillindia.site:6969/announce",
+            "udp://tracker.tvunderground.org.ru:3218/announce",
+            "https://t.213891.xyz:443/announce",
+            "udp://p4p.arenabg.com:1337/announce",
+            "udp://tracker.dler.com:6969/announce",
+            "https://tracker.moeblog.cn:443/announce",
+            "udp://d40969.acod.regrucolo.ru:6969/announce",
+            "https://tracker.jdx3.org:443/announce",
+            "http://ipv6.rer.lol:6969/announce",
+            "http://tracker.netmap.top:6969/announce",
+            "udp://tracker.bitcoinindia.space:6969/announce",
+            "udp://open.demonii.com:1337/announce",
+            "udp://ttk2.nbaonlineservice.com:6969/announce",
+            "https://pybittrack.retiolus.net:443/announce",
+            "udp://bandito.byterunner.io:6969/announce",
+            "udp://tracker.gigantino.net:6969/announce",
+            "udp://tracker.rescuecrew7.com:1337/announce",
+            "udp://tracker.torrust-demo.com:6969/announce",
+            "udp://retracker01-msk-virt.corbina.net:80/announce",
+            "udp://1c.premierzal.ru:6969/announce",
+            "http://taciturn-shadow.spb.ru:6969/announce",
+            "udp://tracker.kmzs123.cn:17272/announce",
+            "udp://tracker.srv00.com:6969/announce",
+            "https://tracker.aburaya.live:443/announce",
+            "udp://tracker-udp.gbitt.info:80/announce",
+            "udp://tracker.hifimarket.in:2710/announce",
+            "udp://tracker.fnix.net:6969/announce",
+            "udp://tracker.therarbg.to:6969/announce",
+            "udp://www.torrent.eu.org:451/announce",
+            "http://torrent.hificode.in:6969/announce",
+            "https://tracker.ghostchu-services.top:443/announce",
+            "udp://open.dstud.io:6969/announce",
+            "http://tracker.ipv6tracker.ru:80/announce",
+            "http://open.trackerlist.xyz:80/announce",
+            "http://shubt.net:2710/announce",
+            "http://0123456789nonexistent.com:80/announce",
+            "udp://tracker.tryhackx.org:6969/announce",
+            "udp://tracker.valete.tf:9999/announce",
+            "udp://tracker.gmi.gd:6969/announce",
+            "https://tracker.zhuqiy.top:443/announce",
+            "https://tracker.leechshield.link:443/announce"
+        )
+        
+        try {
+            val decodedUrl = java.net.URLDecoder.decode(magnetUrl, "UTF-8")
+            
+            val existingTrackers = mutableSetOf<String>()
+            val trackerMatches = Regex("&tr=([^&]+)").findAll(decodedUrl)
+            
+            trackerMatches.forEach { match ->
+                val tracker = java.net.URLDecoder.decode(match.groupValues[1], "UTF-8")
+                existingTrackers.add(tracker)
+            }
+            
+            val newTrackers = premiumTrackers.filter { tracker ->
+                val trackerDomain = tracker.substringAfter("://").substringBefore("/")
+                !existingTrackers.any { existing ->
+                    existing.contains(trackerDomain)
+                }
+            }
+            
+            if (newTrackers.isNotEmpty()) {
+                val enhancedUrl = buildString {
+                    append(decodedUrl)
+                    newTrackers.forEach { tracker ->
+                        append("&tr=")
+                        append(java.net.URLEncoder.encode(tracker, "UTF-8"))
+                    }
+                }
+                return enhancedUrl
+            }
+            
+            return magnetUrl
+        } catch (e: Exception) {
+            return magnetUrl
+        }
     }
     
     private fun extractMagnetInfo(magnetUrl: String): String {
