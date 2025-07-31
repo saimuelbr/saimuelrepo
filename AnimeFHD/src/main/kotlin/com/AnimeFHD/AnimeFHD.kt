@@ -187,7 +187,7 @@ class AnimeFHD : MainAPI() {
         return true
     }
     
-    private fun loadEpisodesFromPage(document: org.jsoup.nodes.Document, baseUrl: String): List<Episode> {
+    private suspend fun loadEpisodesFromPage(document: org.jsoup.nodes.Document, baseUrl: String): List<Episode> {
         val episodes = mutableListOf<Episode>()
         var episodeCounter = 1
         
@@ -202,10 +202,13 @@ class AnimeFHD : MainAPI() {
                 if (episodeMatch != null) {
                     val episodeNumber = episodeMatch.groupValues[1].toIntOrNull()
                     if (episodeNumber != null) {
+                        val episodePoster = extractEpisodeImage(episodeUrl)
+                        
                         val episode = newEpisode(episodeUrl) {
                             this.name = "Episódio $episodeNumber"
                             this.episode = episodeNumber
                             this.season = 1
+                            this.posterUrl = episodePoster
                         }
                         episodes.add(episode)
                         episodeCounter++
@@ -225,10 +228,13 @@ class AnimeFHD : MainAPI() {
                 if (ovaMatch != null) {
                     val ovaNumber = ovaMatch.groupValues[1].toIntOrNull()
                     if (ovaNumber != null) {
+                        val ovaPoster = extractEpisodeImage(ovaUrl)
+                        
                         val episode = newEpisode(ovaUrl) {
                             this.name = "OVA $ovaNumber"
                             this.episode = episodeCounter
                             this.season = 1
+                            this.posterUrl = ovaPoster
                         }
                         episodes.add(episode)
                         episodeCounter++
@@ -248,10 +254,13 @@ class AnimeFHD : MainAPI() {
                 if (movieMatch != null) {
                     val movieNumber = movieMatch.groupValues[1].toIntOrNull()
                     if (movieNumber != null) {
+                        val moviePoster = extractEpisodeImage(movieUrl)
+                        
                         val episode = newEpisode(movieUrl) {
                             this.name = "Filme $movieNumber"
                             this.episode = episodeCounter
                             this.season = 1
+                            this.posterUrl = moviePoster
                         }
                         episodes.add(episode)
                         episodeCounter++
@@ -261,5 +270,37 @@ class AnimeFHD : MainAPI() {
         }
         
         return episodes.sortedBy { it.episode }
+    }
+    
+    private suspend fun extractEpisodeImage(episodeUrl: String): String? {
+        return try {
+            val document = app.get(episodeUrl).document
+            
+            val playerBox = document.selectFirst("div.playerBox iframe")
+            if (playerBox == null) {
+                return null
+            }
+            
+            val embedUrl = playerBox.attr("src")
+            if (embedUrl.isBlank()) {
+                return null
+            }
+            
+            val embedDocument = app.get(embedUrl).document
+            
+            val scripts = embedDocument.select("script")
+            for (script in scripts) {
+                val scriptContent = script.html()
+                if (scriptContent.contains("image:") && scriptContent.contains("animefhd.com")) {
+                    val imageMatch = Regex("image:\\s*'([^']+)'").find(scriptContent)
+                    if (imageMatch != null) {
+                        return imageMatch.groupValues[1]
+                    }
+                }
+            }
+            null
+        } catch (e: Exception) {
+            null
+        }
     }
 } 
