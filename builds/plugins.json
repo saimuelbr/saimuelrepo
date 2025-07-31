@@ -108,28 +108,6 @@
         "language": "pt-br"
     },
     {
-        "iconUrl": "https://www.visioncine-1.com.br/temas/pixer/assets/img/icon_free.png",
-        "fileSize": 18876,
-        "apiVersion": 1,
-        "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
-        "status": 1,
-        "language": "pt-br",
-        "authors": [
-            "saimuelbr"
-        ],
-        "tvTypes": [
-            "Movie",
-            "TvSeries"
-        ],
-        "version": 2,
-        "internalName": "VisionCine",
-        "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/VisionCine.jar",
-        "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/VisionCine.cs3",
-        "name": "VisionCine",
-        "description": "Baseado em MultiAPI. Filmes, Séries, Animes e Doramas.",
-        "language": "pt-br"
-    },
-    {
         "iconUrl": "https://embedcanaistv.com/wp-content/uploads/2024/11/cropped-cropped-iconn-192x192.png",
         "fileSize": 12036,
         "apiVersion": 1,
