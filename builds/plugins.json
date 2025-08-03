@@ -142,7 +142,7 @@
             "Movie",
             "TvSeries"
         ],
-        "version": 2,
+        "version": 3,
         "internalName": "StarckFilmes",
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/StarckFilmes.jar",
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/StarckFilmes.cs3",
