@@ -63,7 +63,7 @@ class StarckFilmes : MainAPI() {
             }
         } else {
             newMovieSearchResponse(title, href, TvType.Movie) {
-                this.posterUrl = posterUrl
+            this.posterUrl = posterUrl
             }
         }
     }
@@ -137,9 +137,9 @@ class StarckFilmes : MainAPI() {
             }
         } else {
             newMovieLoadResponse(title, url, TvType.Movie, url) {
-                this.posterUrl = poster
-                this.plot = description
-                this.year = year
+            this.posterUrl = poster
+            this.plot = description
+            this.year = year
                 this.tags = genres
             }
         }

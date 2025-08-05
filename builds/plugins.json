@@ -1,7 +1,7 @@
 [
     {
         "iconUrl": "https://cdn.bcdn.zip/wp-content/uploads/2017/04/nc-header-responsive.png",
-        "fileSize": 14200,
+        "fileSize": 15877,
         "apiVersion": 3,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
         "status": 1,
@@ -130,7 +130,7 @@
     },
     {
         "iconUrl": "https://www.starckfilmes.online/adjust-icon-192x192.png",
-        "fileSize": 20318,
+        "fileSize": 22538,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
         "status": 1,
@@ -169,5 +169,26 @@
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/AnimeFHD.cs3",
         "name": "AnimeFHD",
         "description": "Animes em português do AnimeFHD HD."
+    },
+    {
+        "iconUrl": "https://novelasflix1.me/apple-touch-icon.png",
+        "fileSize": 17866,
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
+        "status": 1,
+        "language": "pt-br",
+        "authors": [
+            "saimuelbr"
+        ],
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "version": 1,
+        "internalName": "NovelasFlix",
+        "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/NovelasFlix.jar",
+        "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/NovelasFlix.cs3",
+        "name": "NovelasFlix",
+        "description": "Filmes e séries do NovelasFlix. Conteúdo em português com alta qualidade."
     }
 ]

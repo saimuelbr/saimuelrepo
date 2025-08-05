@@ -7,6 +7,7 @@ import com.lagradost.cloudstream3.HomePageResponse
 import com.lagradost.cloudstream3.LoadResponse
 import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
 import com.lagradost.cloudstream3.LoadResponse.Companion.addImdbId
+import com.lagradost.cloudstream3.LoadResponse.Companion.addDuration
 import com.lagradost.cloudstream3.MainAPI
 import com.lagradost.cloudstream3.MainPageRequest
 import com.lagradost.cloudstream3.SearchResponse
@@ -28,7 +29,7 @@ import com.lagradost.cloudstream3.utils.newExtractorLink
 import org.jsoup.nodes.Element
 
 class NetCine : MainAPI() {
-    override var mainUrl = "https://netcine.lat"
+    override var mainUrl = "https://neetx.lol"
     override var name = "NetCine"
     override val hasMainPage = true
     override var lang = "pt-br"
@@ -100,10 +101,13 @@ class NetCine : MainAPI() {
         val document = app.get(url).document
         val title = document.selectFirst("div.dataplus h1")?.text() ?: document.select("div.dataplus span.original").text()
         val poster = fixUrl(document.select("div.headingder > div.cover").attr("data-bg"))
-        val description = document.selectFirst("meta[property=og:description]")?.attr("content")
+        val description = document.selectFirst("#dato-2 p")?.text()?.trim()
         val type = if (url.contains("tvshows")) TvType.TvSeries else TvType.Movie
         val imdbid = document.selectFirst("div.imdbdatos a")?.attr("href")?.substringAfterLast("/")
         val actors=document.select("#dato-1 > div:nth-child(4)").map { it.select("a").text() }
+        val duration = document.select("#dato-1 p span").find { span ->
+            span.select("b.icon-query-builder").isNotEmpty()
+        }?.text()?.trim()
         val recommendations=document.select("div.links a").amap {
             val recName = it.select("div.data-r > h4").text()
             val recHref = it.attr("href")
@@ -136,6 +140,9 @@ class NetCine : MainAPI() {
                     this.recommendations=recommendations
                     addActors(actors)
                     addImdbId(imdbid)
+                    if (!duration.isNullOrBlank()) {
+                        addDuration(duration)
+                    }
                 }
             }
         return newMovieLoadResponse(title, url, TvType.Movie, url) {
@@ -145,6 +152,9 @@ class NetCine : MainAPI() {
             this.recommendations=recommendations
             addActors(actors)
             addImdbId(imdbid)
+            if (!duration.isNullOrBlank()) {
+                addDuration(duration)
+            }
         }
     }
 
@@ -155,53 +165,99 @@ class NetCine : MainAPI() {
         callback: (ExtractorLink) -> Unit
     ): Boolean {
         val doc = app.get(data).document
-        val iframeUrl = doc.selectFirst("#player-container iframe")?.absUrl("src")
-        if (iframeUrl.isNullOrEmpty()) {
-            Log.d("Error:", "Iframe not found")
+        val playerContainer = doc.selectFirst("#player-container")
+        if (playerContainer == null) {
+            Log.d("Error:", "Player container not found")
             return false
         }
 
-        val iframeDoc = app.get(iframeUrl).document
-        val buttons = iframeDoc.select("div.btn-container a")
-        if (buttons.isEmpty()) {
-            Log.d("Error:", "No buttons found in iframe")
-            return false
+        val headers = mapOf(
+            "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+            "Accept" to "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
+            "Accept-Language" to "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+            "Cache-Control" to "no-cache",
+            "Pragma" to "no-cache",
+            "Sec-Fetch-Dest" to "iframe",
+            "Sec-Fetch-Mode" to "navigate",
+            "Sec-Fetch-Site" to "same-origin",
+            "Upgrade-Insecure-Requests" to "1"
+        )
+
+        val cookies = mapOf(
+            "XCRF" to "XCRF",
+            "PHPSESSID" to "72um6ie78l4udrsku00gba1aiv"
+        )
+
+        val playerMenu = playerContainer.select("ul.player-menu li a")
+        val playerContents = playerContainer.select("div.player-content")
+
+        val audioTypes = mutableListOf<Pair<String, String>>()
+        
+        for (menuItem in playerMenu) {
+            val audioType = menuItem.text().trim()
+            val playerId = menuItem.attr("href").substringAfter("#")
+            audioTypes.add(audioType to playerId)
         }
 
-        for (button in buttons) {
-            val intermediateUrl = button.absUrl("href")
+        val dubladoPlayer = audioTypes.find { it.first.contains("Dublado", ignoreCase = true) }
+        val legendadoPlayer = audioTypes.find { it.first.contains("Legendado", ignoreCase = true) }
 
-            val label = button.text().trim()
+        val playersToProcess = mutableListOf<Pair<String, String>>()
+        
+        if (dubladoPlayer != null) {
+            playersToProcess.add(dubladoPlayer)
+        }
+        if (legendadoPlayer != null) {
+            playersToProcess.add(legendadoPlayer)
+        }
+
+        if (playersToProcess.isEmpty()) {
+            playersToProcess.addAll(audioTypes)
+        }
+
+        var hasValidLinks = false
+
+        for ((audioType, playerId) in playersToProcess) {
+            val playerContent = playerContents.find { it.attr("id") == playerId }
+            if (playerContent == null) continue
+
+            val iframe = playerContent.selectFirst("iframe")
+            if (iframe == null) continue
+
+            val iframeSrc = iframe.attr("src")
+            if (iframeSrc.isBlank()) continue
+
+            val fullIframeUrl = if (iframeSrc.startsWith("http")) iframeSrc else "$mainUrl/$iframeSrc"
+            
             try {
-                val finalDoc = app.get(intermediateUrl).document
-                val finalElement = finalDoc.selectFirst("div.container a, source")
-                val finalUrl = when (finalElement?.tagName()) {
-                    "a" -> finalElement.absUrl("href")
-                    "source" -> finalElement.absUrl("src")
-                    else -> null
-                }
+                val iframeDoc = app.get(fullIframeUrl, headers = headers, cookies = cookies).document
+                val videoWrapper = iframeDoc.selectFirst("div.plyr__video-wrapper")
+                if (videoWrapper == null) continue
 
-                if (finalUrl != null) {
-                    if (finalUrl.isNotEmpty()) {
-                        callback.invoke(
-                            newExtractorLink(
-                                "$name $label",
-                                "$name $label",
-                                finalUrl,
-                                INFER_TYPE
-                            )
-                            {
-                                this.referer=mainUrl
-                            }
-                        )
-                    } else {
-                        Log.d("Error:", "No final link found at $intermediateUrl")
+                val videoSource = videoWrapper.selectFirst("video source")
+                if (videoSource == null) continue
+
+                val videoUrl = videoSource.attr("src")
+                if (videoUrl.isBlank()) continue
+
+                val sourceName = "$name $audioType"
+                callback.invoke(
+                    newExtractorLink(
+                        sourceName,
+                        sourceName,
+                        videoUrl,
+                        com.lagradost.cloudstream3.utils.ExtractorLinkType.VIDEO
+                    ) {
+                        this.referer = mainUrl
                     }
-                }
+                )
+                hasValidLinks = true
+                
             } catch (e: Exception) {
-                Log.e("Error:", "Error processing link: $intermediateUrl $e")
+                Log.e("Error:", "Error processing player $playerId ($audioType): $e")
             }
         }
-        return true
+
+        return hasValidLinks
     }
 }
