@@ -4,6 +4,8 @@ import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
 import com.lagradost.cloudstream3.LoadResponse.Companion.addDuration
 import com.lagradost.cloudstream3.utils.*
+import com.lagradost.cloudstream3.network.WebViewResolver
+import com.lagradost.cloudstream3.utils.M3u8Helper
 import org.jsoup.nodes.Element
 
 class NovelasFlix : MainAPI() {
@@ -136,7 +138,42 @@ class NovelasFlix : MainAPI() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
-        return NovelasFlixExtractor.extractVideoLinks(data, mainUrl, name, callback)
+        return try {
+            val m3u8Resolver = WebViewResolver(
+                interceptUrl = Regex("""txt|m3u8"""),
+                additionalUrls = listOf(Regex("""txt|m3u8""")),
+                useOkhttp = false,
+                timeout = 25_000L
+            )
+            
+            val intercepted = app.get(data, interceptor = m3u8Resolver).url
+            
+            if (intercepted.isNotEmpty() && intercepted.contains(".m3u8")) {
+                val headers = mapOf(
+                    "Accept" to "*/*",
+                    "Connection" to "keep-alive",
+                    "Sec-Fetch-Dest" to "empty",
+                    "Sec-Fetch-Mode" to "cors",
+                    "Sec-Fetch-Site" to "cross-site",
+                    "Referer" to data,
+                    "Origin" to mainUrl,
+                    "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+                )
+                
+                M3u8Helper.generateM3u8(
+                    name,
+                    intercepted,
+                    mainUrl,
+                    headers = headers
+                ).forEach(callback)
+                
+                true
+            } else {
+                false
+            }
+        } catch (e: Exception) {
+            false
+        }
     }
     
     private fun cleanTitle(rawTitle: String): String {

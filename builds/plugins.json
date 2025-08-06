@@ -14,7 +14,7 @@
             "Movie",
             "TvSeries"
         ],
-        "version": 2,
+        "version": 3,
         "internalName": "NetCine",
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/NetCine.jar",
         "description": "Filmes, Séries e Animes em Português",
@@ -184,7 +184,7 @@
             "Movie",
             "TvSeries"
         ],
-        "version": 1,
+        "version": 2,
         "internalName": "NovelasFlix",
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/NovelasFlix.jar",
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/NovelasFlix.cs3",
