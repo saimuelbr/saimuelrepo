@@ -139,11 +139,36 @@ class NovelasFlix : MainAPI() {
         callback: (ExtractorLink) -> Unit
     ): Boolean {
         return try {
+            val normalResponse = app.get(data)
+            val normalUrl = normalResponse.url
+            
+            if (normalUrl != data && normalUrl.contains(".m3u8")) {
+                val headers = mapOf(
+                    "Accept" to "*/*",
+                    "Connection" to "keep-alive",
+                    "Sec-Fetch-Dest" to "empty",
+                    "Sec-Fetch-Mode" to "cors",
+                    "Sec-Fetch-Site" to "cross-site",
+                    "Referer" to data,
+                    "Origin" to mainUrl,
+                    "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+                )
+                
+                M3u8Helper.generateM3u8(
+                    name,
+                    normalUrl,
+                    mainUrl,
+                    headers = headers
+                ).forEach(callback)
+                
+                return true
+            }
+            
             val m3u8Resolver = WebViewResolver(
                 interceptUrl = Regex("""txt|m3u8"""),
                 additionalUrls = listOf(Regex("""txt|m3u8""")),
                 useOkhttp = false,
-                timeout = 25_000L
+                timeout = 15_000L
             )
             
             val intercepted = app.get(data, interceptor = m3u8Resolver).url
