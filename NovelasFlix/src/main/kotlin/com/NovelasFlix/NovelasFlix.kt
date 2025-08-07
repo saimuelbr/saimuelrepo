@@ -5,6 +5,9 @@ import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
 import com.lagradost.cloudstream3.LoadResponse.Companion.addDuration
 import com.lagradost.cloudstream3.utils.*
 import com.lagradost.cloudstream3.network.WebViewResolver
+import com.lagradost.cloudstream3.utils.newExtractorLink
+import com.lagradost.cloudstream3.utils.ExtractorLinkType
+import com.lagradost.cloudstream3.utils.INFER_TYPE
 import com.lagradost.cloudstream3.utils.M3u8Helper
 import org.jsoup.nodes.Element
 
@@ -138,56 +141,7 @@ class NovelasFlix : MainAPI() {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ): Boolean {
-        return try {
-            val normalResponse = app.get(data)
-            val normalUrl = normalResponse.url
-            
-            if (normalUrl != data && normalUrl.contains(".m3u8")) {
-                generateM3u8Links(normalUrl, data, callback)
-                return true
-            }
-            
-            val m3u8Resolver = WebViewResolver(
-                interceptUrl = Regex("""m3u8"""),
-                additionalUrls = emptyList(),
-                userAgent = null,
-                useOkhttp = false,
-                script = null,
-                scriptCallback = null,
-                timeout = 15_000L
-            )
-            
-            val intercepted = app.get(data, interceptor = m3u8Resolver).url
-            
-            if (intercepted.isNotEmpty() && intercepted.contains(".m3u8")) {
-                generateM3u8Links(intercepted, data, callback)
-                true
-            } else {
-                false
-            }
-        } catch (e: Exception) {
-            false
-        }
-    }
-    
-    private suspend fun generateM3u8Links(m3u8Url: String, referer: String, callback: (ExtractorLink) -> Unit) {
-        val headers = mapOf(
-            "Accept" to "*/*",
-            "Connection" to "keep-alive",
-            "Sec-Fetch-Dest" to "empty",
-            "Sec-Fetch-Mode" to "cors",
-            "Sec-Fetch-Site" to "cross-site",
-            "Referer" to referer,
-            "Origin" to mainUrl,
-            "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-        )
-        
-        M3u8Helper.generateM3u8(
-            name,
-            m3u8Url,
-            mainUrl,
-            headers = headers
-        ).forEach(callback)
+        return NovelasFlixExtractor.extractVideoLinks(data, mainUrl, name, callback)
     }
     
     private fun cleanTitle(rawTitle: String): String {
