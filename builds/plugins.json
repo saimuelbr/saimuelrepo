@@ -85,6 +85,27 @@
         "language": "pt-br"
     },
     {
+        "iconUrl": "https://animesonline.cloud/wp-content/uploads/2025/06/logo-_1_.png",
+        "fileSize": 21556,
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
+        "status": 1,
+        "language": "pt-br",
+        "authors": [
+            "saimuelbr"
+        ],
+        "tvTypes": [
+            "Anime",
+            "AnimeMovie"
+        ],
+        "version": 1,
+        "internalName": "AnimesCloud",
+        "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/AnimesCloud.jar",
+        "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/AnimesCloud.cs3",
+        "name": "AnimesCloud",
+        "description": "AnimesCloud - Animes em FHD e HD"
+    },
+    {
         "iconUrl": "https://novizer.com/img/android-chrome-192x192.png",
         "fileSize": 17784,
         "apiVersion": 1,
