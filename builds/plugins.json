@@ -211,5 +211,26 @@
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/NovelasFlix.cs3",
         "name": "NovelasFlix",
         "description": "Filmes e séries do NovelasFlix. Conteúdo em português com alta qualidade."
+    },
+    {
+        "iconUrl": "https://i.imgur.com/Y7gXItF.png",
+        "fileSize": 19659,
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
+        "status": 1,
+        "language": "pt-br",
+        "authors": [
+            "saimuelbr"
+        ],
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "version": 1,
+        "internalName": "MegaFlix",
+        "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/MegaFlix.jar",
+        "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/MegaFlix.cs3",
+        "name": "MegaFlix",
+        "description": "Filmes, Séries e Animes em Português"
     }
 ]
