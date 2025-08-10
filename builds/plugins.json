@@ -120,7 +120,7 @@
             "TvSeries",
             "Anime"
         ],
-        "version": 1,
+        "version": 2,
         "internalName": "Vizer",
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/Vizer.jar",
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/Vizer.cs3",
