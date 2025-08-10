@@ -82,16 +82,16 @@ class AnimeFHD : MainAPI() {
         
         val title = document.selectFirst("div.animeFirstContainer h1, h1.anime-title, h1.title")?.text()?.trim() ?: ""
         
-        val poster = document.selectFirst("div.animeCapa img")?.attr("src")
-        
         val description = document.selectFirst("div.animeSecondContainer p, .sinopse p, .description p, .plot p")?.text()?.trim()
         
         val genres = document.select("div.animeFirstContainer ul.animeGen li a, .genres a, .tags a, ul.animeGen li a").map { it.text().trim() }.toMutableList()
         
         val episodes = loadEpisodesFromPage(document, url)
         
+        val firstEpisodePoster = episodes.firstOrNull()?.posterUrl
+        
         return newTvSeriesLoadResponse(title, url, TvType.TvSeries, episodes) {
-            this.posterUrl = poster
+            this.posterUrl = firstEpisodePoster
             this.plot = description
             this.tags = genres
         }
