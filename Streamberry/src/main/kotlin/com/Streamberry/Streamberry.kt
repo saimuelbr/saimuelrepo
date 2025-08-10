@@ -161,14 +161,30 @@ class Streamberry : MainAPI() {
                 val epNum = epEl.selectFirst(".numerando")?.text()?.split("-")?.getOrNull(1)?.trim()?.toIntOrNull() ?: 1
                 val epTitle = epEl.selectFirst(".episodiotitle a")?.text()?.trim() ?: "Episódio $epNum"
                 val epUrl = epEl.selectFirst(".episodiotitle a")?.attr("href") ?: ""
-                val epPoster = epEl.selectFirst(".imagen img")?.let { img ->
-                    img.attr("src").ifBlank { img.attr("data-lazy-src") }
+                
+                val imagenDiv = epEl.selectFirst(".imagen")
+                val posterImg = imagenDiv?.selectFirst("img")
+                var epPoster = posterImg?.attr("src")
+                
+                if (epPoster.isNullOrBlank() || epPoster.startsWith("data:image/svg+xml")) {
+                    epPoster = posterImg?.attr("data-lazy-src")
                 }
+                
+                if (epPoster.isNullOrBlank() || epPoster.startsWith("data:image/svg+xml")) {
+                    val noscriptImg = imagenDiv?.selectFirst("noscript")?.selectFirst("img")
+                    val noscriptSrc = noscriptImg?.attr("src")
+                    if (!noscriptSrc.isNullOrBlank()) {
+                        epPoster = noscriptSrc
+                    }
+                }
+                
+                val finalPoster = epPoster?.let { fixUrl(it) }
+                
                 newEpisode(epUrl) {
                     this.name = epTitle
                     this.season = seasonNum
                     this.episode = epNum
-                    this.posterUrl = epPoster
+                    this.posterUrl = finalPoster
                 }
             }
             val actors = document.select("#cast .persons .person[itemprop=actor]").mapNotNull { actorEl ->
