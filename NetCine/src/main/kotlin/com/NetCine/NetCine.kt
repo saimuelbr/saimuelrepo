@@ -117,38 +117,42 @@ class NetCine : MainAPI() {
             }
         }
         val year = document.select("#dato-1 > div:nth-child(5)").text().toIntOrNull()
-            if (type == TvType.TvSeries) {
-                val episodes = mutableListOf<Episode>()
-                document.select("div.post #cssmenu > ul li > ul > li").map {
-                    val seasonno = it.select("a > span.datex").text().substringBefore("-").trim()
-                        .toIntOrNull()
-                    val episodeno= it.select("a > span.datex").text().substringAfterLast("-").trim()
-                        .toIntOrNull()
-                    val epname=it.select("a > span.datix").text()
-                    val ephref = it.selectFirst("a")?.attr("href")
-                    episodes += newEpisode(ephref)
-                    {
-                        this.name = epname
-                        this.season = seasonno
-                        this.episode = episodeno
-                    }
-                }
-                return newTvSeriesLoadResponse(title, url, TvType.TvSeries, episodes) {
-                    this.posterUrl = poster
-                    this.plot = description
-                    this.year=year
-                    this.recommendations=recommendations
-                    addActors(actors)
-                    addImdbId(imdbid)
-                    if (!duration.isNullOrBlank()) {
-                        addDuration(duration)
-                    }
+        val rating = document.selectFirst("div.rank")?.text()?.toIntOrNull()
+        
+        if (type == TvType.TvSeries) {
+            val episodes = mutableListOf<Episode>()
+            document.select("div.post #cssmenu > ul li > ul > li").map {
+                val seasonno = it.select("a > span.datex").text().substringBefore("-").trim()
+                    .toIntOrNull()
+                val episodeno= it.select("a > span.datex").text().substringAfterLast("-").trim()
+                    .toIntOrNull()
+                val epname=it.select("a > span.datix").text()
+                val ephref = it.selectFirst("a")?.attr("href")
+                episodes += newEpisode(ephref)
+                {
+                    this.name = epname
+                    this.season = seasonno
+                    this.episode = episodeno
                 }
             }
+            return newTvSeriesLoadResponse(title, url, TvType.TvSeries, episodes) {
+                this.posterUrl = poster
+                this.plot = description
+                this.year=year
+                this.rating=rating
+                this.recommendations=recommendations
+                addActors(actors)
+                addImdbId(imdbid)
+                if (!duration.isNullOrBlank()) {
+                    addDuration(duration)
+                }
+            }
+        }
         return newMovieLoadResponse(title, url, TvType.Movie, url) {
             this.posterUrl = poster
             this.plot = description
             this.year=year
+            this.rating=rating
             this.recommendations=recommendations
             addActors(actors)
             addImdbId(imdbid)
@@ -165,99 +169,65 @@ class NetCine : MainAPI() {
         callback: (ExtractorLink) -> Unit
     ): Boolean {
         val doc = app.get(data).document
-        val playerContainer = doc.selectFirst("#player-container")
-        if (playerContainer == null) {
-            Log.d("Error:", "Player container not found")
+        val iframeUrl = doc.selectFirst("#player-container iframe")?.absUrl("src")
+        if (iframeUrl.isNullOrEmpty()) {
+            Log.d("Error:", "Iframe not found")
             return false
         }
 
-        val headers = mapOf(
-            "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
-            "Accept" to "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
-            "Accept-Language" to "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
-            "Cache-Control" to "no-cache",
-            "Pragma" to "no-cache",
-            "Sec-Fetch-Dest" to "iframe",
-            "Sec-Fetch-Mode" to "navigate",
-            "Sec-Fetch-Site" to "same-origin",
-            "Upgrade-Insecure-Requests" to "1"
-        )
+        val iframeDoc = app.get(iframeUrl).document
+        val buttons = iframeDoc.select("div.btn-container a")
+        if (buttons.isEmpty()) {
+            Log.d("Error:", "No buttons found in iframe")
+            return false
+        }
 
-        val cookies = mapOf(
-            "XCRF" to "XCRF",
-            "PHPSESSID" to "72um6ie78l4udrsku00gba1aiv"
-        )
-
-        val playerMenu = playerContainer.select("ul.player-menu li a")
-        val playerContents = playerContainer.select("div.player-content")
-
-        val audioTypes = mutableListOf<Pair<String, String>>()
+        val priorityButtons = mutableListOf<org.jsoup.nodes.Element>()
+        val otherButtons = mutableListOf<org.jsoup.nodes.Element>()
         
-        for (menuItem in playerMenu) {
-            val audioType = menuItem.text().trim()
-            val playerId = menuItem.attr("href").substringAfter("#")
-            audioTypes.add(audioType to playerId)
-        }
-
-        val dubladoPlayer = audioTypes.find { it.first.contains("Dublado", ignoreCase = true) }
-        val legendadoPlayer = audioTypes.find { it.first.contains("Legendado", ignoreCase = true) }
-
-        val playersToProcess = mutableListOf<Pair<String, String>>()
-        
-        if (dubladoPlayer != null) {
-            playersToProcess.add(dubladoPlayer)
-        }
-        if (legendadoPlayer != null) {
-            playersToProcess.add(legendadoPlayer)
-        }
-
-        if (playersToProcess.isEmpty()) {
-            playersToProcess.addAll(audioTypes)
-        }
-
-        var hasValidLinks = false
-
-        for ((audioType, playerId) in playersToProcess) {
-            val playerContent = playerContents.find { it.attr("id") == playerId }
-            if (playerContent == null) continue
-
-            val iframe = playerContent.selectFirst("iframe")
-            if (iframe == null) continue
-
-            val iframeSrc = iframe.attr("src")
-            if (iframeSrc.isBlank()) continue
-
-            val fullIframeUrl = if (iframeSrc.startsWith("http")) iframeSrc else "$mainUrl/$iframeSrc"
-            
-            try {
-                val iframeDoc = app.get(fullIframeUrl, headers = headers, cookies = cookies).document
-                val videoWrapper = iframeDoc.selectFirst("div.plyr__video-wrapper")
-                if (videoWrapper == null) continue
-
-                val videoSource = videoWrapper.selectFirst("video source")
-                if (videoSource == null) continue
-
-                val videoUrl = videoSource.attr("src")
-                if (videoUrl.isBlank()) continue
-
-                val sourceName = "$name $audioType"
-                callback.invoke(
-                    newExtractorLink(
-                        sourceName,
-                        sourceName,
-                        videoUrl,
-                        com.lagradost.cloudstream3.utils.ExtractorLinkType.VIDEO
-                    ) {
-                        this.referer = mainUrl
-                    }
-                )
-                hasValidLinks = true
-                
-            } catch (e: Exception) {
-                Log.e("Error:", "Error processing player $playerId ($audioType): $e")
+        for (button in buttons) {
+            val label = button.text().trim()
+            when {
+                label.contains("Dublado", ignoreCase = true) -> priorityButtons.add(0, button)
+                label.contains("Legendado", ignoreCase = true) -> priorityButtons.add(button)
+                else -> otherButtons.add(button)
             }
         }
+        
+        val allButtons = priorityButtons + otherButtons
 
-        return hasValidLinks
+        for (button in allButtons) {
+            val intermediateUrl = button.absUrl("href")
+            val label = button.text().trim()
+            
+            try {
+                val finalDoc = app.get(intermediateUrl).document
+                val finalElement = finalDoc.selectFirst("div.container a, source")
+                val finalUrl = when (finalElement?.tagName()) {
+                    "a" -> finalElement.absUrl("href")
+                    "source" -> finalElement.absUrl("src")
+                    else -> null
+                }
+
+                if (finalUrl != null && finalUrl.isNotEmpty()) {
+                    callback.invoke(
+                        newExtractorLink(
+                            "$name $label",
+                            "$name $label",
+                            finalUrl,
+                            INFER_TYPE
+                        ) {
+                            this.referer = mainUrl
+                        }
+                    )
+                } else {
+                    Log.d("Error:", "No final link found at $intermediateUrl")
+                }
+            } catch (e: Exception) {
+                Log.e("Error:", "Error processing link: $intermediateUrl $e")
+            }
+        }
+        
+        return buttons.isNotEmpty()
     }
 }
