@@ -295,5 +295,26 @@
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/BakashiTV.cs3",
         "name": "BakashiTV",
         "description": "BakashiTV - Animes"
+    },
+    {
+        "iconUrl": "https://donghuanosekai.com/wp-content/uploads/2020/09/cropped-icon_dnsk.png",
+        "fileSize": 19328,
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
+        "status": 1,
+        "language": "pt-br",
+        "authors": [
+            "saimuelbr"
+        ],
+        "tvTypes": [
+            "Anime",
+            "AnimeMovie"
+        ],
+        "version": 1,
+        "internalName": "DonghuaNoSekai",
+        "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/DonghuaNoSekai.jar",
+        "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/DonghuaNoSekai.cs3",
+        "name": "DonghuaNoSekai",
+        "description": "DonghuaNoSekai - Donghuas em FHD"
     }
 ]
