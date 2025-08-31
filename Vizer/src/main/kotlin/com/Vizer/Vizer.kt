@@ -39,6 +39,7 @@ class Vizer : MainAPI() {
     override var lang = "pt-br"
     override val hasQuickSearch = true
     override val hasMainPage = true
+    override val hasDownloadSupport = true
     override val supportedTypes = setOf(TvType.Movie, TvType.TvSeries)
     override var sequentialMainPageDelay = 300L
     override var sequentialMainPageScrollDelay = 300L

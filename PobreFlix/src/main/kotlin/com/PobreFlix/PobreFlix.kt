@@ -36,6 +36,7 @@ class PobreFlix : MainAPI() {
     override var name = "PobreFlix"
     override var lang = "pt-br"
     override val hasQuickSearch = true
+    override val hasDownloadSupport = true
     override val hasMainPage = true
     override val supportedTypes = setOf(TvType.Movie, TvType.TvSeries)
 
