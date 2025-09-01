@@ -25,11 +25,12 @@ import com.lagradost.cloudstream3.newTvSeriesLoadResponse
 import com.lagradost.cloudstream3.newTvSeriesSearchResponse
 import com.lagradost.cloudstream3.utils.ExtractorLink
 import com.lagradost.cloudstream3.utils.INFER_TYPE
+import com.lagradost.cloudstream3.utils.Qualities
 import com.lagradost.cloudstream3.utils.newExtractorLink
 import org.jsoup.nodes.Element
 
 class NetCine : MainAPI() {
-    override var mainUrl = "https://neetx.lol"
+    override var mainUrl = "https://netcinego.lat"
     override var name = "NetCine"
     override val hasMainPage = true
     override var lang = "pt-br"
@@ -212,8 +213,8 @@ class NetCine : MainAPI() {
                 if (finalUrl != null && finalUrl.isNotEmpty()) {
                     callback.invoke(
                         newExtractorLink(
-                            "$name $label",
-                            "$name $label",
+                            "$name",
+                            "$name",
                             finalUrl,
                             INFER_TYPE
                         ) {
