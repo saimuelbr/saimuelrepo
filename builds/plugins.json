@@ -129,7 +129,7 @@
         "language": "pt-br"
     },
     {
-        "iconUrl": "https://embedcanaistv.com/wp-content/uploads/2024/11/cropped-cropped-iconn-192x192.png",
+        "iconUrl": "https://embedcanais.com/icons/favicon512.png",
         "fileSize": 12036,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
@@ -142,7 +142,7 @@
             "Live"
         ],
         "version": 3,
-        "internalName": "EmbedSports",
+        "internalName": "EmbedCanais",
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/EmbedSports.jar",
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/EmbedSports.cs3",
         "name": "EmbedSports",
@@ -316,5 +316,26 @@
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/DonghuaNoSekai.cs3",
         "name": "DonghuaNoSekai",
         "description": "DonghuaNoSekai - Donghuas em FHD"
+    },
+    {
+        "iconUrl": "https://doramasonline.co/wp-content/uploads/2025/07/cropped-doramas2-180x180.png",
+        "fileSize": 20432,
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
+        "status": 1,
+        "language": "pt-br",
+        "authors": [
+            "TLN+",
+            "saimuelbr"
+        ],
+        "tvTypes": [
+            "AsianDrama"
+        ],
+        "version": 1,
+        "internalName": "Doramas",
+        "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/Doramas.jar",
+        "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/Doramas.cs3",
+        "name": "Doramas",
+        "description": "Doramas em FHD"
     }
 ]
