@@ -130,7 +130,7 @@
     },
     {
         "iconUrl": "https://embedcanais.com/icons/favicon512.png",
-        "fileSize": 12036,
+        "fileSize": 17468,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
         "status": 1,
@@ -143,10 +143,10 @@
         ],
         "version": 3,
         "internalName": "EmbedCanais",
-        "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/EmbedSports.jar",
-        "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/EmbedSports.cs3",
-        "name": "EmbedSports",
-        "description": "Canais de TV ao vivo do EmbedSports. Futebol, UFC e muito mais.",
+        "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/EmbedCanais.jar",
+        "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/EmbedCanais.cs3",
+        "name": "EmbedCanais",
+        "description": "Canais de TV ao vivo do EmbedCanais. Futebol, UFC e muito mais.",
         "language": "pt-br"
     },
     {
