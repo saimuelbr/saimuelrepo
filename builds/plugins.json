@@ -226,7 +226,7 @@
             "Movie",
             "TvSeries"
         ],
-        "version": 1,
+        "version": 2,
         "internalName": "MegaFlix",
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/MegaFlix.jar",
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/MegaFlix.cs3",

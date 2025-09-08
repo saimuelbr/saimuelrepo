@@ -6,7 +6,9 @@ import com.lagradost.cloudstream3.utils.ExtractorLink
 import com.lagradost.cloudstream3.utils.INFER_TYPE
 import com.lagradost.cloudstream3.utils.newExtractorLink
 import com.lagradost.cloudstream3.utils.M3u8Helper
+import com.lagradost.cloudstream3.utils.loadExtractor
 import com.lagradost.cloudstream3.network.WebViewResolver
+import com.lagradost.cloudstream3.extractors.*
 import org.jsoup.nodes.Element
 import com.lagradost.cloudstream3.utils.JsUnpacker
 import com.lagradost.api.Log
@@ -225,7 +227,7 @@ class MegaFlix : MainAPI() {
                 )
             }
         } catch (e: Exception) {
-            Log.e("MegaFlix", "Error getting episodes: ${e.message}")
+            // Error getting episodes
         }
         
         return episodes
@@ -269,8 +271,17 @@ class MegaFlix : MainAPI() {
             
             try {
                 val success = when {
-                    playerUrl.contains("megahide.shop") -> {
+                    playerUrl.contains("playhide.shop") -> {
                         extractMegahideLinks(playerUrl, playerName, callback)
+                    }
+                    playerUrl.contains("filemoon.sx") -> {
+                        loadExtractor(playerUrl, playerUrl, subtitleCallback, callback)
+                    }
+                    playerUrl.contains("listeamed.net") -> {
+                        loadExtractor(playerUrl, playerUrl, subtitleCallback, callback)
+                    }
+                    playerUrl.contains("playerwish.com") -> {
+                        loadExtractor(playerUrl, playerUrl, subtitleCallback, callback)
                     }
                     else -> false
                 }
@@ -298,11 +309,11 @@ class MegaFlix : MainAPI() {
             
             if (scriptContent != null) {
                 val m3u8 = JsUnpacker(scriptContent).unpack()?.let { unpacked ->
-                    val match = Regex("var links=\\s*\\{[^}]*\"hls2\":\"([^\"]+)\"").find(unpacked)
-                    match?.groupValues?.get(1)
+                    val match = Regex("""https://[^"'\s]+\.m3u8[^"'\s]*""").find(unpacked)
+                    match?.value
                 }
                 
-                if (m3u8 != null) {
+                if (m3u8 != null && !m3u8.contains("hls4")) {
                     val m3u8Links = M3u8Helper.generateM3u8(
                         playerName,
                         m3u8,
@@ -326,7 +337,7 @@ class MegaFlix : MainAPI() {
             
             val intercepted = app.get(url, interceptor = resolver).url
             
-            if (intercepted.isNotEmpty() && !intercepted.endsWith(".txt") && !intercepted.contains("/e/")) {
+            if (intercepted.isNotEmpty() && !intercepted.endsWith(".txt") && !intercepted.contains("/e/") && !intercepted.contains("hls4")) {
                 if (intercepted.contains(".m3u8")) {
                     val m3u8Links = M3u8Helper.generateM3u8(
                         playerName,
@@ -353,3 +364,12 @@ class MegaFlix : MainAPI() {
     }
 }
 
+class Vidguardto2 : Vidguardto() {
+    override var name = "Vidguardto2"
+    override var mainUrl = "https://listeamed.net"
+}
+
+class Playerwish : StreamWishExtractor() {
+    override var name = "Playerwish"
+    override var mainUrl = "https://playerwish.com"
+}
