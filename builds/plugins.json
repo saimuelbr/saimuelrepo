@@ -276,7 +276,7 @@
         "description": "UltraCine - Filmes e Séries em Full HD"
     },
     {
-        "iconUrl": "https://bakashi.tv/favicon.ico",
+        "iconUrl": "https://animesonlinenet.com/wp-content/uploads/2025/08/cropped-Favicon-net-1-1.png",
         "fileSize": 16056,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
@@ -290,11 +290,11 @@
             "AnimeMovie"
         ],
         "version": 1,
-        "internalName": "BakashiTV",
-        "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/BakashiTV.jar",
-        "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/BakashiTV.cs3",
-        "name": "BakashiTV",
-        "description": "BakashiTV - Animes"
+        "internalName": "AnimesOnlineNet",
+        "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/AnimesOnlineNet.jar",
+        "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/AnimesOnlineNet.cs3",
+        "name": "AnimesOnlineNet",
+        "description": "AnimesOnlineNet - Animes"
     },
     {
         "iconUrl": "https://donghuanosekai.com/wp-content/uploads/2020/09/cropped-icon_dnsk.png",
