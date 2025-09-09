@@ -12,7 +12,7 @@ class AnimeFHD : MainAPI() {
     override var lang = "pt-br"
     override val hasDownloadSupport = true
     override val hasQuickSearch = true
-    override val supportedTypes = setOf(TvType.TvSeries, TvType.Anime)
+    override val supportedTypes = setOf(TvType.Anime)
 
     override val mainPage = mainPageOf(
         "?ano=2025" to "2025",
@@ -66,7 +66,7 @@ class AnimeFHD : MainAPI() {
             return null
         }
         
-        return newTvSeriesSearchResponse(title, href, TvType.TvSeries) {
+        return newAnimeSearchResponse(title, href, TvType.Anime) {
             this.posterUrl = posterUrl
         }
     }
@@ -88,12 +88,15 @@ class AnimeFHD : MainAPI() {
         
         val episodes = loadEpisodesFromPage(document, url)
         
-        val firstEpisodePoster = episodes.firstOrNull()?.posterUrl
+        val firstEpisodePoster = episodes.firstOrNull()?.let { firstEpisode ->
+            extractFirstEpisodePoster(firstEpisode.data)
+        }
         
-        return newTvSeriesLoadResponse(title, url, TvType.TvSeries, episodes) {
+        return newAnimeLoadResponse(title, url, TvType.Anime) {
             this.posterUrl = firstEpisodePoster
             this.plot = description
             this.tags = genres
+            addEpisodes(DubStatus.Subbed, episodes)
         }
     }
 
@@ -202,13 +205,10 @@ class AnimeFHD : MainAPI() {
                 if (episodeMatch != null) {
                     val episodeNumber = episodeMatch.groupValues[1].toIntOrNull()
                     if (episodeNumber != null) {
-                        val episodePoster = extractEpisodeImage(episodeUrl)
-                        
                         val episode = newEpisode(episodeUrl) {
                             this.name = "Episódio $episodeNumber"
                             this.episode = episodeNumber
                             this.season = 1
-                            this.posterUrl = episodePoster
                         }
                         episodes.add(episode)
                         episodeCounter++
@@ -228,13 +228,10 @@ class AnimeFHD : MainAPI() {
                 if (ovaMatch != null) {
                     val ovaNumber = ovaMatch.groupValues[1].toIntOrNull()
                     if (ovaNumber != null) {
-                        val ovaPoster = extractEpisodeImage(ovaUrl)
-                        
                         val episode = newEpisode(ovaUrl) {
                             this.name = "OVA $ovaNumber"
                             this.episode = episodeCounter
                             this.season = 1
-                            this.posterUrl = ovaPoster
                         }
                         episodes.add(episode)
                         episodeCounter++
@@ -254,13 +251,10 @@ class AnimeFHD : MainAPI() {
                 if (movieMatch != null) {
                     val movieNumber = movieMatch.groupValues[1].toIntOrNull()
                     if (movieNumber != null) {
-                        val moviePoster = extractEpisodeImage(movieUrl)
-                        
                         val episode = newEpisode(movieUrl) {
                             this.name = "Filme $movieNumber"
                             this.episode = episodeCounter
                             this.season = 1
-                            this.posterUrl = moviePoster
                         }
                         episodes.add(episode)
                         episodeCounter++
@@ -272,7 +266,7 @@ class AnimeFHD : MainAPI() {
         return episodes.sortedBy { it.episode }
     }
     
-    private suspend fun extractEpisodeImage(episodeUrl: String): String? {
+    private suspend fun extractFirstEpisodePoster(episodeUrl: String): String? {
         return try {
             val document = app.get(episodeUrl).document
             
@@ -303,4 +297,5 @@ class AnimeFHD : MainAPI() {
             null
         }
     }
+    
 } 
