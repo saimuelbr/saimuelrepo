@@ -234,7 +234,7 @@
         "description": "Filmes, Séries e Animes em Português"
     },
     {
-        "iconUrl": "https://goflix3.lol/wp-content/uploads/2025/01/favicon.png",
+        "iconUrl": "https://goflix4.lol/wp-content/uploads/2025/01/favicon.png",
         "fileSize": 22675,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
@@ -247,7 +247,7 @@
             "Movie",
             "TvSeries"
         ],
-        "version": 1,
+        "version": 2,
         "internalName": "GoFlix",
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/GoFlix.jar",
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/GoFlix.cs3",

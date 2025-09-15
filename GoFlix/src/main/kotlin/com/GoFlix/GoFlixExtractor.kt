@@ -8,7 +8,7 @@ import com.lagradost.cloudstream3.utils.M3u8Helper
 
 class GoFlixExtractor : ExtractorApi() {
     override val name = "GoFlix"
-    override val mainUrl = "https://goflix3.lol"
+    override val mainUrl = "https://goflix4.lol"
     override val requiresReferer = true
 
     override suspend fun getUrl(

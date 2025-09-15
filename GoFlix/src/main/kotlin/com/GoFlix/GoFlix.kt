@@ -10,7 +10,7 @@ import org.jsoup.nodes.Document
 import java.net.URLEncoder
 
 class GoFlix : MainAPI() {
-    override var mainUrl = "https://goflix3.lol"
+    override var mainUrl = "https://goflix4.lol"
     override var name = "GoFlix"
     override val hasMainPage = true
     override var lang = "pt-br"
@@ -93,8 +93,8 @@ class GoFlix : MainAPI() {
             val seasons = getSeasons(doc, url)
             val episodes = mutableListOf<Episode>()
             
-            seasons.forEach { (seasonNum, seasonId) ->
-                val seasonEpisodes = getEpisodesFromSeason(seasonId, url, seasonNum)
+            seasons.forEach { info ->
+                val seasonEpisodes = getEpisodesFromSeason(info.seasonId, info.postId, url, info.seasonNum)
                 episodes.addAll(seasonEpisodes)
             }
 
@@ -134,9 +134,14 @@ class GoFlix : MainAPI() {
         }
     }
 
-    private fun getSeasons(doc: Document, seriesUrl: String): List<Pair<Int, String>> {
-        val seasons = mutableListOf<Pair<Int, String>>()
-        val seasonElements = doc.select("section.section.episodes div.aa-drp ul.aa-cnt li.sel-temp a")
+    data class SeasonInfo(val seasonNum: Int, val seasonId: String, val postId: String)
+
+    private fun getSeasons(doc: Document, seriesUrl: String): List<SeasonInfo> {
+        val seasons = mutableListOf<SeasonInfo>()
+
+        val seasonElements = doc.select("div.aa-drp.choose-season ul.aa-cnt li.sel-temp a").ifEmpty {
+            doc.select("section.section.episodes div.aa-drp ul.aa-cnt li.sel-temp a")
+        }
         
         seasonElements.forEach { element ->
             val seasonText = element.text()
@@ -145,18 +150,17 @@ class GoFlix : MainAPI() {
             val seasonId = element.attr("data-season")
             
             if (seasonNum != null && postId.isNotEmpty() && seasonId.isNotEmpty()) {
-                seasons.add(Pair(seasonNum, seasonId))
+                seasons.add(SeasonInfo(seasonNum, seasonId, postId))
             }
         }
         
         return seasons
     }
 
-    private suspend fun getEpisodesFromSeason(seasonId: String, seriesUrl: String, seasonNum: Int): List<Episode> {
+    private suspend fun getEpisodesFromSeason(seasonId: String, postId: String, seriesUrl: String, seasonNum: Int): List<Episode> {
         val episodes = mutableListOf<Episode>()
         
         try {
-            val postId = extractPostId(seriesUrl)
             val response = app.post(
                 "$mainUrl/wp-admin/admin-ajax.php",
                 headers = mapOf(
@@ -249,7 +253,6 @@ class GoFlix : MainAPI() {
                 }
             }
             
-            // Fallback: busca em toda a página por URLs do YouTube
             val pageContent = doc.html()
             val youtubeRegex = Regex("https://www\\.youtube\\.com/embed/[a-zA-Z0-9_-]+")
             val youtubeMatch = youtubeRegex.find(pageContent)
