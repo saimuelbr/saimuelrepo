@@ -337,5 +337,27 @@
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/Doramas.cs3",
         "name": "Doramas",
         "description": "Doramas em FHD"
+    },
+    {
+        "iconUrl": "https://static.anroll.net/app-images/favicon.ico",
+        "fileSize": 36037,
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
+        "status": 1,
+        "language": "pt-br",
+        "authors": [
+            "Hexated",
+            "saimuelbr"
+        ],
+        "tvTypes": [
+            "Anime",
+            "AnimeMovie"
+        ],
+        "version": 1,
+        "internalName": "Anroll",
+        "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/Anroll.jar",
+        "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/Anroll.cs3",
+        "name": "Anroll",
+        "description": "Anroll - Animes em HD"
     }
 ]
