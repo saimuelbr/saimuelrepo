@@ -862,27 +862,40 @@ class EmbedCanais : MainAPI() {
         val channelUrl = data.ifEmpty { return false }
         val doc = app.get(channelUrl).document
 
-        val scriptContent = doc.select("script").firstOrNull { script ->
-            script.data().contains("source:") && script.data().contains(".m3u8")
-        }?.data() ?: return false
+        // 1) Tenta capturar diretamente no div de configuração
+        val cfgM3u8 = doc.selectFirst("div#cfg")?.attr("data-src")
+            ?.takeIf { it.startsWith("https://embmaxtv.") && it.contains(".m3u8") }
 
-        Regex("source:\\s*\"([^\"]+\\.m3u8[^\"]*)\"").find(scriptContent)?.groupValues?.get(1)
-            ?.let { url ->
-                callback(newExtractorLink("EmbedCanais", "EmbedCanais Live", url) {
-                    this.referer = channelUrl
-                })
-                return true
-            }
+        // 2) Fallback: procura no HTML inteiro por qualquer m3u8 que comece com https://embmaxtv.
+        val html = doc.html()
+        val regex = Regex("https://embmaxtv\\.[^\"'<>\\s]+\\.m3u8[^\"'<>\\s]*")
+        val foundByRegex = regex.find(html)?.value
 
-        Regex("embmaxtv\\.online/[^/]+/index\\.m3u8").find(scriptContent)?.value?.let { path ->
-            val url = "https://$path"
-            callback(newExtractorLink("EmbedCanais", "EmbedCanais Live", url) {
-                this.referer = channelUrl
-            })
-            return true
-        }
+        val finalUrl = cfgM3u8 ?: foundByRegex ?: return false
 
-        return false
+        // Headers requeridos para evitar bloqueio ao acessar o m3u8
+        val headers = mapOf(
+            // Request headers essenciais
+            "referer" to "https://embedcanais.com/",
+            "origin" to "https://embedcanais.com",
+            "user-agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+            "accept" to "application/vnd.apple.mpegurl",
+            // Client hints e privacidade
+            "sec-ch-ua" to "\"Google Chrome\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+            "sec-ch-ua-mobile" to "?0",
+            "sec-ch-ua-platform" to "\"Windows\"",
+            "sec-gpc" to "1",
+            "dnt" to "1"
+        )
+
+        // Retorna o link com os headers aplicados (o player usará esses headers para requisitar o m3u8)
+        callback(newExtractorLink("EmbedCanais", "EmbedCanais Live", finalUrl) {
+            this.referer = channelUrl
+            this.type = com.lagradost.cloudstream3.utils.ExtractorLinkType.M3U8
+            this.headers = headers
+        })
+
+        return true
     }
 
 }
