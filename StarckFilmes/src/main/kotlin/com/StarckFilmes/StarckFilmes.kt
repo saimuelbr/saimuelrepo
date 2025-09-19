@@ -720,8 +720,25 @@ class StarckFilmes : MainAPI() {
             "udp://tracker4.piratux.com:6969/announce",
             "udp://zer0day.ch:1337/announce",
             "udp://zer0day.to:1337/announce",
-            "udp://tracker.theoks.net:6969/announce"
+            "udp://tracker.theoks.net:6969/announce",
 
+            "http://1337.abcvg.info:80/announce",
+            "http://nyaa.tracker.wf:7777/announce",
+            "http://tk.greedland.net:80/announce",
+            "http://www.all4nothin.net:80/announce.php",
+            "https://1337.abcvg.info:443/announce",
+            "https://tr.abiir.top:443/announce",
+            "https://tr.abir.ga:443/announce",
+            "https://tracker.foreverpirates.co:443/announce",
+            "https://tracker.zhuqiy.com:443/announce",
+            "https://tracker1.520.jp:443/announce",
+            "udp://bt.bontal.net:6969/announce",
+            "udp://isk.richardsw.club:6969/announce",
+            "udp://opentor.org:2710/announce",
+            "udp://public.tracker.vraphim.com:6969/announce",
+            "udp://run.publictracker.xyz:6969/announce",
+            "udp://tracker.tnl.one:8000/announce",
+            "wss://tracker.openwebtorrent.com:443/announce"
 
         )
         
