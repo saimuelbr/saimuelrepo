@@ -1,7 +1,7 @@
 [
     {
         "iconUrl": "https://cdn.bcdn.zip/wp-content/uploads/2017/04/nc-header-responsive.png",
-        "fileSize": 15877,
+        "fileSize": 14875,
         "apiVersion": 3,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
         "status": 1,
@@ -23,7 +23,7 @@
     },
     {
         "iconUrl": "https://pobreflixtv.lat/uploads/set_resources_14/a5bd102ac3b4e1362ac25aed38707f87_favicon.ico",
-        "fileSize": 24480,
+        "fileSize": 15710,
         "apiVersion": 3,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
         "status": 1,
@@ -44,7 +44,7 @@
     },
     {
         "iconUrl": "https://streamberry.com.br/wp-content/uploads/2024/04/favicon-96x96-1.png",
-        "fileSize": 15665,
+        "fileSize": 17643,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
         "status": 1,
@@ -107,7 +107,7 @@
     },
     {
         "iconUrl": "https://novizer.com/img/android-chrome-192x192.png",
-        "fileSize": 17784,
+        "fileSize": 23911,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
         "status": 1,
@@ -130,7 +130,7 @@
     },
     {
         "iconUrl": "https://embedcanais.com/icons/favicon512.png",
-        "fileSize": 17468,
+        "fileSize": 9717,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
         "status": 1,
@@ -141,7 +141,7 @@
         "tvTypes": [
             "Live"
         ],
-        "version": 4,
+        "version": 5,
         "internalName": "EmbedCanais",
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/EmbedCanais.jar",
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/EmbedCanais.cs3",
@@ -151,7 +151,7 @@
     },
     {
         "iconUrl": "https://www.starckfilmes.online/adjust-icon-192x192.png",
-        "fileSize": 22538,
+        "fileSize": 25852,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
         "status": 1,
@@ -173,7 +173,7 @@
     },
     {
         "iconUrl": "https://animefhd.com/wp-content/themes/temaa25/img/favicon/270.png",
-        "fileSize": 15800,
+        "fileSize": 15733,
         "apiVersion": 2,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
         "status": 1,
@@ -193,7 +193,7 @@
     },
     {
         "iconUrl": "https://novelasflix1.me/apple-touch-icon.png",
-        "fileSize": 17866,
+        "fileSize": 17871,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
         "status": 1,
@@ -214,7 +214,7 @@
     },
     {
         "iconUrl": "https://i.imgur.com/Y7gXItF.png",
-        "fileSize": 19659,
+        "fileSize": 18543,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
         "status": 1,
@@ -235,7 +235,7 @@
     },
     {
         "iconUrl": "https://goflix4.lol/wp-content/uploads/2025/01/favicon.png",
-        "fileSize": 22675,
+        "fileSize": 23338,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
         "status": 1,
@@ -277,7 +277,7 @@
     },
     {
         "iconUrl": "https://animesonlinenet.com/wp-content/uploads/2025/08/cropped-Favicon-net-1-1.png",
-        "fileSize": 16056,
+        "fileSize": 18404,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
         "status": 1,
