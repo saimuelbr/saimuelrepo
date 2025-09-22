@@ -1,11 +1,32 @@
 package com.Anroll
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import com.lagradost.cloudstream3.*
-import com.lagradost.cloudstream3.utils.*
+import com.lagradost.cloudstream3.AnimeSearchResponse
+import com.lagradost.cloudstream3.DubStatus
+import com.lagradost.cloudstream3.Episode
+import com.lagradost.cloudstream3.ErrorLoadingException
+import com.lagradost.cloudstream3.HomePageList
+import com.lagradost.cloudstream3.HomePageResponse
+import com.lagradost.cloudstream3.LoadResponse
+import com.lagradost.cloudstream3.MainAPI
+import com.lagradost.cloudstream3.MainPageRequest
+import com.lagradost.cloudstream3.SearchResponse
+import com.lagradost.cloudstream3.SubtitleFile
+import com.lagradost.cloudstream3.TvType
+import com.lagradost.cloudstream3.addDubStatus
+import com.lagradost.cloudstream3.addEpisodes
+import com.lagradost.cloudstream3.app
+import com.lagradost.cloudstream3.fixUrl
+import com.lagradost.cloudstream3.fixUrlNull
+import com.lagradost.cloudstream3.newAnimeLoadResponse
+import com.lagradost.cloudstream3.newAnimeSearchResponse
+import com.lagradost.cloudstream3.newEpisode
+import com.lagradost.cloudstream3.newHomePageResponse
+import com.lagradost.cloudstream3.newMovieLoadResponse
 import com.lagradost.cloudstream3.utils.AppUtils.toJson
 import com.lagradost.cloudstream3.utils.AppUtils.tryParseJson
-import com.lagradost.cloudstream3.utils.Qualities
+import com.lagradost.cloudstream3.utils.ExtractorLink
+import com.lagradost.cloudstream3.utils.newExtractorLink
 import org.jsoup.nodes.Element
 
 class Anroll : MainAPI() {
@@ -20,9 +41,8 @@ class Anroll : MainAPI() {
         TvType.Anime,
         TvType.AnimeMovie
     )
-// thanks to https://github.com/hexated/cloudstream-extensions-hexated/blob/master/Anroll/src/main/kotlin/com/hexated/Anroll.kt (:
+
     companion object {
-        private const val searchUrl = "https://apiv2-prd.anroll.net"
         private const val episodeUrl = "https://apiv3-prd.anroll.net"
         private const val posterUrl = "https://static.anroll.net"
         private const val videoUrl = "https://cdn-zenitsu-2-gamabunta.b-cdn.net"
@@ -69,8 +89,8 @@ class Anroll : MainAPI() {
         val hasNext = animeRes?.meta?.hasNextPage == true
         return newHomePageResponse(
             listOf(
-                HomePageList("Animes - Todos", animeItems),
-                HomePageList("Filmes - Todos", filmeItems)
+                HomePageList("Filmes - Todos", filmeItems),
+                HomePageList("Animes - Todos", animeItems)
             ),
             hasNext
         )
@@ -91,7 +111,8 @@ class Anroll : MainAPI() {
     override suspend fun quickSearch(query: String): List<SearchResponse>? = search(query)
 
     override suspend fun search(query: String): List<SearchResponse>? {
-        val res = app.get("https://api-search.anroll.net/data?q=$query").parsedSafe<SearchApiResponse>()
+        val res =
+            app.get("https://api-search.anroll.net/data?q=${query}").parsedSafe<SearchApiResponse>()
         return res?.data?.mapNotNull { item ->
             val title = item.title ?: return@mapNotNull null
             val genId = item.gen_id ?: return@mapNotNull null
@@ -103,7 +124,7 @@ class Anroll : MainAPI() {
             } else {
                 "$posterUrl/images/animes/capas/$slug.jpg"
             }
-            
+
             newAnimeSearchResponse(title, href, type) {
                 this.posterUrl = poster
                 this.year = item.year?.toIntOrNull()
@@ -112,48 +133,56 @@ class Anroll : MainAPI() {
     }
 
     override suspend fun load(url: String): LoadResponse? {
-        val fixUrl = getProperAnimeLink(url) ?: throw ErrorLoadingException()
-        val document = app.get(fixUrl).document
 
-        val article = document.selectFirst("article.animedetails") ?: return null
-        val title = article.selectFirst("h2")?.text() ?: return null
-        
-        val bgPosterFromStyle = document.selectFirst("div[style*=static.anroll.net][style*=images/animes/screens/]")
-            ?.attr("style")
-            ?.let { style ->
-                Regex("""https?://static\.anroll\.net/[^"')\\s]+\.jpg""")
-                    .find(style)?.value
-            }
-            ?: run {
-                val html = document.html()
-                Regex("""https?://static\.anroll\.net/[^"')\\s]+\.jpg""")
-                    .find(html)?.value
-            }
-        var poster = bgPosterFromStyle
-        if (poster.isNullOrBlank()) {
-            poster = fixUrlNull(document.select("section.animecontent img").attr("src"))
-        }
-        
-        val tags = article.select("div#generos a").map { it.text() }
-        val year = article.selectFirst("div.dfuefM")?.nextElementSibling()?.text()
-            ?.toIntOrNull()
-        val description = document.select("div.sinopse").text().trim()
+        val fixUrl = getProperAnimeLink(url) ?: throw ErrorLoadingException()
+
         val type = if (fixUrl.contains("/a/")) TvType.Anime else TvType.AnimeMovie
 
         return if (type == TvType.AnimeMovie) {
             val genId = fixUrl.substringAfterLast("/")
-            val movieApiUrl = "https://www.anroll.net/_next/data/RWySOXkJe1_j6zQD6H8T_/f/$genId.json?movie=$genId"
+            val movieApiUrl =
+                "https://www.anroll.net/_next/data/RWySOXkJe1_j6zQD6H8T_/f/$genId.json?movie=$genId"
             val movieRes = tryParseJson<MovieApiResponse>(app.get(movieApiUrl).text)
             val movieData = movieRes?.pageProps?.data?.data_movie
-            
-            newMovieLoadResponse(title, url, type, url) {
-                posterUrl = poster
-                this.year = year
-                plot = description
-                this.tags = tags
+
+            val slug = movieData?.slug_filme?.trim().orEmpty()
+
+            newMovieLoadResponse(movieData?.nome_original ?: "", url, type, url) {
+                posterUrl = "${Companion.posterUrl}/images/filmes/capas/$slug.jpg"
+                movieData?.ano.also { this.year = it?.toIntOrNull() }
+                movieData?.sinopse_filme.also { this.plot = it }
                 this.dataUrl = url
             }
+
         } else {
+
+            val document = app.get(fixUrl).document
+
+            val article = document.selectFirst("article.animedetails") ?: return null
+            val title = article.selectFirst("h2")?.text() ?: return null
+
+            val bgPosterFromStyle =
+                document.selectFirst("div[style*=static.anroll.net][style*=images/animes/screens/]")
+                    ?.attr("style")
+                    ?.let { style ->
+                        Regex("""https?://static\.anroll\.net/[^"')\\s]+\.jpg""")
+                            .find(style)?.value
+                    }
+                    ?: run {
+                        val html = document.html()
+                        Regex("""https?://static\.anroll\.net/[^"')\\s]+\.jpg""")
+                            .find(html)?.value
+                    }
+            var poster = bgPosterFromStyle
+            if (poster.isNullOrBlank()) {
+                poster = fixUrlNull(document.select("section.animecontent img").attr("src"))
+            }
+
+            val tags = article.select("div#generos a").map { it.text() }
+            val year = article.selectFirst("div.dfuefM")?.nextElementSibling()?.text()
+                ?.toIntOrNull()
+            val description = document.select("div.sinopse").text().trim()
+
             val episodes = mutableListOf<Episode>()
             val baseId = fixUrl.substringAfterLast("/")
             val firstText = app.get("$episodeUrl/animes/$baseId/episodes?page=1&order=asc").text
@@ -163,13 +192,19 @@ class Anroll : MainAPI() {
             fun map(list: List<DataEpisode>?): List<Episode> {
                 return list?.map { ep ->
                     val episodeNum = ep.n_episodio?.toIntOrNull()
-                    Episode(
-                        Load(ep.anime?.get("slug_serie"), ep.n_episodio, "animes").toJson(),
-                        ep.titulo_episodio,
-                        episode = episodeNum,
-                        posterUrl = ep.anime?.get("slug_serie")?.fixImageUrl(Image.Episode, episodeNum),
-                        description = ep.sinopse_episodio
-                    )
+                    newEpisode(
+                        Load(
+                            ep.anime?.get("slug_serie"),
+                            ep.n_episodio,
+                            "animes"
+                        ).toJson()
+                    ) {
+                        this.episode = episodeNum
+                        this.name = ep.titulo_episodio
+                        this.description = ep.sinopse_episodio
+                        this.posterUrl =
+                            ep.anime?.get("slug_serie")?.fixImageUrl(Image.Episode, episodeNum)
+                    }
                 } ?: emptyList()
             }
 
@@ -201,13 +236,14 @@ class Anroll : MainAPI() {
     ): Boolean {
         if (data.startsWith("http")) {
             val genId = data.substringAfterLast("/")
-            val movieApiUrl = "https://www.anroll.net/_next/data/RWySOXkJe1_j6zQD6H8T_/f/$genId.json?movie=$genId"
+            val movieApiUrl =
+                "https://www.anroll.net/_next/data/RWySOXkJe1_j6zQD6H8T_/f/$genId.json?movie=$genId"
             val movieRes = tryParseJson<MovieApiResponse>(app.get(movieApiUrl).text)
             val movieData = movieRes?.pageProps?.data?.data_movie
             val slugFilme = movieData?.slug_filme ?: return false
-            
-            val streamUrl = "$videoUrl/hls/movies/$slugFilme/movie.mp4/media-1/stream.m3u8"
-            
+
+            val streamUrl = "$videoUrl/cf/hls/movies/$slugFilme/movie.mp4/media-1/stream.m3u8"
+
             callback(
                 newExtractorLink(
                     source = this.name,
@@ -216,36 +252,15 @@ class Anroll : MainAPI() {
                     type = com.lagradost.cloudstream3.utils.ExtractorLinkType.M3U8
                 ) {
                     this.referer = "$mainUrl/"
-                    this.headers = mapOf(
-                        "accept" to "*/*",
-                        "accept-encoding" to "gzip, deflate, br, zstd",
-                        "accept-language" to "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
-                        "cache-control" to "no-cache",
-                        "dnt" to "1",
-                        "origin" to mainUrl,
-                        "pragma" to "no-cache",
-                        "referer" to "$mainUrl/watch/e/",
-                        "sec-ch-ua" to "\"Google Chrome\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
-                        "sec-ch-ua-mobile" to "?0",
-                        "sec-ch-ua-platform" to "\"Windows\"",
-                        "sec-fetch-dest" to "empty",
-                        "sec-fetch-mode" to "cors",
-                        "sec-fetch-site" to "cross-site",
-                        "sec-gpc" to "1",
-                        "user-agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
-                        "X-Requested-With" to "XMLHttpRequest",
-                        "Range" to "bytes=0-",
-                        "Content-Type" to "application/vnd.apple.mpegurl; charset=utf-8",
-                        "access-control-allow-origin" to "*",
-                        "access-control-expose-headers" to "Server, x-goog-meta-frames, Content-Length, Content-Type, Range, X-Requested-With, If-Modified-Since, If-None-Match"
-                    )
+                    this.headers = getHeaders()
                 }
             )
             return true
         }
-        
+
         val load = tryParseJson<Load>(data)
-        val streamUrl = "$videoUrl/cf/hls/${load?.type}/${load?.slug_serie}/${load?.n_episodio}.mp4/media-1/stream.m3u8"
+        val streamUrl =
+            "$videoUrl/cf/hls/${load?.type}/${load?.slug_serie}/${load?.n_episodio}.mp4/media-1/stream.m3u8"
 
         callback(
             newExtractorLink(
@@ -255,34 +270,36 @@ class Anroll : MainAPI() {
                 type = com.lagradost.cloudstream3.utils.ExtractorLinkType.M3U8
             ) {
                 this.referer = "$mainUrl/"
-                this.headers = mapOf(
-                    "accept" to "*/*",
-                    "accept-encoding" to "gzip, deflate, br, zstd",
-                    "accept-language" to "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
-                    "cache-control" to "no-cache",
-                    "dnt" to "1",
-                    "origin" to mainUrl,
-                    "pragma" to "no-cache",
-                    "referer" to "$mainUrl/watch/e/",
-                    "sec-ch-ua" to "\"Google Chrome\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
-                    "sec-ch-ua-mobile" to "?0",
-                    "sec-ch-ua-platform" to "\"Windows\"",
-                    "sec-fetch-dest" to "empty",
-                    "sec-fetch-mode" to "cors",
-                    "sec-fetch-site" to "cross-site",
-                    "sec-gpc" to "1",
-                    "user-agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
-
-                    "X-Requested-With" to "XMLHttpRequest",
-                    "Range" to "bytes=0-",
-                    "Content-Type" to "application/vnd.apple.mpegurl; charset=utf-8",
-
-                    "access-control-allow-origin" to "*",
-                    "access-control-expose-headers" to "Server, x-goog-meta-frames, Content-Length, Content-Type, Range, X-Requested-With, If-Modified-Since, If-None-Match"
-                )
+                this.headers = getHeaders()
             }
         )
         return true
+    }
+
+    private fun getHeaders(): Map<String, String> {
+        return mapOf(
+            "accept" to "*/*",
+            "accept-encoding" to "gzip, deflate, br, zstd",
+            "accept-language" to "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+            "cache-control" to "no-cache",
+            "dnt" to "1",
+            "origin" to mainUrl,
+            "pragma" to "no-cache",
+            "referer" to "$mainUrl/watch/e/",
+            "sec-ch-ua" to "\"Google Chrome\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+            "sec-ch-ua-mobile" to "?0",
+            "sec-ch-ua-platform" to "\"Windows\"",
+            "sec-fetch-dest" to "empty",
+            "sec-fetch-mode" to "cors",
+            "sec-fetch-site" to "cross-site",
+            "sec-gpc" to "1",
+            "user-agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+            "X-Requested-With" to "XMLHttpRequest",
+            "Range" to "bytes=0-",
+            "Content-Type" to "application/vnd.apple.mpegurl; charset=utf-8",
+            "access-control-allow-origin" to "*",
+            "access-control-expose-headers" to "Server, x-goog-meta-frames, Content-Length, Content-Type, Range, X-Requested-With, If-Modified-Since, If-None-Match"
+        )
     }
 
     private suspend fun getProperAnimeLink(uri: String): String? {
@@ -295,21 +312,17 @@ class Anroll : MainAPI() {
         }
     }
 
-    private fun addAnimeSearch(titulo: String, id: String, slug: String, type: Image): AnimeSearchResponse {
-        return newAnimeSearchResponse(titulo, "$mainUrl/$id", TvType.Anime) {
-            this.posterUrl = slug.fixImageUrl(type)
-        }
-    }
-
     private fun String.fixImageUrl(param: Image, episodeNumber: Int? = null): String {
         return when (param) {
             Image.Episode -> {
                 val epNum = episodeNumber?.let { String.format("%03d", it) } ?: "001"
                 "$posterUrl/images/animes/screens/$this/$epNum.jpg"
             }
+
             Image.Anime -> {
                 "$posterUrl/images/animes/capas/$this.jpg"
             }
+
             Image.Filme -> {
                 "$posterUrl/images/filmes/capas/$this.jpg"
             }
@@ -438,5 +451,4 @@ class Anroll : MainAPI() {
         @JsonProperty("pageProps") val pageProps: MovieApiPageProps? = null,
         @JsonProperty("__N_SSG") val __N_SSG: Boolean? = null,
     )
-
 }

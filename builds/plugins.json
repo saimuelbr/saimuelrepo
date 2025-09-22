@@ -340,20 +340,21 @@
     },
     {
         "iconUrl": "https://static.anroll.net/app-images/favicon.ico",
-        "fileSize": 36037,
+        "fileSize": 35987,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
         "status": 1,
         "language": "pt-br",
         "authors": [
             "Hexated",
-            "saimuelbr"
+            "saimuelbr",
+            "Mr.Robot"
         ],
         "tvTypes": [
             "Anime",
             "AnimeMovie"
         ],
-        "version": 1,
+        "version": 2,
         "internalName": "Anroll",
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/Anroll.jar",
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/Anroll.cs3",
