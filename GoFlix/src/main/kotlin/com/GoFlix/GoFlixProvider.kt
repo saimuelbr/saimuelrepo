@@ -7,6 +7,5 @@ import com.lagradost.cloudstream3.plugins.CloudstreamPlugin
 class GoFlixProvider : BasePlugin() {
     override fun load() {
         registerMainAPI(GoFlix())
-        registerExtractorAPI(GoFlixExtractor())
     }
 }
