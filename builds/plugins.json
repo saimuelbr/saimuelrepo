@@ -89,7 +89,7 @@
         "fileSize": 21556,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
-        "status": 1,
+        "status": 0,
         "language": "pt-br",
         "authors": [
             "saimuelbr"
@@ -234,11 +234,11 @@
         "description": "Filmes, Séries e Animes em Português"
     },
     {
-        "iconUrl": "https://goflix4.lol/wp-content/uploads/2025/01/favicon.png",
+        "iconUrl": "https://goflixy.lol/assets/favicon7.png",
         "fileSize": 23338,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
-        "status": 0,
+        "status": 1,
         "language": "pt-br",
         "authors": [
             "saimuelbr"
@@ -247,12 +247,12 @@
             "Movie",
             "TvSeries"
         ],
-        "version": 2,
+        "version": 4,
         "internalName": "GoFlix",
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/GoFlix.jar",
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/GoFlix.cs3",
         "name": "GoFlix",
-        "description": "GoFlix - Filmes, Séries e Animes em Português"
+        "description": "GoFlix - Filmes e Séries e Animes"
     },
     {
         "iconUrl": "https://ultracine.org/wp-content/uploads/2024/07/cropped-favicon-300x300.png",
