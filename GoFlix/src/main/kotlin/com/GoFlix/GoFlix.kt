@@ -262,7 +262,7 @@ class GoFlix : MainAPI() {
                     if (playerResponse.isNotEmpty() && playerResponse.contains("src=")) {
                         break
                     }
-        } catch (e: Exception) {
+                } catch (e: Exception) {
                 }
             }
             
@@ -270,17 +270,11 @@ class GoFlix : MainAPI() {
                 return false
             }
             
-            
             val iframePattern = Regex("src=\"([^\"]+)\"")
-            val iframeMatch = iframePattern.find(playerResponse)
-            
-            if (iframeMatch == null) {
-                return false
-            }
+            val iframeMatch = iframePattern.find(playerResponse) ?: return false
             
             val iframeSrc = iframeMatch.groupValues[1]
             val adsUrl = if (iframeSrc.startsWith("/")) "https://$FEMBED_DOMAIN$iframeSrc" else iframeSrc
-            
             
             val adsHeaders = mapOf(
                 "Accept" to "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
@@ -298,18 +292,12 @@ class GoFlix : MainAPI() {
             
             val adsResponse = app.get(adsUrl, headers = adsHeaders).text
             
-            val filemoonPattern = Regex("src=\"(https://filemoon\\.to/e/[^\"]+)\"")
-            val filemoonMatch = filemoonPattern.find(adsResponse)
-            
-            if (filemoonMatch == null) {
-                return false
-            }
+            val filemoonPattern = Regex("src=\"(https://filemoon\\.(to|in)/e/[^\"]+)\"")
+            val filemoonMatch = filemoonPattern.find(adsResponse) ?: return false
             
             val filemoonUrl = filemoonMatch.groupValues[1]
             
-            val extractorResult = loadExtractor(filemoonUrl, subtitleCallback = {}, callback = callback)
-            
-            return extractorResult
+            return loadExtractor(filemoonUrl, subtitleCallback = {}, callback = callback)
             
         } catch (e: Exception) {
             return false

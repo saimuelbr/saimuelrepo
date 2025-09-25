@@ -247,12 +247,12 @@
             "Movie",
             "TvSeries"
         ],
-        "version": 4,
+        "version": 5,
         "internalName": "GoFlix",
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/GoFlix.jar",
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/GoFlix.cs3",
         "name": "GoFlix",
-        "description": "GoFlix - Filmes e Séries e Animes"
+        "description": "GoFlix - Filmes e Séries e Animes em FHD e HD+"
     },
     {
         "iconUrl": "https://ultracine.org/wp-content/uploads/2024/07/cropped-favicon-300x300.png",
