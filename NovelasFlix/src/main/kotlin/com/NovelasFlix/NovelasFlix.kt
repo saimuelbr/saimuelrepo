@@ -12,7 +12,7 @@ import com.lagradost.cloudstream3.utils.M3u8Helper
 import org.jsoup.nodes.Element
 
 class NovelasFlix : MainAPI() {
-    override var mainUrl = "https://novelasflix1.me"
+    override var mainUrl = "https://novelasflix4k.me"
     override var name = "NovelasFlix"
     override val hasMainPage = true
     override var lang = "pt-br"
@@ -79,6 +79,29 @@ class NovelasFlix : MainAPI() {
 
     override suspend fun search(query: String): List<SearchResponse> {
         val url = "$mainUrl/index.php?do=search"
+        val headers = mapOf(
+            "accept" to "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
+            "accept-language" to "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+            "cache-control" to "no-cache",
+            "content-type" to "application/x-www-form-urlencoded",
+            "cookie" to "PHPSESSID=3891nsf302kp8on9us4qt7k0ae",
+            "dnt" to "1",
+            "origin" to "https://novelasflix4k.me",
+            "pragma" to "no-cache",
+            "priority" to "u=0, i",
+            "referer" to "https://novelasflix4k.me/",
+            "sec-ch-ua" to "\"Google Chrome\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\"",
+            "sec-ch-ua-mobile" to "?0",
+            "sec-ch-ua-platform" to "\"Windows\"",
+            "sec-fetch-dest" to "document",
+            "sec-fetch-mode" to "navigate",
+            "sec-fetch-site" to "same-origin",
+            "sec-fetch-user" to "?1",
+            "sec-gpc" to "1",
+            "upgrade-insecure-requests" to "1",
+            "user-agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36"
+        )
+        
         val data = mapOf(
             "do" to "search",
             "subaction" to "search",
@@ -88,7 +111,7 @@ class NovelasFlix : MainAPI() {
             "story" to query
         )
         
-        val document = app.post(url, data = data).document
+        val document = app.post(url, headers = headers, data = data).document
         return document.select("div#dle-content div.default.poster.grid-item.has-overlay")
             .mapNotNull { it.toSearchResult() }
     }
