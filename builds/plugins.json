@@ -360,5 +360,26 @@
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/Anroll.cs3",
         "name": "Anroll",
         "description": "Anroll - Animes em HD"
+    },
+    {
+        "iconUrl": "https://filmeson1.site/wp-content/uploads/2022/12/Imagem2.png",
+        "fileSize": 27849,
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
+        "status": 1,
+        "language": "pt-br",
+        "authors": [
+            "saimuelbr"
+        ],
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "version": 1,
+        "internalName": "FilmesOn",
+        "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/FilmesOn.jar",
+        "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/FilmesOn.cs3",
+        "name": "FilmesOn",
+        "description": "FilmesOn - Filmes e Séries em HD+"
     }
 ]
