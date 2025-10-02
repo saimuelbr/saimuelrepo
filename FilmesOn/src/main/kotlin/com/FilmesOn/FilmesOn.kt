@@ -234,7 +234,6 @@ class FilmesOn : MainAPI() {
         val dateText = select("div.extra span.date").text().trim()
         Log.d("FilmesOn", "Date text: '$dateText'")
         
-        // Try to extract year from date text like "Jul. 09, 2025"
         val yearMatch = Regex("(\\d{4})").find(dateText)
         if (yearMatch != null) {
             val year = yearMatch.groupValues[1].toIntOrNull()
@@ -262,12 +261,10 @@ class FilmesOn : MainAPI() {
     }
     
     private fun Element.extractDuration(): Int? {
-        // Movie runtime: <span class="runtime">129 Min.</span>
         val movieText = select("div.extra span.runtime").text().trim()
         val movieMinutes = Regex("(\\d+)").find(movieText)?.groupValues?.get(1)?.toIntOrNull()
         if (movieMinutes != null) return movieMinutes
         
-        // Series average duration: custom_fields > Average Duration : "50 minutes"
         val seriesDurationText = select("div.custom_fields")
             .firstOrNull { it.select("b.variante").text().contains("Average Duration", ignoreCase = true) }
             ?.select("span.valor")?.text()?.trim()
@@ -344,7 +341,6 @@ class FilmesOn : MainAPI() {
                 val episodeTitle = episodeElement.select("div.episodiotitle a").text().trim()
                 val episodeUrl = fixUrl(episodeElement.select("div.episodiotitle a").attr("href"))
                 
-                // FilmesOn-specific poster: tmdb w154 -> original, with simple fallbacks
                 val imagenDiv = episodeElement.selectFirst("div.imagen")
                 val imgEl = imagenDiv?.selectFirst("img")
                 var epPoster = imgEl?.attr("src")
@@ -362,7 +358,6 @@ class FilmesOn : MainAPI() {
                 }
                 val finalPoster = epPoster?.let { fixUrl(it) }
                 
-                // Air date from episode tile span.date (e.g., "Oct. 01, 2006")
                 val airDate = episodeElement.select("div.episodiotitle span.date").text().trim().ifBlank { null }
                 
                 val ep = newEpisode(episodeUrl) {
@@ -493,7 +488,6 @@ class FilmesOn : MainAPI() {
         val iframeSrc = document.select("iframe[src*='1take.lat/player']").attr("src")
         Log.d("FilmesOn", "Found iframe src: $iframeSrc")
         if (iframeSrc.isEmpty()) return
-        // Request player page and extract apiUrl, then send &url Mediafire to native extractor
         val handled = handleApiUrlAndUseMediafire(iframeSrc, subtitleCallback, callback)
         Log.d("FilmesOn", "Handled via Mediafire extractor: $handled")
     }

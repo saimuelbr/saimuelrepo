@@ -44,7 +44,7 @@
     },
     {
         "iconUrl": "https://streamberry.com.br/wp-content/uploads/2024/04/favicon-96x96-1.png",
-        "fileSize": 17643,
+        "fileSize": 19681,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
         "status": 1,
@@ -55,7 +55,7 @@
             "Movie",
             "TvSeries"
         ],
-        "version": 4,
+        "version": 5,
         "internalName": "Streamberry",
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/Streamberry.jar",
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/Streamberry.cs3",
