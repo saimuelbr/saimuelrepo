@@ -262,7 +262,7 @@ class GoFlix : MainAPI() {
                     if (playerResponse.isNotEmpty() && playerResponse.contains("src=")) {
                         break
                     }
-                } catch (e: Exception) {
+        } catch (e: Exception) {
                 }
             }
             
