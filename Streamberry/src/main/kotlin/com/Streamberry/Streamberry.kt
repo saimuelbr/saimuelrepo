@@ -70,6 +70,7 @@ class Streamberry : MainAPI() {
             ?: document.selectFirst(".sheader .poster noscript img")?.attr("src")?.let { fixUrl(it) }
 
         val plot = document.selectFirst("#info .wp-content p")?.text()?.trim()
+        val rating = document.extractRating()
         val genres = document.select(".sgeneros a").map { it.text().trim() }
         val year = document.selectFirst(".extra .date")?.text()?.takeLast(4)?.toIntOrNull()
 
@@ -99,6 +100,7 @@ class Streamberry : MainAPI() {
                 this.posterUrl = poster
                 this.year = year
                 this.plot = plot
+                this.rating = rating
                 this.tags = tags
                 this.duration = duration
                 this.backgroundPosterUrl = posterList.firstOrNull()
@@ -140,6 +142,7 @@ class Streamberry : MainAPI() {
                 this.posterUrl = poster
                 this.year = year
                 this.plot = plot
+                this.rating = rating
                 this.tags = tags
                 this.duration = duration
                 this.backgroundPosterUrl = posterList.firstOrNull()
@@ -210,6 +213,20 @@ class Streamberry : MainAPI() {
         }
         return initial
     }
+
+    private fun Element.extractRating(): Int? {
+    val imdb = select("div.custom_fields")
+        .firstOrNull { it.select("b.variante").text().contains("IMDb", ignoreCase = true) }
+        ?.select("span.valor strong")?.text()?.trim()
+
+    val tmdb = select("div.custom_fields")
+        .firstOrNull { it.select("b.variante").text().contains("TMDb", ignoreCase = true) }
+        ?.select("span.valor strong")?.text()?.trim()
+
+    val ratingText = imdb ?: tmdb
+
+    return ratingText?.toRatingInt()
+}
 
     private fun Element.toSearchResult(): SearchResponse? {
         val link = this.selectFirst("a")?.attr("href") ?: return null
