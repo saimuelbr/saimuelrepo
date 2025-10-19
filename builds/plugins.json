@@ -129,8 +129,8 @@
         "language": "pt-br"
     },
     {
-        "iconUrl": "https://embedcanais.com/icons/favicon512.png",
-        "fileSize": 9717,
+        "iconUrl": "https://embedcanais.com/icons/embedcanaistv.png",
+        "fileSize": 9758,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
         "status": 1,
@@ -141,7 +141,7 @@
         "tvTypes": [
             "Live"
         ],
-        "version": 5,
+        "version": 6,
         "internalName": "EmbedCanais",
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/EmbedCanais.jar",
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/EmbedCanais.cs3",

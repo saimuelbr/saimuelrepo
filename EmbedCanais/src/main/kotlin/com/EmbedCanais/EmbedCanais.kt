@@ -90,34 +90,38 @@ class EmbedCanais : MainAPI() {
     }
 
     override suspend fun loadLinks(
-        data: String,
-        isCasting: Boolean,
-        subtitleCallback: (SubtitleFile) -> Unit,
-        callback: (ExtractorLink) -> Unit
-    ): Boolean {
+    data: String,
+    isCasting: Boolean,
+    subtitleCallback: (SubtitleFile) -> Unit,
+    callback: (ExtractorLink) -> Unit
+): Boolean {
 
-        val channelUrl = data.ifEmpty { return false }
-        val doc = app.get(channelUrl).document
+    val channelUrl = data.ifEmpty { return false }
+    val doc = app.get(channelUrl).document
 
-        val scripts = doc.select("script")
-        var finalUrl: String? = null
-        
-        for (script in scripts) {
-            val scriptContent = script.html()
-            val urlMatch = Regex("const\\s+url\\s*=\\s*\"([^\"]+\\.m3u8[^\"]*)\"").find(scriptContent)
-            if (urlMatch != null) {
-                finalUrl = urlMatch.groupValues[1]
-                break
-            }
+    val scripts = doc.select("script")
+    var finalUrl: String? = null
+
+    for (script in scripts) {
+        val scriptContent = script.html()
+
+        val urlMatch = Regex(
+            """(?:const\s+(?:url|SRC)\s*=\s*(?:q\(['"]src['"],\s*)?['"]([^'"]+\.m3u8[^'"]*)['"])"""
+        ).find(scriptContent)
+
+        if (urlMatch != null) {
+            finalUrl = urlMatch.groupValues[1]
+            break
         }
+    }
 
-        if (finalUrl == null) {
-            val html = doc.html()
-            val regex = Regex("https://embmaxtv\\.[^\"'<>\\s]+\\.m3u8[^\"'<>\\s]*")
-            finalUrl = regex.find(html)?.value
-        }
+    if (finalUrl == null) {
+        val html = doc.html()
+        val regex = Regex("""https?://[^\s"'<>]+\.m3u8[^\s"'<>]*""")
+        finalUrl = regex.find(html)?.value
+    }
 
-        if (finalUrl == null) return false
+    if (finalUrl == null) return false
 
         val headers = mapOf(
             "referer" to "https://embedcanais.com/",
@@ -132,12 +136,12 @@ class EmbedCanais : MainAPI() {
         )
 
         callback(newExtractorLink("EmbedCanais", "EmbedCanais Live", finalUrl) {
-            this.referer = channelUrl
+                this.referer = channelUrl
             this.type = com.lagradost.cloudstream3.utils.ExtractorLinkType.M3U8
             this.headers = headers
-        })
+            })
 
-        return true
+            return true
     }
 
 }

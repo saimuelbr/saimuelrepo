@@ -6,6 +6,6 @@ cloudstream {
     authors = listOf("saimuelbr")
     status = 1
     tvTypes = listOf("Live")
-    iconUrl = "https://embedcanais.com/icons/favicon512.png"
+    iconUrl = "https://embedcanais.com/icons/embedcanaistv.png"
     isCrossPlatform = true
 } 
