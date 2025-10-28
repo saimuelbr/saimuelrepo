@@ -381,5 +381,27 @@
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/FilmesOn.cs3",
         "name": "FilmesOn",
         "description": "FilmesOn - Filmes e Séries em HD+"
+    },
+    {
+    "iconUrl": "https://animesdigital.org/wp-content/uploads/2025/03/cropped-logo-e1740827992823-192x192.png",
+    "fileSize": 27391,
+    "apiVersion": 1,
+    "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
+    "status": 1,
+    "language": "pt-br",
+    "authors": [
+        "saimuelbr",
+        "Sephiroth"
+    ],
+    "tvTypes": [
+        "Anime",
+        "AnimeMovie"
+    ],
+    "version": 2,
+    "internalName": "AnimesDigital",
+    "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/AnimesDigital.jar",
+    "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/AnimesDigital.cs3",
+    "name": "AnimesDigital",
+    "description": "Animes Digital - Animes em FHD LEG e DUB."
     }
 ]
