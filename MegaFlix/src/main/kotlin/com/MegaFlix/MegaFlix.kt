@@ -162,76 +162,75 @@ class MegaFlix : MainAPI() {
     }
 
     private suspend fun getEpisodesFromSeasons(doc: org.jsoup.nodes.Document, url: String): List<Episode> {
-        val episodes = mutableListOf<Episode>()
-        
-        val scriptContent = doc.select("script").find { it.data().contains("item_id") }?.data() ?: return emptyList()
-        val itemIdMatch = Regex("""let item_id = (\d+);""").find(scriptContent)
-        val itemUrlMatch = Regex("""let item_url = '([^']+)';""").find(scriptContent)
-        
-        if (itemIdMatch != null && itemUrlMatch != null) {
-            val itemId = itemIdMatch.groupValues[1]
-            val itemUrl = itemUrlMatch.groupValues[1]
-            
-            val seasonElements = doc.select("div.accordion-item")
-            
-            for (seasonElement in seasonElements) {
-                val seasonNumber = seasonElement.select("div.select-season").attr("data-season").toIntOrNull() ?: continue
-                val seasonEpisodes = getEpisodes(itemId, seasonNumber, itemUrl)
-                
-                seasonEpisodes.forEach { episode ->
-                    episode.season = seasonNumber
+    val episodes = mutableListOf<Episode>()
+
+    val scriptContent = doc.select("script").find { it.data().contains("item_id") }?.data() ?: return emptyList()
+    val itemIdMatch = Regex("""let item_id = (\d+);""").find(scriptContent)
+    val itemUrlMatch = Regex("""let item_url = '([^']+)';""").find(scriptContent)
+
+    if (itemIdMatch != null && itemUrlMatch != null) {
+        val itemId = itemIdMatch.groupValues[1]
+        val itemUrl = itemUrlMatch.groupValues[1]
+
+        val seasonElements = doc.select("div.accordion-item")
+
+        for (seasonElement in seasonElements) {
+            val seasonNumber = seasonElement.select("div.select-season").attr("data-season").toIntOrNull() ?: continue
+            val seasonEpisodes = getEpisodes(itemId, seasonNumber, itemUrl)
+
+            seasonEpisodes.forEach { ep ->
+                episodes += newEpisode(ep.data) {
+                    this.name = ep.name
+                    this.season = seasonNumber
+                    this.episode = ep.episode
                 }
-                
-                episodes.addAll(seasonEpisodes)
             }
         }
-        
-        return episodes
     }
 
+    return episodes
+}
+
     private suspend fun getEpisodes(itemId: String, season: Int, itemUrl: String): List<Episode> {
-        val episodes = mutableListOf<Episode>()
-        
-        try {
-            val response = app.post(
-                "$mainUrl/api/seasons",
-                headers = mapOf(
-                    "User-Agent" to USER_AGENT,
-                    "Content-Type" to "application/x-www-form-urlencoded",
-                    "X-Requested-With" to "XMLHttpRequest",
-                    "Referer" to mainUrl
-                ),
-                data = mapOf(
-                    "item_id" to itemId,
-                    "season" to season.toString(),
-                    "item_url" to itemUrl
+    val episodes = mutableListOf<Episode>()
+
+    try {
+        val response = app.post(
+            "$mainUrl/api/seasons",
+            headers = mapOf(
+                "User-Agent" to USER_AGENT,
+                "Content-Type" to "application/x-www-form-urlencoded",
+                "X-Requested-With" to "XMLHttpRequest",
+                "Referer" to mainUrl
+            ),
+            data = mapOf(
+                "item_id" to itemId,
+                "season" to season.toString(),
+                "item_url" to itemUrl
+            )
+        )
+
+        val episodeDoc = response.document
+        val episodeElements = episodeDoc.select("div.card-episode")
+
+        for (episodeElement in episodeElements) {
+            val epLink = episodeElement.select("a.episode").attr("href")
+            val epNum = episodeElement.select("a.episode").text().trim()
+                .replace("Episodio ", "").toIntOrNull() ?: continue
+            val epName = episodeElement.select("a.name").text().trim()
+
+            episodes.add(
+                Episode(
+                    data = epLink,
+                    episode = epNum,
+                    name = epName
                 )
             )
-            
-            val episodeDoc = response.document
-            val episodeElements = episodeDoc.select("div.card-episode")
-            
-            for (episodeElement in episodeElements) {
-                val episodeLink = episodeElement.select("a.episode").attr("href")
-                val episodeNumber = episodeElement.select("a.episode").text().trim()
-                val episodeName = episodeElement.select("a.name").text().trim()
-                
-                val episodeNum = episodeNumber.replace("Episodio ", "").toIntOrNull() ?: continue
-                
-                episodes.add(
-                    Episode(
-                        data = episodeLink,
-                        episode = episodeNum,
-                        name = episodeName
-                    )
-                )
-            }
-        } catch (e: Exception) {
-            // Error getting episodes
         }
-        
-        return episodes
-    }
+    } catch (_: Exception) {}
+
+    return episodes
+}
 
     override suspend fun loadLinks(data: String, isCasting: Boolean, subtitleCallback: (SubtitleFile) -> Unit, callback: (ExtractorLink) -> Unit): Boolean {
         val doc = app.get(data, headers = mapOf("User-Agent" to USER_AGENT)).document
