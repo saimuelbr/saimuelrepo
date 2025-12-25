@@ -4,7 +4,7 @@
         "fileSize": 14875,
         "apiVersion": 3,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
-        "status": 1,
+        "status": 0,
         "language": "pt-br",
         "authors": [
             "Phisher98",
@@ -89,7 +89,7 @@
         "fileSize": 21556,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
-        "status": 1,
+        "status": 0,
         "language": "pt-br",
         "authors": [
             "saimuelbr"
@@ -110,7 +110,7 @@
         "fileSize": 23911,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
-        "status": 1,
+        "status": 0,
         "language": "pt-br",
         "authors": [
             "saimuelbr"
@@ -163,7 +163,7 @@
             "Movie",
             "TvSeries"
         ],
-        "version": 7,
+        "version": 8,
         "internalName": "StarckFilmes",
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/StarckFilmes.jar",
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/StarckFilmes.cs3",

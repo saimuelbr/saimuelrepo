@@ -15,7 +15,7 @@ class StarckFilmes : MainAPI() {
         )
     }
     
-    override var mainUrl = "https://www.starckfilmes.online"
+    override var mainUrl = "https://starckfilmes-v8.com"
     override var name = "StarckFilmes"
     override val hasMainPage = true
     override var lang = "pt-br"
