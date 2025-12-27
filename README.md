@@ -1,18 +1,18 @@
-<h1 align="center">Hi 👋, I'm saimuel</h1>
+<h1 align="center">Eai 👋, sou o criador dessa extensão, saimuel</h1>
 <h3 align="center">> Extensão brasileira gratuita para CloudStream 3 com filmes, séries e animes — feita por mim e para a comunidade.</h3>
 
-<p>- 🔭 I’m currently working on <a href="https://github.com/saimuelbr/saimuelrepo">saimuelrepo</a></p>
+<p>- Atualmente trabalhando <a href="https://github.com/saimuelbr/saimuelrepo">saimuelrepo</a></p>
 
-<p>- 🌱 I’m currently learning <b>Kotlin</b></p>
+<p>- Aprennde constantemente <b>Kotlin</b></p>
 
-<h3 align="left">Connect with me:</h3>
+<h3 align="left">Participe da comunidade, receba suporte, relate problemas em:</h3>
 <p align="left">
 <a href="https://discord.gg/yK2bTH4dDm" target="blank">
 <img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/discord.svg" alt="discord" height="30" width="40" />
 </a>
 </p>
 
-<h3 align="left">Languages and Tools:</h3>
+<h3 align="left">Linguagems e Ferramentas:</h3>
 <p align="left">
 <a href="https://developer.android.com" target="_blank" rel="noreferrer">
 <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/android/android-original-wordmark.svg" alt="android" width="40" height="40"/>
