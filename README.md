@@ -3,7 +3,7 @@
 
 <p>- Atualmente trabalhando <a href="https://github.com/saimuelbr/saimuelrepo">saimuelrepo</a></p>
 
-<p>- Aprennde constantemente <b>Kotlin</b></p>
+<p>- Aprendendo constantemente <b>Kotlin</b></p>
 
 <h3 align="left">Participe da comunidade, receba suporte, relate problemas em:</h3>
 <p align="left">
