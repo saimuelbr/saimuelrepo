@@ -403,5 +403,26 @@
     "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/AnimesDigital.cs3",
     "name": "AnimesDigital",
     "description": "Animes Digital - Animes em FHD LEG e DUB."
+    },
+    {
+        "iconUrl": "https://overflix.me/assets/img/android-chrome-192x192.png",
+        "fileSize": 21093,
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
+        "status": 1,
+        "language": "pt-br",
+        "authors": [
+            "saimuelbr"
+        ],
+        "tvTypes": [
+            "Movie",
+            "TvSeries"
+        ],
+        "version": 1,
+        "internalName": "OverFlix",
+        "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/OverFlix.jar",
+        "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/OverFlix.cs3",
+        "name": "OverFlix",
+        "description": "OverFlix - Filmes em HD+ e Séries em FHD"
     }
 ]
