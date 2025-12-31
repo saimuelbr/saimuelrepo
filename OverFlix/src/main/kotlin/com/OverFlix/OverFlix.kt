@@ -107,6 +107,25 @@ class OverFlix : MainAPI() {
         val document = app.get(realUrl).document
         val isMovie = realUrl.contains("/filme/")
         val title = document.selectFirst("h1.text-3xl, h2.text-3xl")?.text()?.trim().orEmpty()
+        val actors = if (isMovie) {
+            document.select("div.group\\/item").mapNotNull {
+                val name = it.selectFirst("a.text-sm")?.text()?.trim() ?: return@mapNotNull null
+                val image = it.selectFirst("img")?.attr("src")
+                ActorData(Actor(name, image))
+            }
+        } else {
+            val firstEpUrl = document.selectFirst("div[id^=season-] article a")?.attr("href")
+            if (firstEpUrl != null) {
+                val epDoc = app.get(firstEpUrl, headers = UA_HEADERS).document
+                epDoc.select("div.group\\/item").mapNotNull {
+                    val name = it.selectFirst("a.text-sm")?.text()?.trim() ?: return@mapNotNull null
+                    val image = it.selectFirst("img")?.attr("src")
+                    ActorData(Actor(name, image))
+                }
+            } else {
+                emptyList()
+            }
+        }
 
         val poster = if (isMovie && forcedBackdrop != null) {
             forcedBackdrop
@@ -140,6 +159,7 @@ class OverFlix : MainAPI() {
                 this.year = year
                 this.duration = duration
                 this.score = Score.from10(score)
+                this.actors = actors
             }
         } else {
             val episodes = document.select("div[id^=season-]").flatMap { seasonEl ->
@@ -171,6 +191,7 @@ class OverFlix : MainAPI() {
                 this.year = year
                 this.duration = duration
                 this.score = Score.from10(score)
+                this.actors = actors
             }
         }
     }
