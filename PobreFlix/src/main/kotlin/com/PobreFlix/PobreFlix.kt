@@ -1,37 +1,20 @@
 package com.PobreFlix
 
 import com.lagradost.cloudstream3.*
-import com.lagradost.cloudstream3.AnimeSearchResponse
-import com.lagradost.cloudstream3.DubStatus
-import com.lagradost.cloudstream3.Episode
-import com.lagradost.cloudstream3.ErrorLoadingException
-import com.lagradost.cloudstream3.HomePageResponse
-import com.lagradost.cloudstream3.LoadResponse
 import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
-import com.lagradost.cloudstream3.MainAPI
-import com.lagradost.cloudstream3.MainPageRequest
-import com.lagradost.cloudstream3.SearchResponse
-import com.lagradost.cloudstream3.SubtitleFile
-import com.lagradost.cloudstream3.TvType
-import com.lagradost.cloudstream3.app
-import com.lagradost.cloudstream3.base64Decode
-import com.lagradost.cloudstream3.fixUrlNull
-import com.lagradost.cloudstream3.getQualityFromString
-import com.lagradost.cloudstream3.mainPageOf
-import com.lagradost.cloudstream3.newAnimeSearchResponse
-import com.lagradost.cloudstream3.newEpisode
-import com.lagradost.cloudstream3.newHomePageResponse
-import com.lagradost.cloudstream3.newMovieLoadResponse
-import com.lagradost.cloudstream3.newTvSeriesLoadResponse
-import com.lagradost.cloudstream3.toRatingInt
 import com.lagradost.cloudstream3.utils.ExtractorLink
-import com.lagradost.cloudstream3.utils.loadExtractor
+import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import java.net.URI
+import java.util.Calendar
 import java.util.EnumSet
 
-
 class PobreFlix : MainAPI() {
+
+    companion object {
+        private const val BASE_URL = "https://www.pobreflixtv.beer"
+        private val CURRENT_YEAR = Calendar.getInstance().get(Calendar.YEAR)
+    }
 
     override var name = "PobreFlix"
     override var lang = "pt-br"
@@ -39,213 +22,209 @@ class PobreFlix : MainAPI() {
     override val hasDownloadSupport = true
     override val hasMainPage = true
     override val supportedTypes = setOf(TvType.Movie, TvType.TvSeries)
+    override var mainUrl = BASE_URL
 
-    override var mainUrl = "https://tvredecanais.bid"
-
-    private fun getUrl(url: String): String {
+    private fun normalizeUrl(url: String): String {
         val uri = URI(url)
-        return "${mainUrl}${uri.path ?: ""}${if (uri.query != null) "?${uri.query}" else ""}"
+        return buildString {
+            append(mainUrl)
+            append(uri.path ?: "")
+            uri.query?.let { append("?").append(it) }
+        }
     }
 
     override val mainPage = mainPageOf(
-        Pair("${mainUrl}/assistir/filmes-online-online-2/", "Filmes"),
-        Pair("${mainUrl}/assistir/series-online-online-3/", "Séries"),
+        "$mainUrl/genero/filmes-de-$CURRENT_YEAR-online-65/" to "Filmes - $CURRENT_YEAR",
+        "$mainUrl/genero/series-de-$CURRENT_YEAR-online-82/" to "Séries - $CURRENT_YEAR",
+        "$mainUrl/genero/filmes-de-acao-online-3/" to "Filmes - Ação",
+        "$mainUrl/genero/series-de-acao-online-22/" to "Séries - Ação",
+        "$mainUrl/genero/filmes-de-animacao-online-1/" to "Filmes - Animação",
+        "$mainUrl/genero/series-de-animacao-online-20/" to "Séries - Animação",
+        "$mainUrl/genero/filmes-de-comedia-online-4/" to "Filmes - Comédia",
+        "$mainUrl/genero/series-de-comedia-online-23/" to "Séries - Comédia",
+        "$mainUrl/genero/filmes-de-crime-online-5/" to "Filmes - Crime",
+        "$mainUrl/genero/series-de-crime-online-24/" to "Séries - Crime",
+        "$mainUrl/genero/filmes-de-drama-online-7/" to "Filmes - Drama",
+        "$mainUrl/genero/series-de-drama-online-26/" to "Séries - Drama",
+        "$mainUrl/genero/filmes-de-ficcao-cientifica-online-11/" to "Filmes - Ficção",
+        "$mainUrl/genero/series-de-ficcao-cientifica-online-30/" to "Séries - Ficção",
+        "$mainUrl/genero/filmes-de-guerra-online-12/" to "Filmes - Guerra",
+        "$mainUrl/genero/series-de-guerra-online-31/" to "Séries - Guerra",
+        "$mainUrl/genero/filmes-de-misterio-online-14/" to "Filmes - Mistério",
+        "$mainUrl/genero/series-de-misterio-online-32/" to "Séries - Mistério"
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        val response = app.get(getUrl("${request.data}?page=${page}")).document
+        val url =
+            if (page <= 1) request.data
+            else "${request.data.removeSuffix("/")}/?page=$page/"
 
-        val home = response.select("div.ipsBox div.vbItemImage")
+        val items = app.get(url).document
+            .select("article.item")
             .mapNotNull { it.toSearchResult() }
 
-        return newHomePageResponse(request.name, home)
+        return newHomePageResponse(request.name, items, items.isNotEmpty())
     }
 
-    override suspend fun search(query: String): List<SearchResponse>? {
-        val response = app.get("${mainUrl}/pesquisar/?p=${query.replace(" ", "+")}").document
-
-
-        val home = response.select("div.ipsBox div.vbItemImage")
+    override suspend fun search(query: String): List<SearchResponse> {
+        val url = "$mainUrl/pesquisar/?p=${query.replace(" ", "+")}"
+        return app.get(url).document
+            .select("article.item")
             .mapNotNull { it.toSearchResult() }
-
-        return home
     }
 
-    private fun Element.toSearchResult(): AnimeSearchResponse? {
-        val title = this.selectFirst("div.caption a")?.text()?.trim() ?: ""
+    private fun Element.toSearchResult(): SearchResponse? {
+        val title = selectFirst("div.caption h3")?.text()?.trim() ?: return null
+        val link = selectFirst("a")?.attr("href") ?: return null
 
-        val link = this.selectFirst("div.caption a")?.attr("href") ?: ""
-        val postUrl = this.selectFirst("div.vb_image_container")?.attr("data-background-src")
-        val qual = getQualityFromString(
-            this.selectFirst("div.TopLeft span.capa-info.capa-quali")?.text()
-        )
-        val dub = this.selectFirst("div.TopLeft span.capa-info.capa-audio")?.text() ?: ""
+        val poster =
+            selectFirst("div.vb_image_container")?.attr("data-background-src")
+                ?: Regex("""url\(['"]?(.*?)['"]?\)""")
+                    .find(selectFirst("div.vb_image_container")?.attr("style").orEmpty())
+                    ?.groupValues?.get(1)
 
-        return newAnimeSearchResponse(
-            title, link, TvType.Movie
-        ) {
-            this.posterUrl = postUrl
-            this.dubStatus =
-                if (dub.contains("DUB")) EnumSet.of(DubStatus.Dubbed)
-                else EnumSet.of(DubStatus.Subbed)
-            quality = qual
+        val audio = selectFirst("div.capa-audio")?.text().orEmpty()
+        val quality = getQualityFromString(selectFirst("div.capa-quali")?.text())
+
+        return newAnimeSearchResponse(title, link, TvType.Movie) {
+            posterUrl = poster?.replace("w185", "original")
+            this.quality = quality
+            dubStatus =
+                if (audio.contains("DUB", true))
+                    EnumSet.of(DubStatus.Dubbed)
+                else
+                    EnumSet.of(DubStatus.Subbed)
         }
     }
 
     override suspend fun load(url: String): LoadResponse {
-        val document = app.get(url, headers = mapOf("User-Agent" to USER_AGENT)).document
-        
-        val title = document.selectFirst("h1.ipsType_pageTitle span.titulo")?.ownText()?.trim() ?: "Sem título"
-        
-        var poster: String? = null
-        var videoEmbedDiv = document.selectFirst("div#video_embed")
-        
-        if (videoEmbedDiv != null) {
-            val style = videoEmbedDiv.attr("style")
-            val backgroundImageMatch = Regex("""background-image:url\(([^)]+)\)""").find(style)
-            if (backgroundImageMatch != null) {
-                poster = backgroundImageMatch.groupValues[1].let { fixUrl(it) }
-            }
-        } else {
-            val onlineUrl = if (url.contains("?area=online")) url else "$url?area=online"
-            try {
-                val onlineDoc = app.get(onlineUrl, headers = mapOf("User-Agent" to USER_AGENT)).document
-                videoEmbedDiv = onlineDoc.selectFirst("div#video_embed")
-                if (videoEmbedDiv != null) {
-                    val style = videoEmbedDiv.attr("style")
-                    val backgroundImageMatch = Regex("""background-image:url\(([^)]+)\)""").find(style)
-                    if (backgroundImageMatch != null) {
-                        poster = backgroundImageMatch.groupValues[1].let { fixUrl(it) }
-                    }
-                }
-            } catch (e: Exception) {
-            }
-        }
-        
-        if (poster == null) {
-            poster = document.selectFirst("div.vb_image_container")?.attr("data-background-src")?.let { fixUrl(it) }
-        }
-        
+        val document = app.get(url).document
+        val isSeries = document.select("span.escolha_span").isNotEmpty()
 
-        val description =
-            document.selectFirst("div.sinopse")?.text()?.replace("Ler mais...", "")?.trim()
-        val rating = document.selectFirst("div.infos span.imdb")?.text()?.replace("/10", "")?.trim()
-            ?.toRatingInt()
-        val year = document.select("div.infos span:nth-child(2)").text().toIntOrNull()
-        val actors = document.select("div.extrainfo span").firstOrNull {
-            it.html()
-                .contains("<b>Elenco:</b>")
-        }?.childNodes()?.filterNot { it.nodeName() == "b" }?.map { it.toString().trim() }
-        val category = document.select("span.gen a").map {
-            it.text()
-        }
+        val title = document.selectFirst("h1.ipsType_pageTitle span.titulo")
+            ?.ownText()?.trim() ?: "Sem título"
 
-        if (document.select("span.escolha_span").isNotEmpty()) {
-            val list = ArrayList<Int>()
+        val plot = document.selectFirst("div.sinopse")?.apply {
+            select("span#myBtn, b").remove()
+        }?.text()?.replace("...", "")?.trim()
 
-            document.select("script").map { script ->
-                if (script.data()
-                        .contains(Regex("""document\.addEventListener\("DOMContentLoaded",\s*function\(\)"""))
-                ) {
-                    val regex = """<li onclick='load\((\d+)\);'>""".toRegex()
-                    val matches = regex.findAll(script.data())
+        val duration = document.select("div.infos span")
+            .firstOrNull { it.text().contains("min") }
+            ?.text()?.replace("min", "")?.trim()?.toIntOrNull()
 
-                    for (match in matches) {
-                        val value = match.groups[1]?.value
-                        if (value != null) {
-                            list.add(value.toInt())
-                        }
-                    }
-                }
-            }
+        val score = document.selectFirst("div.infos span.imdb")
+            ?.text()?.replace("/10", "")?.trim()?.toDoubleOrNull()
 
-            if (list.isEmpty()) throw ErrorLoadingException("No Seasons Found")
+        val year = document.select("div.infos span:nth-child(2)")
+            .text().toIntOrNull()
 
-            val episodeList = ArrayList<Episode>()
+        val actors = document.select("div.extrainfo span")
+            .firstOrNull { it.html().contains("<b>Elenco:</b>") }
+            ?.text()
+            ?.replace("Elenco:", "")
+            ?.split(",")
+            ?.map {
+            Pair(Actor(it.trim(), null), null as String?)
+    }
 
-            for (season in list) {
 
-                val seasonResponse = app.get(getUrl("${url}?temporada=${season}")).document
+        val tags = document.select("span.gen a").map { it.text() }
+        val poster = extractPoster(document, url, isSeries)
 
-                val episodes = seasonResponse.select("div.listagem li")
-                if (episodes.isNotEmpty()) {
-                    episodes.forEach { episode ->
-
-                        val ep = episode.selectFirst("li")?.attr("data-id")
-                            ?.replaceFirst(season.toString(), "")
-                        val href = episode.selectFirst("a")?.attr("href")
-
-                        episodeList.add(newEpisode(href) {
-                            this.season = season
-                            this.episode = ep?.toInt()
-                        })
-                    }
-                }
-            }
-            return newTvSeriesLoadResponse(
-                title, url, TvType.TvSeries, episodeList
+        return if (isSeries) {
+            newTvSeriesLoadResponse(
+                title,
+                url,
+                TvType.TvSeries,
+                loadEpisodes(document, url)
             ) {
                 posterUrl = poster
-                this.plot = description
-                this.tags = category
-                this.rating = rating
+                this.plot = plot
+                this.duration = duration
+                this.tags = tags
                 this.year = year
+                this.score = Score.from10(score)
                 addActors(actors)
             }
-
         } else {
-
-            return newMovieLoadResponse(
-                title, url, TvType.Movie, url
-            ) {
+            newMovieLoadResponse(title, url, TvType.Movie, "movie|$url") {
                 posterUrl = poster
-                this.plot = description
-                this.tags = category
-                this.rating = rating
+                this.plot = plot
+                this.duration = duration
+                this.tags = tags
                 this.year = year
+                this.score = Score.from10(score)
                 addActors(actors)
             }
         }
     }
 
+    private suspend fun extractPoster(
+        document: Document,
+        url: String,
+        isSeries: Boolean
+    ): String? {
 
+        val playerUrl =
+            if (isSeries)
+                document.selectFirst("div.listagem li a")?.attr("href")
+            else
+                if (url.contains("?")) "$url&area=online" else "$url/?area=online"
+
+        playerUrl?.let {
+            val style = app.get(it).document
+                .selectFirst("div#video_embed")
+                ?.attr("style")
+
+            Regex("""url\((.*?)\)""")
+                .find(style.orEmpty())
+                ?.groupValues?.get(1)
+                ?.replace(Regex("['\"]"), "")
+                ?.replace("w1280", "original")
+                ?.let { return it }
+        }
+
+        return document.selectFirst("div.vb_image_container")
+            ?.attr("data-background-src")
+            ?.replace("w185", "original")
+            ?.let { fixUrl(it) }
+    }
+
+    private suspend fun loadEpisodes(
+        document: Document,
+        url: String
+    ): List<Episode> {
+
+        val seasons = mutableSetOf<Int>()
+
+        document.select("script").forEach {
+            if (it.data().contains("DOMContentLoaded")) {
+                Regex("""<li onclick='load\((\d+)\);'>""")
+                    .findAll(it.data())
+                    .forEach { m ->
+                        m.groupValues[1].toIntOrNull()?.let(seasons::add)
+                    }
+            }
+        }
+
+        return seasons.flatMap { season ->
+            val seasonDoc = app.get(normalizeUrl("$url?temporada=$season")).document
+            seasonDoc.select("div.listagem li").mapNotNull { ep ->
+                val href = ep.selectFirst("a")?.attr("href") ?: return@mapNotNull null
+                val epId = ep.attr("data-id").replaceFirst(season.toString(), "")
+                newEpisode("series|$href") {
+                    this.season = season
+                    this.episode = epId.toIntOrNull()
+                }
+            }
+        }
+    }
 
     override suspend fun loadLinks(
         data: String,
         isCasting: Boolean,
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
-    ): Boolean {
-
-        val document = app.get(getUrl("${data}?area=online")).document
-
-        document.select("ul#baixar_menu li.ipsMenu_item > a").map { li ->
-
-            val decodedUrl = extractUrlParam(li.attr("href")).decryptUrl()
-
-            decodedUrl.takeIf { it.startsWith("http") }?.let { url ->
-                loadExtractor(url, url, subtitleCallback, callback)
-            }
-
-        }
-
-        return data.isEmpty()
-    }
-
-    fun extrairLink(input: String): String? {
-        val regex = """window\.location\.href\s*=\s*"(.*?)";""".toRegex()
-        val matchResult = regex.find(input)
-        return matchResult?.groups?.get(1)?.value
-    }
-
-    fun extractUrlParam(href: String): String {
-        val regex = Regex("""[?&]url=([^&]+)""")
-        return regex.find(href)?.groupValues?.get(1) ?: ""
-    }
-
-    fun String?.decryptUrl(): String {
-        if (this == null) return ""
-        val decoded = base64Decode(this)
-        return decoded.reversed()
-    }
+    ): Boolean =
+        PobreFlixExtractor.getLinks(data, subtitleCallback, callback)
 }
