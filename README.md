@@ -1,18 +1,44 @@
-<h1 align="center">Eai 👋, sou o criador dessa extensão, saimuel</h1>
-<h3 align="center">> Extensão brasileira gratuita para CloudStream 3 com filmes, séries e animes — feita por mim e para a comunidade.</h3>
+<div align="center"> 
 
-<p>- Atualmente trabalhando <a href="https://github.com/saimuelbr/saimuelrepo">saimuelrepo</a></p>
+# saimuelrepo
 
-<p>- Aprendendo constantemente <b>Kotlin</b></p>
+<img src="https://img.shields.io/badge/CloudStream-blue?style=for-the-badge&logo=android" alt="CloudStream 3+">
+<img src="https://img.shields.io/badge/Status-Estável-yellow?style=for-the-badge" alt="Experimental">
 
-<h3 align="left">Participe da comunidade, receba suporte, relate problemas em:</h3>
-<p align="left">
+[![Licença MIT](https://img.shields.io/badge/📄_Licença-MIT-8BC34A?style=for-the-badge&logo=book)](https://opensource.org/licenses/MIT)
+
+### A Primeira Extensão Brasileira do CloudStream — feita por mim e para a comunidade.
+
+</div>
+
+---
+<div align="center">
+  
+###  Sobre o Projeto
+- **Atualmente trabalhando em:** [saimuelrepo](https://github.com/saimuelbr/saimuelrepo)
+- **Linguagem:** Constante aprendizado em **Kotlin** 
+- **Comunidade:** Participe, receba suporte ou relate problemas no nosso Discord:
 <a href="https://discord.gg/yK2bTH4dDm" target="blank">
-<img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/discord.svg" alt="discord" height="30" width="40" />
+<img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/discord.svg" alt="discord" height="60" width="80" />
 </a>
-</p>
+  
+</div>
 
-<h3 align="left">Linguagems e Ferramentas:</h3>
+---
+
+#  Adicione a Extensão
+
+[![Passo 1](https://img.shields.io/badge/Abrir_CloudStream-2196F3?style=flat-square&logo=android)]()
+[![Passo 2](https://img.shields.io/badge/Configurações→Extensões-4CAF50?style=flat-square&logo=settings)]()
+[![Passo 3](https://img.shields.io/badge/Adicionar_Repositório-FF9800?style=flat-square&logo=plus)]()
+[![Passo 4](https://img.shields.io/badge/Digite_o_Link_Curto-9C27B0?style=flat-square&logo=clipboard)]()
+
+**Link Curto:**
+`saim`
+
+---
+
+###  Linguagens e Ferramentas
 <p align="left">
 <a href="https://developer.android.com" target="_blank" rel="noreferrer">
 <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/android/android-original-wordmark.svg" alt="android" width="40" height="40"/>
@@ -27,24 +53,25 @@
 
 ---
 
-<h3>📜 License</h3>
-<p>
-Este repositório está licenciado sob a <a href="https://opensource.org/license/mit-0" target="_blank"><b>MIT License</b></a>.<br>
-Você pode usar, copiar, modificar, mesclar, publicar e distribuir este código livremente, desde que mantenha os devidos créditos.
-</p>
+<div align="center">
+  
+[![CloudStream GitHub](https://img.shields.io/badge/_CloudStream_GitHub-181717?style=for-the-badge&logo=github)](https://github.com/recloudstream/cloudstream)
+[![Commits](https://img.shields.io/github/last-commit/saimuelbr/saimuelrepo?style=for-the-badge&label=%20Último%20commit&color=9C27B0)](https://github.com/saimuelbr/saimuelrepo/activity)
+[![Tamanho do repositório](https://img.shields.io/github/repo-size/saimuelbr/saimuelrepo?style=for-the-badge&label=%20Tamanho%20do%20repo&color=FF9800)](https://github.com/saimuelbr/saimuelrepo)
+[![Stars](https://img.shields.io/github/stars/saimuelbr/saimuelrepo?style=for-the-badge&label=%20Stars&color=FFD700)](https://github.com/saimuelbr/saimuelrepo/stargazers)
 
-<h3>⚠️ Aviso Legal</h3>
-<p>
-• Eu <b>não hospedo</b> filmes, séries, animes ou qualquer outro tipo de conteúdo protegido por direitos autorais.<br>
-• Os plugins aqui disponibilizados apenas <b>indexam sites públicos</b> para uso no <b>CloudStream 3</b>.<br>
-• <b>Não assumo qualquer responsabilidade</b> sobre como terceiros utilizam este repositório. O uso é de inteira responsabilidade do usuário final.
-</p>
+</div>
 
-<h3>⚖️ Aviso DMCA</h3>
-<p>
-Este projeto tem caráter meramente educacional e funciona de forma semelhante a um navegador comum, apenas buscando arquivos de vídeo disponíveis publicamente na internet.<br><br>
-Nenhum conteúdo é hospedado por este repositório ou pelo aplicativo CloudStream 3.<br>
-Qualquer conteúdo acessado é hospedado por sites de terceiros.<br>
-O uso é de total responsabilidade do usuário, que deve cumprir as leis locais.<br>
-Se você acredita que algum conteúdo viola direitos autorais, entre em contato diretamente com o provedor que hospeda os arquivos, e não com os desenvolvedores deste repositório ou do aplicativo CloudStream 3.
-</p>
+---
+
+
+### DMCA
+Este projeto tem caráter meramente educacional e funciona de forma semelhante a um navegador comum, apenas buscando arquivos de vídeo disponíveis publicamente na internet.
+
+Nenhum conteúdo é hospedado por este repositório ou pelo aplicativo CloudStream. Qualquer conteúdo acessado é hospedado por sites de terceiros. O uso é de total responsabilidade do usuário, que deve cumprir as leis locais. Se você acredita que algum conteúdo viola direitos autorais, entre em contato diretamente com o provedor que hospeda os arquivos.
+
+<div align="center">
+  
+[![Deixe uma Star](https://img.shields.io/badge/_Deixe_uma_Star_no_Repo-4CAF38?style=for-the-badge&logo=github&logoColor=black)]()
+
+</div>
