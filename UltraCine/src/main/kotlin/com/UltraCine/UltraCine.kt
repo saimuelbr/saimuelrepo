@@ -56,11 +56,15 @@ class UltraCine : MainAPI() {
         val poster = selectPoster("div.post-thumbnail figure img", "/w500/")
         val year = selectFirst("span.year")?.text()?.toIntOrNull()
         val quality = getQualityFromString(selectFirst("span.post-ql")?.text())
+        val ratingText = selectFirst("div.entry-meta span.vote")?.text()
+            ?.replace("TMDB", "")
+            ?.trim()
 
         return newMovieSearchResponse(title, href, TvType.Movie) {
             posterUrl = poster
             this.year = year
             this.quality = quality
+            this.score = Score.from10(ratingText)
         }
     }
 
