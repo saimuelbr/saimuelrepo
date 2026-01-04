@@ -320,7 +320,7 @@
     },
     {
         "iconUrl": "https://doramasonline.co/wp-content/uploads/2025/07/cropped-doramas2-180x180.png",
-        "fileSize": 20432,
+        "fileSize": 16603,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
         "status": 1,
@@ -332,7 +332,7 @@
         "tvTypes": [
             "AsianDrama"
         ],
-        "version": 1,
+        "version": 2,
         "internalName": "Doramas",
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/Doramas.jar",
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/Doramas.cs3",
