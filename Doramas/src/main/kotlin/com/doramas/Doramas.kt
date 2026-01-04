@@ -45,11 +45,15 @@ class Doramas : MainAPI() {
         val href = selectFirst("a.lnk-blk")?.attr("href") ?: return null
         val poster = selectPoster("div.post-thumbnail figure img", "/w500/")
         val year = selectFirst("span.year")?.text()?.toIntOrNull()
+        val ratingText = selectFirst("div.entry-meta span.vote")?.text()
+            ?.replace("TMDB", "")
+            ?.trim()
 
         return newMovieSearchResponse(title, href, TvType.Movie) {
             posterUrl = poster
             this.year = year
             this.quality = getQualityFromString(selectFirst("span.post-ql")?.text())
+            this.score = Score.from10(ratingText)
         }
     }
 
