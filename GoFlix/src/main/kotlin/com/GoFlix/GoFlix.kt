@@ -292,10 +292,18 @@ class GoFlix : MainAPI() {
             
             val adsResponse = app.get(adsUrl, headers = adsHeaders).text
             
-            val filemoonPattern = Regex("src=\"(https://filemoon\\.(to|in)/e/[^\"]+)\"")
+            val filemoonPattern = Regex("src=\"(https://bysevepoin\\.(com|in)/e/[^\"]+)\"")
             val filemoonMatch = filemoonPattern.find(adsResponse) ?: return false
             
-            val filemoonUrl = filemoonMatch.groupValues[1]
+            val rawFilemoonUrl = filemoonMatch.groupValues[1]
+            
+            val filemoonUrl = if (rawFilemoonUrl.contains("/e/")) {
+                val base = rawFilemoonUrl.substringBefore("/e/") + "/e/"
+                val code = rawFilemoonUrl.substringAfter("/e/").substringBefore("/")
+                base + code
+            } else {
+                rawFilemoonUrl
+            }
             
             return loadExtractor(filemoonUrl, subtitleCallback = {}, callback = callback)
             
