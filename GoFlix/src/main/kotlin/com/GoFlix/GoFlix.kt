@@ -291,7 +291,7 @@ class GoFlix : MainAPI() {
             )
             
             val adsResponse = app.get(adsUrl, headers = adsHeaders).text
-            
+            // change in future
             val filemoonPattern = Regex("src=\"(https://bysevepoin\\.(com|in)/e/[^\"]+)\"")
             val filemoonMatch = filemoonPattern.find(adsResponse) ?: return false
             
