@@ -1,10 +1,10 @@
 [
     {
         "iconUrl": "https://cdn.bcdn.zip/wp-content/uploads/2017/04/nc-header-responsive.png",
-        "fileSize": 14875,
-        "apiVersion": 3,
+        "fileSize": 17609,
+        "apiVersion": 4,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
-        "status": 0,
+        "status": 1,
         "language": "pt-br",
         "authors": [
             "Phisher98",
@@ -12,9 +12,10 @@
         ],
         "tvTypes": [
             "Movie",
-            "TvSeries"
+            "TvSeries",
+            "Anime"
         ],
-        "version": 5,
+        "version": 6,
         "internalName": "NetCine",
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/NetCine.jar",
         "description": "NetCine - Filmes, Séries e Animes em FHD",
