@@ -15,7 +15,7 @@
             "TvSeries",
             "Anime"
         ],
-        "version": 6,
+        "version": 7,
         "internalName": "NetCine",
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/NetCine.jar",
         "description": "NetCine - Filmes, Séries e Animes em FHD",
@@ -113,7 +113,6 @@
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
         "status": 0,
-        "language": "pt-br",
         "authors": [
             "saimuelbr"
         ],
@@ -136,7 +135,6 @@
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
         "status": 1,
-        "language": "pt-br",
         "authors": [
             "saimuelbr"
         ],
@@ -157,7 +155,6 @@
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
         "status": 1,
-        "language": "pt-br",
         "authors": [
             "saimuelbr"
         ],

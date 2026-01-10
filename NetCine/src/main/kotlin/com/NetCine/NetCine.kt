@@ -22,7 +22,7 @@ class NetCine : MainAPI() {
         val iframeRegex = Regex("""<div\s+id="(play-\d+)"[^>]*>.*?<iframe\s+src="([^"]+)""", RegexOption.DOT_MATCHES_ALL)
         val labelRegex = Regex("""<a\s+href="#(play-\d+)">([^<]+)</a>""")
         val videoSourceRegex = Regex("""<source\s+[^>]*src=["']([^"']+)["']""")
-        val nextRegex = Regex("""href\s*=\s*["']([^"']*(?:hls\.php|hlsarchive\.php\?hls|gc\d+\.php)[^"']*)["']""")
+        val nextRegex = Regex("""href\s*=\s*["']([^"']*(?:hls\.php|hlsarchive\.php\?hls|gc\d+\.php|playerarchive\.php)[^"']*)["']""")
 
         val defaultHeaders = mapOf(
             "accept" to "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
@@ -140,10 +140,12 @@ class NetCine : MainAPI() {
 
             if (videoUrl.isNullOrEmpty()) {
                 nextRegex.find(res2.text)?.groupValues?.get(1)?.let { path ->
-                    val res3 = app.get(fixUrl(path), headers = sessionHeaders.toMutableMap().apply {
+                    val absNextUrl = fixUrl(path)
+                    val res3 = app.get(absNextUrl, headers = sessionHeaders.toMutableMap().apply {
                         put("referer", iframeUrl)
                         put("cookie", "XCRF=XCRF; PHPSESSID=3o6atiuojr31rthqvefimlhtl8")
                     })
+                    
                     videoUrl = videoSourceRegex.find(res3.text)?.groupValues?.get(1)
                     ref = iframeUrl
                 }
