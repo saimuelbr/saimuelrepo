@@ -362,7 +362,7 @@
     },
     {
         "iconUrl": "https://filmeson1.site/wp-content/uploads/2022/12/Imagem2.png",
-        "fileSize": 27849,
+        "fileSize": 22862,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
         "status": 1,
@@ -374,7 +374,7 @@
             "Movie",
             "TvSeries"
         ],
-        "version": 1,
+        "version": 2,
         "internalName": "FilmesOn",
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/FilmesOn.jar",
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/FilmesOn.cs3",
