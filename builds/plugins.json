@@ -128,26 +128,6 @@
         "language": "pt-br"
     },
     {
-        "iconUrl": "https://animefhd.com/wp-content/themes/temaa25/img/favicon/270.png",
-        "fileSize": 15733,
-        "apiVersion": 2,
-        "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
-        "status": 0,
-        "language": "pt-br",
-        "authors": [
-            "saimuelbr"
-        ],
-        "tvTypes": [
-            "Anime"
-        ],
-        "version": 3,
-        "internalName": "AnimeFHD",
-        "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/AnimeFHD.jar",
-        "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/AnimeFHD.cs3",
-        "name": "AnimeFHD",
-        "description": "AnimeFHD - Animes em HD E FHD."
-    },
-    {
         "iconUrl": "https://novelasflix1.me/apple-touch-icon.png",
         "fileSize": 17871,
         "apiVersion": 1,
