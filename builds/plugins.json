@@ -128,27 +128,6 @@
         "language": "pt-br"
     },
     {
-        "iconUrl": "https://www.starckfilmes.online/adjust-icon-192x192.png",
-        "fileSize": 25852,
-        "apiVersion": 1,
-        "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
-        "status": 1,
-        "authors": [
-            "saimuelbr"
-        ],
-        "tvTypes": [
-            "Movie",
-            "TvSeries"
-        ],
-        "version": 8,
-        "internalName": "StarckFilmes",
-        "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/StarckFilmes.jar",
-        "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/StarckFilmes.cs3",
-        "name": "StarckFilmes",
-        "description": "StarckFilmes - Filmes e Séries (Torrent) em FHD e UHD (Sua atividade pode ser rastreada, sujeito a multa).",
-        "language": "pt-br"
-    },
-    {
         "iconUrl": "https://animefhd.com/wp-content/themes/temaa25/img/favicon/270.png",
         "fileSize": 15733,
         "apiVersion": 2,
