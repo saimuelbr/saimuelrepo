@@ -18,7 +18,7 @@
         "version": 7,
         "internalName": "NetCine",
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/NetCine.jar",
-        "description": "NetCine - Filmes, Séries e Animes em FHD",
+        "description": "NetCine - Filmes, Séries e Animes em FHD.",
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/NetCine.cs3",
         "name": "NetCine"
     },
@@ -41,7 +41,7 @@
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/PobreFlix.jar",
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/PobreFlix.cs3",
         "name": "PobreFlix",
-        "description": "PobreFlix - Filmes, Séries, K-Dramas e Animes em HD e FHD.",
+        "description": "PobreFlix - Filmes, Séries, K-Dramas e Animes em FHD e HD.",
         "language": "pt-br"
     },
     {
@@ -105,29 +105,7 @@
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/AnimesCloud.jar",
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/AnimesCloud.cs3",
         "name": "AnimesCloud",
-        "description": "AnimesCloud - Animes em FHD"
-    },
-    {
-        "iconUrl": "https://novizer.com/img/android-chrome-192x192.png",
-        "fileSize": 23911,
-        "apiVersion": 1,
-        "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
-        "status": 0,
-        "authors": [
-            "saimuelbr"
-        ],
-        "tvTypes": [
-            "Movie",
-            "TvSeries",
-            "Anime"
-        ],
-        "version": 3,
-        "internalName": "Vizer",
-        "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/Vizer.jar",
-        "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/Vizer.cs3",
-        "name": "Vizer",
-        "description": "Vizer - Filmes, Séries e Animes.",
-        "language": "pt-br"
+        "description": "AnimesCloud - Animes em FHD."
     },
     {
         "iconUrl": "https://embedcanais.com/icons/embedcanaistv.png",
@@ -146,7 +124,7 @@
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/EmbedCanais.jar",
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/EmbedCanais.cs3",
         "name": "EmbedCanais",
-        "description": "EmbedCanais - Futebol, UFC, Tênis. Basquete, Filmes e Séries Ao Vivo.",
+        "description": "EmbedCanais - Futebol, UFC, Tênis. Basquete, Filmes e Séries Ao Vivo em FHD e HD.",
         "language": "pt-br"
     },
     {
@@ -230,7 +208,7 @@
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/MegaFlix.jar",
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/MegaFlix.cs3",
         "name": "MegaFlix",
-        "description": "MegaFlix - Filmes e Séries em HD e FHD"
+        "description": "MegaFlix - Filmes e Séries em HD e FHD."
     },
     {
         "iconUrl": "https://goflixy.lol/assets/favicon7.png",
@@ -251,7 +229,7 @@
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/GoFlix.jar",
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/GoFlix.cs3",
         "name": "GoFlix",
-        "description": "GoFlix - Filmes e Séries e Animes em FHD e HD+"
+        "description": "GoFlix - Filmes e Séries e Animes em FHD e HD+."
     },
     {
         "iconUrl": "https://ultracine.org/wp-content/uploads/2024/07/cropped-favicon-300x300.png",
@@ -272,7 +250,7 @@
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/UltraCine.jar",
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/UltraCine.cs3",
         "name": "UltraCine",
-        "description": "UltraCine - Filmes e Séries em FHD"
+        "description": "UltraCine - Filmes e Séries em FHD."
     },
     {
         "iconUrl": "https://animesonlinenet.com/wp-content/uploads/2025/08/cropped-Favicon-net-1-1.png",
@@ -293,7 +271,7 @@
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/AnimesOnlineNet.jar",
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/AnimesOnlineNet.cs3",
         "name": "AnimesOnlineNet",
-        "description": "AnimesOnlineNet - Animes em SD e HD"
+        "description": "AnimesOnlineNet - Animes em SD e HD."
     },
     {
         "iconUrl": "https://donghuanosekai.com/wp-content/uploads/2020/09/cropped-icon_dnsk.png",
@@ -314,7 +292,7 @@
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/DonghuaNoSekai.jar",
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/DonghuaNoSekai.cs3",
         "name": "DonghuaNoSekai",
-        "description": "DonghuaNoSekai - Donghuas em FHD"
+        "description": "DonghuaNoSekai - Donghuas em FHD."
     },
     {
         "iconUrl": "https://doramasonline.co/wp-content/uploads/2025/07/cropped-doramas2-180x180.png",
@@ -335,7 +313,7 @@
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/Doramas.jar",
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/Doramas.cs3",
         "name": "Doramas",
-        "description": "Doramas - Doramas em FHD"
+        "description": "Doramas - Doramas em FHD."
     },
     {
         "iconUrl": "https://static.anroll.net/app-images/favicon.ico",
@@ -358,7 +336,7 @@
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/Anroll.jar",
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/Anroll.cs3",
         "name": "Anroll",
-        "description": "Anroll - Animes em HD"
+        "description": "Anroll - Animes em HD."
     },
     {
         "iconUrl": "https://filmeson1.site/wp-content/uploads/2022/12/Imagem2.png",
@@ -379,7 +357,7 @@
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/FilmesOn.jar",
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/FilmesOn.cs3",
         "name": "FilmesOn",
-        "description": "FilmesOn - Filmes e Séries em FHD e HD"
+        "description": "FilmesOn - Filmes e Séries em FHD e HD."
     },
     {
     "iconUrl": "https://animesdigital.org/wp-content/uploads/2025/03/cropped-logo-e1740827992823-192x192.png",
@@ -422,6 +400,30 @@
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/OverFlix.jar",
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/OverFlix.cs3",
         "name": "OverFlix",
-        "description": "OverFlix - Filmes em HD+ e Séries em FHD"
+        "description": "OverFlix - Filmes em HD+ e Séries em FHD."
+    },
+    {
+        "iconUrl": "https://cnvsweb.stream/temas/pixer/assets/img/icon_free.png",
+        "fileSize": 26559,
+        "apiVersion": 2,
+        "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
+        "status": 1,
+        "language": "pt-br",
+        "authors": [
+            "saimuelbr"
+        ],
+        "tvTypes": [
+            "Movie",
+            "TvSeries",
+            "Anime",
+            "AnimeMovie",
+            "AsianDrama"
+        ],
+        "version": 1,
+        "internalName": "VisionCine",
+        "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/VisionCine.jar",
+        "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/VisionCine.cs3",
+        "name": "VisionCine",
+        "description": "VisionCine - Baseado em MultiAPI. Filmes, Séries, Animes e Doramas - 4k, FHD e HD."
     }
 ]
