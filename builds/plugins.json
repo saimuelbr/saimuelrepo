@@ -212,8 +212,8 @@
         "description": "UltraCine - Filmes e Séries em FHD."
     },
     {
-        "iconUrl": "https://animesonlinenet.com/wp-content/uploads/2025/08/cropped-Favicon-net-1-1.png",
-        "fileSize": 18404,
+        "iconUrl": "https://betteranime.io/wp-content/uploads/2025/12/Favicon-net-better.webp",
+        "fileSize": 18515,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
         "status": 1,
@@ -226,11 +226,11 @@
             "AnimeMovie"
         ],
         "version": 1,
-        "internalName": "AnimesOnlineNet",
-        "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/AnimesOnlineNet.jar",
-        "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/AnimesOnlineNet.cs3",
-        "name": "AnimesOnlineNet",
-        "description": "AnimesOnlineNet - Animes em SD e HD."
+        "internalName": "BetterAnime",
+        "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/BetterAnime.jar",
+        "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/BetterAnime.cs3",
+        "name": "BetterAnime",
+        "description": "BetterAnime - Animes em SD e HD."
     },
     {
         "iconUrl": "https://donghuanosekai.com/wp-content/uploads/2020/09/cropped-icon_dnsk.png",
