@@ -87,11 +87,11 @@
         "language": "pt-br"
     },
     {
-        "iconUrl": "https://animesonline.cloud/wp-content/uploads/2025/06/logo-_1_.png",
-        "fileSize": 21556,
+        "iconUrl": "https://i.imgur.com/tYNiHZN.png",
+        "fileSize": 22370,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
-        "status": 0,
+        "status": 1,
         "language": "pt-br",
         "authors": [
             "saimuelbr"
@@ -100,7 +100,7 @@
             "Anime",
             "AnimeMovie"
         ],
-        "version": 2,
+        "version": 3,
         "internalName": "AnimesCloud",
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/AnimesCloud.jar",
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/AnimesCloud.cs3",
