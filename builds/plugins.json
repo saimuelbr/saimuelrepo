@@ -108,8 +108,8 @@
         "description": "AnimesCloud - Animes em FHD."
     },
     {
-        "iconUrl": "https://embedcanais.com/icons/embedcanaistv.png",
-        "fileSize": 9758,
+        "iconUrl": "https://1.embedtvonline.com/icons/embedtvonline2026.png",
+        "fileSize": 9629,
         "apiVersion": 1,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
         "status": 1,
@@ -119,12 +119,12 @@
         "tvTypes": [
             "Live"
         ],
-        "version": 6,
-        "internalName": "EmbedCanais",
-        "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/EmbedCanais.jar",
-        "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/EmbedCanais.cs3",
-        "name": "EmbedCanais",
-        "description": "EmbedCanais - Futebol, UFC, Tênis. Basquete, Filmes e Séries Ao Vivo em FHD e HD.",
+        "version": 7,
+        "internalName": "EmbedTVOnline",
+        "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/EmbedTVOnline.jar",
+        "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/EmbedTVOnline.cs3",
+        "name": "EmbedTVOnline",
+        "description": "EmbedTVOnline - Futebol, UFC, Tênis. Basquete, Filmes e Séries Ao Vivo em FHD e HD.",
         "language": "pt-br"
     },
     {
