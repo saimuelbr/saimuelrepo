@@ -1,5 +1,6 @@
 package com.PobreFlix
 
+import android.util.Log
 import com.lagradost.cloudstream3.*
 import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
 import com.lagradost.cloudstream3.utils.ExtractorLink
@@ -12,7 +13,7 @@ import java.util.EnumSet
 class PobreFlix : MainAPI() {
 
     companion object {
-        private const val BASE_URL = "https://www.pobreflixtv.beer"
+        private const val BASE_URL = "https://www.pobreflixtv.club"
         private val CURRENT_YEAR = Calendar.getInstance().get(Calendar.YEAR)
     }
 
@@ -34,8 +35,8 @@ class PobreFlix : MainAPI() {
     }
 
     override val mainPage = mainPageOf(
-        "$mainUrl/genero/filmes-de-$CURRENT_YEAR-online-65/" to "Filmes - $CURRENT_YEAR",
-        "$mainUrl/genero/series-de-$CURRENT_YEAR-online-82/" to "Séries - $CURRENT_YEAR",
+        "$mainUrl/genero/filmes-de-$CURRENT_YEAR-online-66/" to "Filmes - $CURRENT_YEAR",
+        "$mainUrl/genero/series-de-$CURRENT_YEAR-online-83/" to "Séries - $CURRENT_YEAR",
         "$mainUrl/genero/filmes-de-acao-online-3/" to "Filmes - Ação",
         "$mainUrl/genero/series-de-acao-online-22/" to "Séries - Ação",
         "$mainUrl/genero/filmes-de-animacao-online-1/" to "Filmes - Animação",
@@ -55,47 +56,55 @@ class PobreFlix : MainAPI() {
     )
 
     override suspend fun getMainPage(page: Int, request: MainPageRequest): HomePageResponse {
-        val url =
-            if (page <= 1) request.data
-            else "${request.data.removeSuffix("/")}/?page=$page/"
+    val url = if (page <= 1) request.data
+    else "${request.data.removeSuffix("/")}/?page=$page/"
 
-        val items = app.get(url).document
-            .select("article.item")
-            .mapNotNull { it.toSearchResult() }
+    val response = app.get(url)
+    val document = response.document
+    
+    val elements = document.select("div.vbItemImage") 
 
-        return newHomePageResponse(request.name, items, items.isNotEmpty())
+    if (elements.isEmpty()) {
+        val htmlDump = document.html().take(2000)
     }
 
-    override suspend fun search(query: String): List<SearchResponse> {
-        val url = "$mainUrl/pesquisar/?p=${query.replace(" ", "+")}"
-        return app.get(url).document
-            .select("article.item")
-            .mapNotNull { it.toSearchResult() }
+    val items = elements.mapNotNull { it.toSearchResult() }
+
+    return newHomePageResponse(request.name, items, items.isNotEmpty())
+}
+
+override suspend fun search(query: String): List<SearchResponse> {
+    val url = "$mainUrl/pesquisar/?p=${query.replace(" ", "+")}"
+    
+    return app.get(url).document
+        .select("div.vbItemImage")
+        .mapNotNull { it.toSearchResult() }
+}
+
+private fun Element.toSearchResult(): SearchResponse? {
+    val title = selectFirst("div.caption")?.ownText()?.trim() ?: return null
+    val link = fixUrlNull(selectFirst("a")?.attr("href")) ?: return null
+
+    val container = selectFirst("div.vb_image_container")
+    val poster = container?.attr("data-background-src")?.takeIf { it.isNotEmpty() }
+        ?: Regex("""url\(['"]?(.*?)['"]?\)""")
+            .find(container?.attr("style").orEmpty())
+            ?.groupValues?.get(1)
+            ?.replace("&quot;", "")
+            ?.replace("\"", "")
+
+    val audio = selectFirst("div.capa-audio")?.text().orEmpty()
+    val qualityStr = selectFirst("div.capa-quali")?.text()
+
+    return newAnimeSearchResponse(title, link, TvType.Movie) {
+        this.posterUrl = poster?.replace("w185", "original")
+        this.quality = getQualityFromString(qualityStr)
+        this.dubStatus = if (audio.contains("DUB", true)) 
+            EnumSet.of(DubStatus.Dubbed) 
+        else 
+            EnumSet.of(DubStatus.Subbed)
     }
-
-    private fun Element.toSearchResult(): SearchResponse? {
-        val title = selectFirst("div.caption h3")?.text()?.trim() ?: return null
-        val link = selectFirst("a")?.attr("href") ?: return null
-
-        val poster =
-            selectFirst("div.vb_image_container")?.attr("data-background-src")
-                ?: Regex("""url\(['"]?(.*?)['"]?\)""")
-                    .find(selectFirst("div.vb_image_container")?.attr("style").orEmpty())
-                    ?.groupValues?.get(1)
-
-        val audio = selectFirst("div.capa-audio")?.text().orEmpty()
-        val quality = getQualityFromString(selectFirst("div.capa-quali")?.text())
-
-        return newAnimeSearchResponse(title, link, TvType.Movie) {
-            posterUrl = poster?.replace("w185", "original")
-            this.quality = quality
-            dubStatus =
-                if (audio.contains("DUB", true))
-                    EnumSet.of(DubStatus.Dubbed)
-                else
-                    EnumSet.of(DubStatus.Subbed)
-        }
-    }
+}
 
     override suspend fun load(url: String): LoadResponse {
         val document = app.get(url).document

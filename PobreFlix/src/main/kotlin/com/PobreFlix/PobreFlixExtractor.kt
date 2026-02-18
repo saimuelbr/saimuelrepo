@@ -1,5 +1,6 @@
 package com.PobreFlix
 
+import android.util.Log
 import com.lagradost.cloudstream3.SubtitleFile
 import com.lagradost.cloudstream3.app
 import com.lagradost.cloudstream3.utils.ExtractorLink
@@ -7,9 +8,10 @@ import com.lagradost.cloudstream3.utils.loadExtractor
 
 object PobreFlixExtractor {
 
-    private const val BASE_PLAYER = "https://www.pobreflixtv.beer/e/getplay.php"
+    private const val BASE_PLAYER = "https://www.pobreflixtv.club/e/getplay.php"
+    private const val TAG = "PobreFlix"
 
-    private val iframeRegex = Regex("""GetIframe\('(\d+)','(.*?)'\)""")
+    private val videoRegex = Regex("""C_Video\('(\d+)','(.*?)'\)""")
     private val serverRegex = Regex("""'([^']*)'\)""")
 
     private val serverPriority = mapOf(
@@ -30,14 +32,21 @@ object PobreFlixExtractor {
         return runCatching {
             val document = app.get(url).document
 
-            document.select("div.item[onclick*='GetIframe']")
-                .sortedBy { extractPriority(it.attr("onclick")) }
+            val items = document.select("div.item[onclick*='C_Video']")
+
+            if (items.isEmpty()) {
+            }
+
+            items.sortedBy { extractPriority(it.attr("onclick")) }
                 .forEach { item ->
-                    processItem(item.attr("onclick"), url, subtitleCallback, callback)
+                    val onClickAttr = item.attr("onclick")
+                    processItem(onClickAttr, url, subtitleCallback, callback)
                 }
 
             true
-        }.getOrElse { false }
+        }.getOrElse { 
+            false 
+        }
     }
 
     private fun parseData(data: String): Pair<String, String> {
@@ -61,7 +70,7 @@ object PobreFlixExtractor {
         subtitleCallback: (SubtitleFile) -> Unit,
         callback: (ExtractorLink) -> Unit
     ) {
-        val match = iframeRegex.find(onClick) ?: return
+        val match = videoRegex.find(onClick) ?: return
         val id = match.groupValues[1]
         val server = match.groupValues[2].lowercase()
 
@@ -71,13 +80,12 @@ object PobreFlixExtractor {
             val response = app.get(
                 playUrl,
                 referer = referer,
-                headers = mapOf(
-                    "User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
-                )
+                headers = mapOf("User-Agent" to "Mozilla/5.0 (Windows NT 10.0; Win64; x64)")
             )
 
             val finalUrl = response.url
-            if (finalUrl.isNotEmpty() && !finalUrl.contains("pobreflixtv.beer")) {
+
+            if (finalUrl.isNotEmpty() && finalUrl != playUrl && !finalUrl.contains("pobreflixtv")) {
                 loadExtractor(finalUrl, referer, subtitleCallback, callback)
             }
         }

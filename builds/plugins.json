@@ -23,9 +23,9 @@
         "name": "NetCine"
     },
     {
-        "iconUrl": "https://www.pobreflixtv.beer/uploads/set_resources_14/a5bd102ac3b4e1362ac25aed38707f87_favicon.ico",
+        "iconUrl": "https://www.pobreflixtv.club/uploads/set_resources_14/a5bd102ac3b4e1362ac25aed38707f87_favicon.ico",
         "fileSize": 20855,
-        "apiVersion": 6,
+        "apiVersion": 7,
         "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
         "status": 1,
         "authors": [
@@ -36,7 +36,7 @@
             "TvSeries",
             "Anime"
         ],
-        "version": 6,
+        "version": 7,
         "internalName": "PobreFlix",
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/PobreFlix.jar",
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/PobreFlix.cs3",
