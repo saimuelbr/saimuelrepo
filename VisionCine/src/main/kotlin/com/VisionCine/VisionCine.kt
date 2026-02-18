@@ -33,7 +33,7 @@ import org.jsoup.nodes.Element
 import java.util.concurrent.TimeUnit
 
 object VisionCineSession {
-    private const val INTERNAL_DRM_ID = "pygrp_KJp_cyHJkXN-N8mwGbGXgblJK-nX9XtaG8t-G5kJE2"
+    private const val INTERNAL_DRM_ID = "pygrp_KJp_cyHo0.lbp-kBz.mo52lYEgGDK1tDG9tb_9GXI_"
 
     val okClient by lazy {
         com.lagradost.cloudstream3.app.baseClient.newBuilder()

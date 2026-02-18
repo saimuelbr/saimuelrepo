@@ -378,7 +378,7 @@
             "AnimeMovie",
             "AsianDrama"
         ],
-        "version": 1,
+        "version": 2,
         "internalName": "VisionCine",
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/VisionCine.jar",
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/VisionCine.cs3",
