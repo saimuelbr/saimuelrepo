@@ -2,10 +2,10 @@
 
 # saimuelrepo
 
-<img src="https://img.shields.io/badge/CloudStream-blue?style=for-the-badge&logo=android" alt="CloudStream 3+">
+<img src="https://img.shields.io/badge/CloudStream-blue?style=for-the-badge&logo=android" alt="CloudStream 4+">
 <img src="https://img.shields.io/badge/Status-Estável-yellow?style=for-the-badge" alt="Experimental">
 
-[![Licença MIT](https://img.shields.io/badge/📄_Licença-MIT-8BC34A?style=for-the-badge&logo=book)](https://opensource.org/licenses/MIT)
+[![Licença GPL-3.0](https://img.shields.io/badge/%F0%9F%93%84_Licen%C3%A7a-GPL%203.0-8BC34A?style=for-the-badge&logo=book)](https://www.gnu.org/licenses/gpl-3.0.html)
 
 ### A Primeira Extensão Brasileira do CloudStream — feita por mim e para a comunidade.
 
@@ -41,13 +41,13 @@
 ###  Linguagens e Ferramentas
 <p align="left">
 <a href="https://developer.android.com" target="_blank" rel="noreferrer">
-<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/android/android-original-wordmark.svg" alt="android" width="40" height="40"/>
+<img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/android/android-original-wordmark.svg" alt="android" width="60" height="60"/>
 </a> 
 <a href="https://git-scm.com/" target="_blank" rel="noreferrer">
-<img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="git" width="40" height="40"/>
+<img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="git" width="60" height="60"/>
 </a> 
 <a href="https://kotlinlang.org" target="_blank" rel="noreferrer">
-<img src="https://www.vectorlogo.zone/logos/kotlinlang/kotlinlang-icon.svg" alt="kotlin" width="40" height="40"/>
+<img src="https://www.vectorlogo.zone/logos/kotlinlang/kotlinlang-icon.svg" alt="kotlin" width="60" height="60"/>
 </a> 
 </p>
 
