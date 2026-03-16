@@ -97,39 +97,45 @@ class EmbedTVOnline : MainAPI() {
 ): Boolean {
 
     val channelUrl = data.ifEmpty { return false }
-    val doc = app.get(channelUrl).document
+    val response = app.get(channelUrl)
+    val doc = response.document
 
     val scripts = doc.select("script")
     var finalUrl: String? = null
 
     for (script in scripts) {
         val scriptContent = script.html()
+        if (scriptContent.contains("const SRC")) {
+            val urlMatch = Regex(
+                """const\s+SRC\s*=\s*q\(\s*['"]src['"]\s*,\s*['"]([^'"]+\.m3u8[^'"]*)['"]\)"""
+            ).find(scriptContent)
 
-        val urlMatch = Regex(
-            """(?:const\s+(?:url|SRC)\s*=\s*(?:q\(['"]src['"],\s*)?['"]([^'"]+\.m3u8[^'"]*)['"])"""
-        ).find(scriptContent)
-
-        if (urlMatch != null) {
-            finalUrl = urlMatch.groupValues[1]
-            break
+            if (urlMatch != null) {
+                finalUrl = urlMatch.groupValues[1]
+                break
+            }
         }
     }
 
     if (finalUrl == null) {
-        val html = doc.html()
         val regex = Regex("""https?://[^\s"'<>]+\.m3u8[^\s"'<>]*""")
-        finalUrl = regex.find(html)?.value
+        finalUrl = regex.find(doc.html())?.value
     }
 
     if (finalUrl == null) return false
 
-        val headers = mapOf(
-            "referer" to "https://1.embedtvonline.com",
-            "origin" to "https://1.embedtvonline.com/",
-            "user-agent" to "Mozilla/5.0 (X11; Linux x86_64; rv:147.0) Gecko/20100101 Firefox/147.0",
-            "accept" to "*/*",
-            "sec-ch-ua" to "\"Google Chrome\";v=\"137\", \"Chromium\";v=\"137\", \"Not/A)Brand\";v=\"24\""
-        )
+    val headers = mapOf(
+        "Origin" to "https://embedcanaisonline.com",
+        "Referer" to "https://embedcanaisonline.com/",
+        "User-Agent" to "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+        "Accept" to "*/*",
+        "Accept-Language" to "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+        "Sec-Fetch-Mode" to "cors",
+        "Sec-Fetch-Site" to "cross-site",
+        "Sec-Fetch-Dest" to "empty",
+        "DNT" to "1",
+        "Sec-GPC" to "1"
+    )
 
         callback(newExtractorLink("EmbedTVOnline", "EmbedTVOnline Live", finalUrl) {
                 this.referer = channelUrl

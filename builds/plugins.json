@@ -119,7 +119,7 @@
         "tvTypes": [
             "Live"
         ],
-        "version": 7,
+        "version": 8,
         "internalName": "EmbedTVOnline",
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/EmbedTVOnline.jar",
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/EmbedTVOnline.cs3",
