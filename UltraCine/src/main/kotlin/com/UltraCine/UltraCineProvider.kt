@@ -5,9 +5,9 @@ import com.lagradost.cloudstream3.plugins.CloudstreamPlugin
 
 @CloudstreamPlugin
 class UltraCineProvider : BasePlugin() {
-    override fun load() {
-        registerMainAPI(UltraCine())
-        registerExtractorAPI(EmbedPlayUpnsPro())
-        registerExtractorAPI(EmbedPlayUpnOne())
-    }
+  override fun load() {
+    registerMainAPI(UltraCine())
+    registerExtractorAPI(EmbedPlayUpnsPro())
+    registerExtractorAPI(EmbedPlayUpnOne())
+  }
 }

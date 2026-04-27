@@ -204,7 +204,7 @@
             "Movie",
             "TvSeries"
         ],
-        "version": 2,
+        "version": 3,
         "internalName": "UltraCine",
         "jarUrl": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/UltraCine.jar",
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/UltraCine.cs3",
