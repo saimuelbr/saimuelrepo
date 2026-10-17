@@ -17,10 +17,6 @@
 ###  Sobre o Projeto
 - **Atualmente trabalhando em:** [saimuelrepo](https://github.com/saimuelbr/saimuelrepo)
 - **Linguagem:** **Kotlin** 
-- **Comunidade:** Participe, receba suporte ou relate problemas no nosso Discord:
-<a href="https://discord.gg/yK2bTH4dDm" target="blank">
-<img src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/discord.svg" alt="discord" height="60" width="80" />
-</a>
   
 </div>
 
