@@ -214,5 +214,25 @@
         "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/OverFlix.cs3",
         "name": "OverFlix",
         "description": "OverFlix - HD+ e FHD."
+    },
+    {
+        "iconUrl": "https://animesfhd.net/stremio/logo.png",
+        "fileSize": 32861,
+        "apiVersion": 1,
+        "repositoryUrl": "https://github.com/saimuelbr/saimuelrepo",
+        "status": 1,
+        "language": "pt-br",
+        "authors": [
+            "animesfhd"
+        ],
+        "tvTypes": [
+            "Anime",
+            "AnimeMovie"
+        ],
+        "version": 1,
+        "internalName": "AnimesFHD",
+        "url": "https://raw.githubusercontent.com/saimuelbr/saimuelrepo/main/builds/AnimesFHD.cs3",
+        "name": "AnimesFHD",
+        "description": "AnimesFHD - Animes legendados e dublados em PT-BR."
     }
 ]
